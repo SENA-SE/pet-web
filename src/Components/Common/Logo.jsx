@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 const Container = styled.div`
-    width: 250px;
+    width: ${({w}) => w};
 `
-function Logo({...rest}) {
+function Logo({w="250px", ...rest}) {
 
     return (
         <Container {...rest}>
