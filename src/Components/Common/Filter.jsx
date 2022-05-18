@@ -5,56 +5,71 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import DraftsIcon from '@mui/icons-material/Drafts';
-import SendIcon from '@mui/icons-material/Send';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
 
-export default function NestedList({data}) {
-  const [open, setOpen] = React.useState(true);
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import styled from 'styled-components';
+import CheckIcon from '@mui/icons-material/Check';
+const StyledList = styled(List)`
+  background: none;
+  color: ${({ theme }) => theme.palette.secondary.main};
+
+  & .MuiTypography-root{
+    font-size: 18px;
+  }
+`;
+export default function NestedList({ data, label = "title" }) {
+  const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = React.useState(["all"]);
-    //handle clear，点击all触发
+  //handle clear，点击all触发
   const handleClick = () => {
     setOpen(!open);
   };
-  const handleFilter=(name) => {
-      console.log(selected)
-    setSelected(selected.push(name))
+  const handleFilter = (name) => {
+    let newArr = selected;
+    if (newArr.includes(name)) {
+      newArr = selected.filter((item) => item !== name)
+    } else {
+      newArr = selected.filter((item) => item !== "all")
+      newArr = [...newArr, name]
+    }
+    setSelected(newArr)
   };
+  const handleAll = () => {
+    setSelected(["all"])
+  }
   return (
-    <List
+    <StyledList
       sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
       component="nav"
     >
       <ListItemButton onClick={handleClick}>
-        <ListItemIcon>
+        {/* <ListItemIcon>
           <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Inbox" />
-        {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItemIcon> */}
+        <ListItemText primary={label} />
+        {open ? <RemoveIcon fontSize="16" /> : <AddIcon fontSize='16' />}
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
-      <List component="div" disablePadding>
-                      <ListItemButton sx={{ pl: 4 }} >
-                        <ListItemText primary={"all"} />
-                        <ListItemIcon>
-                          <StarBorder color={selected.includes("all")? "primary": "secondary"}/>
-                        </ListItemIcon>
-                      </ListItemButton>
-                    </List>
-          {data.map(item=>
-                      <List component="div" disablePadding>
-                      <ListItemButton sx={{ pl: 4 }} onClick={()=>handleFilter(item.name)}>
-                        <ListItemText primary={item.name} />
-                        <ListItemIcon>
-                          <StarBorder color={selected.includes(item.name)? "primary": "secondary"}/>
-                        </ListItemIcon>
-                      </ListItemButton>
-                    </List>
-          )}
+        <List component="div" disablePadding>
+          <ListItemButton sx={{ pl: 4 }} onClick={handleAll} fontSize="16">
+            <ListItemText primary={"全部"} />
+            <ListItemIcon>
+              <CheckIcon fontSize="16" color={selected.includes("all") ? "primary" : "secondary"} />
+            </ListItemIcon>
+          </ListItemButton>
+        </List>
+        {data.map(item =>
+          <List component="div" disablePadding key={item.name}>
+            <ListItemButton sx={{ pl: 4 }} onClick={() => handleFilter(item.name)}>
+              <ListItemText primary={item.name}/>
+              <ListItemIcon>
+                <CheckIcon fontSize="16" color={selected.includes(item.name) ? "primary" : "secondary"} />
+              </ListItemIcon>
+            </ListItemButton>
+          </List>
+        )}
       </Collapse>
-    </List>
+    </StyledList>
   );
 }
