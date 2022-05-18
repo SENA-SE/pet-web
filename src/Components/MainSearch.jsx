@@ -24,9 +24,9 @@ const Wrapper = styled.div`
     width: 100%;
     background:${({theme})=> theme.status.bg};
     border-radius: 10px;
-    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    transition: 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     box-shadow:  ${({focus}) => focus && "0 2px 6px 0 rgba(0,0,0,0.24)"};
-    border:${({focus, theme}) => focus && "1px solid"+theme.palette.primary.main};
+    border:${({focus, theme}) => focus && "1px solid"+theme.palette.primary.main || "1px solid transparent"};
 `
 const StyledInputBase = styled(InputBase)`
 
