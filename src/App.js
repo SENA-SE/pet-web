@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import Adoption from "./Pages/Adoption";
 import Navbar from "./Components/Navbar";
+import PetDetail from "./Pages/PetDetail";
 export default function App() {
   return (
 <>
@@ -22,7 +23,7 @@ export default function App() {
     <Route path="/" element={<Home />}></Route>
     <Route path="/home" element={<Home />}></Route>
     <Route path="/adoption" element={<Adoption />}></Route>
-
+    <Route path="/adoption/:id" element={<PetDetail />}></Route>
     {/* <Route path="/products/:category" element={<ProductList />}></Route>
     <Route path="/product/:id" element={<SingleProduct />}></Route>
     <Route path="/cart" element={<Cart />}></Route>
