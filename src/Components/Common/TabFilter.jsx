@@ -23,8 +23,8 @@ const StyledTabs = styled(Tabs)`
 const StyledTab = styled(Tab)`
     // margin-right: 50px;
 `
-export default function TabFilter({filters, ...rest}) {
-  const [value, setValue] = React.useState('cat');
+export default function TabFilter({filters=["猫","狗","其他"], ...rest}) {
+  const [value, setValue] = React.useState(filters[0]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -39,9 +39,9 @@ export default function TabFilter({filters, ...rest}) {
         aria-label="secondary tabs example"
         {...rest}
       >
-        <StyledTab value="cat" label="猫" />
-        <StyledTab value="dog" label="狗" />
-        <StyledTab value="other" label="其他" />
+        {filters.map(item=>
+          <StyledTab value={item} label={item} />
+          )}
       </StyledTabs>
   );
 }

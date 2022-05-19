@@ -9,11 +9,12 @@ import Divider from '@mui/material/Divider';
 import PetInfo from '../Components/Common/PetInfo';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
-import Carousel from '../Components/Common/Carousel.tsx'
+import Carousel from '../Components/Common/Carousel'
+import InfoForm from '../Components/InfoForm'
 const Container = styled.div`
     width: 100%;
     padding: 20px;
-    margin-top: 10vh;
+    margin-top: 12vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -31,6 +32,7 @@ const InfoContainer = styled.div`
     align-items: flex-start;
     justify-content: center;
     gap: 20px;
+    padding: 20px 10px 10px 10px;
 `
 const Status = styled.div`
     border: 1px solid ${({ theme, confirm }) => confirm? theme.palette.secondary.main : "none"};
@@ -42,7 +44,8 @@ const Status = styled.div`
 const FlexWrapper = styled.div`
     display: flex;
     gap: 10px;
-    flex-direction: ${({column}) => column? "column" : "row"}
+    flex-direction: ${({column}) => column? "column" : "row"};
+    font-size: 18px;
 `
 // const data = {
 //         name: "名字",
@@ -92,8 +95,9 @@ function PetDetail({data = {
                 
             </Header>
             <Divider variant="middle" />
+            <Carousel/>
             <InfoContainer>
-                <Carousel/>
+
                 <PetInfo data={{age: data.age,species: data.species,gender: data.gender}}/>
 <FlexWrapper>
 {
@@ -120,6 +124,7 @@ function PetDetail({data = {
     {data.condition}
     </FlexWrapper>
             </InfoContainer>
+            <InfoForm/>
             </MainContainer>
             </Container>
     )

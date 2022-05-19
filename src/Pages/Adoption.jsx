@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import PetList from '../Components/PetList'
 import styled from 'styled-components'
 import Sidebar from '../Components/Sidebar'
-import PetsHeader from '../Components/PetsHeader'
+import PetsHeader from '../Components/FilterHeader'
 import Pagination from '../Components/Common/Pagination'
 const Container = styled.div`
   width: 100%;

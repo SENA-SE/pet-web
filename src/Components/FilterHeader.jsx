@@ -9,14 +9,14 @@ const Container = styled.div`
     align-items: center;
     padding-right: 20px;
 `
-function PetsHeader({ ...rest }) {
+function FilterHeader({tabData, ...rest }) {
     return (
         <Container {...rest}>
             <Sort style={{ flex: 1 }} />
-            <TabFilter style={{ flex: 8 }} />
+            <TabFilter filter={tabData} style={{ flex: 8 }} />
             <Search style={{ flex: 2 }} />
         </Container>
     )
 }
 
-export default PetsHeader
+export default FilterHeader
