@@ -8,7 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function FormDialog() {
+export default function FormDialog({ ...rest }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -20,8 +20,8 @@ export default function FormDialog() {
   };
 
   return (
-    <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+    <div {...rest}>
+      <Button variant="outlined" onClick={handleClickOpen} >
         提交送养信息
       </Button>
       <Dialog open={open} onClose={handleClose}>

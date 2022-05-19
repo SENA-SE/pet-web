@@ -31,20 +31,20 @@ const InfoContainer = styled.div`
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    gap: 20px;
+    gap: 40px;
     padding: 20px 10px 10px 10px;
 `
 const Status = styled.div`
-    border: 1px solid ${({ theme, confirm }) => confirm? theme.palette.secondary.main : "none"};
+    border: 1px solid ${({ theme, confirm }) => confirm ? theme.palette.secondary.main : "none"};
     color:${({ theme }) => theme.palette.secondary.main};
-    background: ${({ theme, confirm }) =>confirm? theme.status.bg2: "none"};
+    background: ${({ theme, confirm }) => confirm ? theme.status.bg2 : "none"};
     border-radius: 10px;
     padding: 5px 10px;
 `
 const FlexWrapper = styled.div`
     display: flex;
     gap: 10px;
-    flex-direction: ${({column}) => column? "column" : "row"};
+    flex-direction: ${({ column }) => column ? "column" : "row"};
     font-size: 18px;
 `
 // const data = {
@@ -65,68 +65,68 @@ const FlexWrapper = styled.div`
 //         },
 //         id: "1",
 // }
-function PetDetail({data = {
+function PetDetail({ data = {
     name: "名字",
     isCollected: true,
     species: "萨摩耶",
     age: "3个月",
     gender: "female",
     location: "福州",
-    created:"2002-05-01",
-    description:"格里芬大约45磅，大约2到3岁，他喜欢玩耍",
-    condition:"1. 仅限同城 2. 不得遗弃、转让",
-    imageUrl:["1","2"],
-    status:{
+    created: "2002-05-01",
+    description: "格里芬大约45磅，大约2到3岁，他喜欢玩耍",
+    condition: "1. 仅限同城 2. 不得遗弃、转让",
+    imageUrl: ["1", "2"],
+    status: {
         "已免疫": true,
         "已绝育": false,
         "已驱虫": false
     },
-    owner:"主人昵称",
+    owner: "主人昵称",
     id: "1",
-}}) {
+} }) {
     // console.log(data)
     return (
         <Container>
             <MainContainer>
-            <Header>
-                <ArrowBackIosIcon sx={{cursor: 'pointer'}}/>
-                <h2>{data.name}</h2>
-                <FavoriteIcon sx={{cursor: 'pointer'}}/>
-                
-            </Header>
-            <Divider variant="middle" />
-            <Carousel/>
-            <InfoContainer>
+                <Header>
+                    <ArrowBackIosIcon sx={{ cursor: 'pointer' }} />
+                    <h2>{data.name}</h2>
+                    <FavoriteIcon sx={{ cursor: 'pointer' }} />
 
-                <PetInfo data={{age: data.age,species: data.species,gender: data.gender}}/>
-<FlexWrapper>
-{
-                    Object.keys(data.status).map((key) => { 
-                       return <Status confirm={data.status[key] && true}>{key}</Status>
-                    })
-                }
-</FlexWrapper>
-<FlexWrapper>创建时间： {data.created}</FlexWrapper>
-<FlexWrapper>
-    <AccountCircleIcon/>
-    {data.owner}
-</FlexWrapper>
-<FlexWrapper>
-    <LocationOnOutlinedIcon/>
-    {data.location}
-</FlexWrapper>
-<FlexWrapper column>
-    <h3>主人描述： </h3>
-    {data.description}
-    </FlexWrapper>
-<FlexWrapper column>
-    <h3>领养条件： </h3>
-    {data.condition}
-    </FlexWrapper>
-            </InfoContainer>
-            <InfoForm/>
+                </Header>
+                <Divider variant="middle" sx={{ marginBottom: "15px" }} />
+                <Carousel />
+                <InfoContainer>
+                    <FlexWrapper style={{ width: "100%", justifyContent: "space-between" }}>
+                        <PetInfo data={{ age: data.age, species: data.species, gender: data.gender }} style={{ fontSize: "20px" }} />
+                        <FlexWrapper>                       {
+                            Object.keys(data.status).map((key) => {
+                                return <Status confirm={data.status[key] && true}>{key}</Status>
+                            })
+                        }</FlexWrapper>
+                    </FlexWrapper>
+                    <FlexWrapper>创建时间： {data.created}</FlexWrapper>
+                    <FlexWrapper>
+                        <AccountCircleIcon />
+                        {data.owner}
+                    </FlexWrapper>
+                    <FlexWrapper>
+                        <LocationOnOutlinedIcon />
+                        {data.location}
+                    </FlexWrapper>
+                    <FlexWrapper column>
+                        <h3>主人描述： </h3>
+                        {data.description}
+                    </FlexWrapper>
+                    <FlexWrapper column>
+                        <h3>领养条件： </h3>
+                        {data.condition}
+                    </FlexWrapper>
+                    <InfoForm style={{ alignSelf: "flex-end" }} />
+                </InfoContainer>
+
             </MainContainer>
-            </Container>
+        </Container>
     )
 }
 

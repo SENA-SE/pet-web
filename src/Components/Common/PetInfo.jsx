@@ -11,7 +11,7 @@ const Container = styled.div`
     font-size: 16px;
 `
 
-function PetInfo({data={age:"3周岁", species:"哈士奇", gender:"male"}, ...rest}) {
+function PetInfo({ data = { age: "3周岁", species: "哈士奇", gender: "male" }, ...rest }) {
     // console.log(data)
     return (
         <Container {...rest}>

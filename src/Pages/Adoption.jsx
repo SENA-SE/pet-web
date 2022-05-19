@@ -27,7 +27,7 @@ function Adoption(props) {
       <ListContainer>
         <PetsHeader />
         <PetList />
-        <Pagination/>
+        <Pagination right sx={{marginTop: '10px', marginRight: '15px'}}/>
       </ListContainer>
     </Container>
   )

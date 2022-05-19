@@ -11,20 +11,23 @@ import {
 import Adoption from "./Pages/Adoption";
 import Navbar from "./Components/Navbar";
 import PetDetail from "./Pages/PetDetail";
+import Community from "./Pages/Community";
 export default function App() {
   return (
-<>
-<GlobalStyle />
+    <>
+      <GlobalStyle />
 
-<Router>
-  {" "}
-  <Navbar />
-  <Routes>
-    <Route path="/" element={<Home />}></Route>
-    <Route path="/home" element={<Home />}></Route>
-    <Route path="/adoption" element={<Adoption />}></Route>
-    <Route path="/adoption/:id" element={<PetDetail />}></Route>
-    {/* <Route path="/products/:category" element={<ProductList />}></Route>
+      <Router>
+        {" "}
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/home" element={<Home />}></Route>
+          <Route path="/adoption" element={<Adoption />}></Route>
+          <Route path="/adoption/:id" element={<PetDetail />}></Route>
+          <Route path="/community" element={<Community />}></Route>
+
+          {/* <Route path="/products/:category" element={<ProductList />}></Route>
     <Route path="/product/:id" element={<SingleProduct />}></Route>
     <Route path="/cart" element={<Cart />}></Route>
     <Route
@@ -35,8 +38,8 @@ export default function App() {
       path="/register"
       element={userLogin ? <Navigate to="/" /> : <Register />}
     ></Route> */}
-  </Routes>
-</Router>
-</>
+        </Routes>
+      </Router>
+    </>
   );
 }

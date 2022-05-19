@@ -21,13 +21,13 @@ const Container = styled.div`
 `
 const ImgContainer = styled.div`
   & .test {
-    width: 230px;
-    height: 200px;
-    background: royalblue;
+    width:100%;
+    height: 300px;
+    background: gray;
     color: white;
   }
 `
-export default function SimpleSlider() {
+export default function SimpleSlider({ ...rest }) {
   let settings = {
     dots: true,
     // infinite: true,
@@ -35,37 +35,37 @@ export default function SimpleSlider() {
     // slidesToShow: 3,
     // slidesToScroll: 1
     className: "center",
-      centerMode: true,
-      infinite: true,
-      centerPadding: "60px",
-      slidesToShow: 3,
-      speed: 500,
-      nextArrow: <ArrowRightOutlinedIcon color="primary"/>,
-      prevArrow: <ArrowLeftOutlinedIcon color="primary"/>
+    centerMode: true,
+    infinite: true,
+    centerPadding: "10px",
+    slidesToShow: 3,
+    speed: 500,
+    nextArrow: <ArrowRightOutlinedIcon color="primary" />,
+    prevArrow: <ArrowLeftOutlinedIcon color="primary" />
   };
   return (
- <Container>
+    <Container {...rest}>
       <Slider {...settings}>
-        
-      <ImgContainer>
-        <div class="test">1</div>
-      </ImgContainer>
-      <ImgContainer>
-        <div class="test">2</div>
-      </ImgContainer>
-      <ImgContainer>
-        <div class="test">3</div >
-      </ImgContainer>
-      <ImgContainer>
-        <div class="test">4</div >
-      </ImgContainer>
-      {/* <ImgContainer>
+
+        <ImgContainer>
+          <div class="test">1</div>
+        </ImgContainer>
+        <ImgContainer>
+          <div class="test">2</div>
+        </ImgContainer>
+        <ImgContainer>
+          <div class="test">3</div >
+        </ImgContainer>
+        <ImgContainer>
+          <div class="test">4</div >
+        </ImgContainer>
+        {/* <ImgContainer>
         <h3>5</h3>
       </ImgContainer>
       <ImgContainer>
         <h3>6</h3>
       </ImgContainer> */}
-    </Slider>
- </Container>
+      </Slider>
+    </Container>
   );
 }

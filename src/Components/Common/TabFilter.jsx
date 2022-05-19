@@ -23,25 +23,38 @@ const StyledTabs = styled(Tabs)`
 const StyledTab = styled(Tab)`
     // margin-right: 50px;
 `
-export default function TabFilter({filters=["猫","狗","其他"], ...rest}) {
-  const [value, setValue] = React.useState(filters[0]);
+export default function TabFilter({ filters = [
+  {
+    value: "cat",
+    name: "猫"
+  },
+  {
+    value: "dog",
+    name: "狗"
+  },
+  {
+    value: "others",
+    name: "其他"
+  },
+], ...rest }) {
+  const [value, setValue] = React.useState(filters[0].value);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
-      <StyledTabs
-        value={value}
-        onChange={handleChange}
-        textColor="secondary"
-        indicatorColor="secondary"
-        aria-label="secondary tabs example"
-        {...rest}
-      >
-        {filters.map(item=>
-          <StyledTab value={item} label={item} />
-          )}
-      </StyledTabs>
+    <StyledTabs
+      value={value}
+      onChange={handleChange}
+      textColor="secondary"
+      indicatorColor="secondary"
+      aria-label="secondary tabs example"
+      {...rest}
+    >
+      {filters.map(item =>
+        <StyledTab value={item.value} label={item.name} />
+      )}
+    </StyledTabs>
   );
 }
