@@ -12,6 +12,7 @@ import Adoption from "./Pages/Adoption";
 import Navbar from "./Components/Navbar";
 import PetDetail from "./Pages/PetDetail";
 import Community from "./Pages/Community";
+import PostDetail from "./Pages/PostDetail"
 export default function App() {
   return (
     <>
@@ -26,6 +27,8 @@ export default function App() {
           <Route path="/adoption" element={<Adoption />}></Route>
           <Route path="/adoption/:id" element={<PetDetail />}></Route>
           <Route path="/community" element={<Community />}></Route>
+          <Route path="/community/:id" element={<PostDetail />}></Route>
+
 
           {/* <Route path="/products/:category" element={<ProductList />}></Route>
     <Route path="/product/:id" element={<SingleProduct />}></Route>

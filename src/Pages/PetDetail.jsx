@@ -11,6 +11,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import Carousel from '../Components/Common/Carousel'
 import InfoForm from '../Components/InfoForm'
+import Header from '../Components/Common/Header'
 const Container = styled.div`
     width: 100%;
     padding: 20px;
@@ -20,12 +21,12 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
 `
-const Header = styled.div`
-    padding:0 10px 15px 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`
+// const Header = styled.div`
+//     margin: 0 10px 15px 10px;
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+// `
 const InfoContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -88,11 +89,14 @@ function PetDetail({ data = {
     return (
         <Container>
             <MainContainer>
-                <Header>
+                {/* <Header>
                     <ArrowBackIosIcon sx={{ cursor: 'pointer' }} />
                     <h2>{data.name}</h2>
                     <FavoriteIcon sx={{ cursor: 'pointer' }} />
 
+                </Header> */}
+                <Header title={data.name} back>
+                    <FavoriteIcon sx={{ cursor: 'pointer' }} />
                 </Header>
                 <Divider variant="middle" sx={{ marginBottom: "15px" }} />
                 <Carousel />

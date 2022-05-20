@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { useState } from 'react';
 import { useWindowSize } from '../../util/useWindowSize';
+import ViewInfo from './ViewInfo';
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -18,17 +19,23 @@ const StyledParagraph = styled.span`
         `
     };
 `;
+const Bottom = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: ${({info}) => info? "space-between" : "flex-end"};
+    height: 40px;
+`
 const Expand = styled.span`
     color: ${({ theme }) => theme.palette.primary.main};
     cursor: pointer;
     align-self: flex-end;
-    margin: 10px 10px 0 10px;
+    // margin: 10px 10px 0 10px;
     user-select: none;
 
 `;
 
 
-function Paragraph({ children, ...rest }) {
+function Paragraph({ info, children, ...rest }) {
     const [status, setStatus] = useState({ ellipsis: true, });
     const handleExpand = () => {
         setStatus({ ...status, ellipsis: !status.ellipsis })
@@ -42,10 +49,13 @@ function Paragraph({ children, ...rest }) {
             <StyledParagraph as="p" status={status} {...rest}>
                 {children}
             </StyledParagraph>
-            {children.length > maxWord && (status.ellipsis ? <Expand status={status} onClick={handleExpand}>展开</Expand>
+            <Bottom info={info}>
+                {info && <ViewInfo data={info} style={{marginTop: '10px'}}/>}
+                {children.length > maxWord && (status.ellipsis ? <Expand status={status} onClick={handleExpand}>展开</Expand>
                 :
                 <Expand status={status} onClick={handleExpand}>收回</Expand>)
             }
+            </Bottom>
         </Container>
     );
 }
