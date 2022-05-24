@@ -29,7 +29,7 @@ const NoticeWrapper = styled.div`
     transition: 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     &: hover {
         border-radius: 5px;
-        background: ${({theme})=>theme.status.bg2};
+        background: ${({ theme }) => theme.status.bg2};
     }
 `;
 const FlexWrapper = styled.div`
@@ -41,15 +41,15 @@ const FlexWrapper = styled.div`
 `;
 const filters = [
     {
-        value: "announcement", 
+        value: "announcement",
         name: "全部公告"
     },
     {
-        value: "volunteer", 
+        value: "volunteer",
         name: "志愿服务"
     },
     {
-        value: "rescueStation", 
+        value: "rescueStation",
         name: "救助基地"
     },
 ];
@@ -75,38 +75,38 @@ const notices = [
 ]
 // useEffect path改变时获取数据
 function Notice() {
-  return (
-    <Container>
+    return (
+        <Container>
             <MainContainer>
-        <TabFilter filters={filters}/>
-        <Divider variant="middle" sx={{ marginY: "15px" }} />
-        <NoticeContainer>
-        {notices.map(item=>
-            <>
-                    <Link to={item.id}>
-            <NoticeWrapper>
-                <h3>{item.title}</h3>
-                {/* <Paragraph info={{read: item.read, favorite: item.favorite, comment: item.comment}}>
+                <TabFilter filters={filters} />
+                <Divider variant="middle" sx={{ marginY: "15px" }} />
+                <NoticeContainer>
+                    {notices.map(item =>
+                        <>
+                            <Link to={item.id}>
+                                <NoticeWrapper>
+                                    <h3>{item.title}</h3>
+                                    {/* <Paragraph info={{read: item.read, favorite: item.favorite, comment: item.comment}}>
                                     {item.content}
                                 </Paragraph> */}
-                <Paragraph>
-                    {item.content}
-                </Paragraph>
-                <FlexWrapper>
-                    <span>发布时间：{item.createdAt}</span>
-                </FlexWrapper>
-            </NoticeWrapper>
-            </Link>
-            <Divider variant="middle" sx={{ marginTop: "15px", marginBottom: "20px" }} />
-</>
-            )}
+                                    <Paragraph>
+                                        {item.content}
+                                    </Paragraph>
+                                    <FlexWrapper>
+                                        <span>发布时间：{item.createdAt}</span>
+                                    </FlexWrapper>
+                                </NoticeWrapper>
+                            </Link>
+                            <Divider variant="middle" sx={{ marginTop: "15px", marginBottom: "20px" }} />
+                        </>
+                    )}
 
-        </NoticeContainer>
-        <PaginationLink right/>
-    </MainContainer>
+                </NoticeContainer>
+                <PaginationLink right />
+            </MainContainer>
 
-    </Container>
-  )
+        </Container>
+    )
 }
 
 export default Notice

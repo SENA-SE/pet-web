@@ -47,33 +47,33 @@ const ContentWrapper = styled.div`
 
 // useEffect path依赖更改时发送请求请求data
 
-function NoticeDetail({post={
+function NoticeDetail({ post = {
     id: "222",
     title: "标题",
     createdAt: "2002-05",
     content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
-}}) {
-  return (
-    <Container>
-            <MainContainer style={{minHeight: "50vh"}}>
-        <Wrapper>
-        <Header title={post.title} back>
-                <div></div>
-                </Header>                    
-                <Divider variant="middle"  />
-                
-                <ContentWrapper>
-                <span>发布时间：{post.createdAt}</span>
-                <p>{post.content}</p>
-                </ContentWrapper>
-                {/* <ViewInfo 
+} }) {
+    return (
+        <Container>
+            <MainContainer style={{ minHeight: "50vh" }}>
+                <Wrapper>
+                    <Header title={post.title} back>
+                        <div></div>
+                    </Header>
+                    <Divider variant="middle" />
+
+                    <ContentWrapper>
+                        <span>发布时间：{post.createdAt}</span>
+                        <p>{post.content}</p>
+                    </ContentWrapper>
+                    {/* <ViewInfo 
                 data={{read: post.read, favorite: post.favorite, comment: post.comment}}
                 style={{alignSelf: 'flex-start', marginLeft: '10px'}}
                 /> */}
-        </Wrapper>
-    </MainContainer>
-    </Container>
-  )
+                </Wrapper>
+            </MainContainer>
+        </Container>
+    )
 }
 
 export default NoticeDetail

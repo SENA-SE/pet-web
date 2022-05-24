@@ -16,6 +16,7 @@ import PostDetail from "./Pages/PostDetail"
 import Notice from "./Pages/Notice";
 import NoticeDetail from "./Pages/NoticeDetail";
 import SendPet from "./Pages/SendPet";
+import User from "./Pages/User";
 // TODO: 正则
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
           <Route path="/notice" element={<Notice />}></Route>
           <Route path="/notice/:id" element={<NoticeDetail />}></Route>
           <Route path="/send" element={<SendPet />}></Route>
+          <Route path="/user" element={<User />}></Route>
 
 
 

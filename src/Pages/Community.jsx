@@ -46,7 +46,7 @@ const PostWrapper = styled.div`
     &: hover {
         // padding: 0;
         border-radius: 5px;
-        background: ${({theme})=>theme.status.bg2};
+        background: ${({ theme }) => theme.status.bg2};
     }
 `;
 const tags = [
@@ -105,28 +105,6 @@ const posts = [
         content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
         tag: "#紧急寻宠",
         id: "222",
-            read: 100,
-    favorite: 50,
-    comment: 25,
-
-    },
-    {
-        user: "用户名",
-        createdAt: "05-11",
-        content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
-        tag: "#提问求助",
-        id: "222",
-            read: 100,
-    favorite: 50,
-    comment: 25,
-
-    },
-    {
-        user: "用户名",
-        createdAt: "05-11",
-        content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
-        tag: "#紧急寻宠",
-        id: "222" ,
         read: 100,
         favorite: 50,
         comment: 25,
@@ -137,7 +115,29 @@ const posts = [
         createdAt: "05-11",
         content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
         tag: "#提问求助",
-        id: "222"     ,
+        id: "222",
+        read: 100,
+        favorite: 50,
+        comment: 25,
+
+    },
+    {
+        user: "用户名",
+        createdAt: "05-11",
+        content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
+        tag: "#紧急寻宠",
+        id: "222",
+        read: 100,
+        favorite: 50,
+        comment: 25,
+
+    },
+    {
+        user: "用户名",
+        createdAt: "05-11",
+        content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
+        tag: "#提问求助",
+        id: "222",
         read: 100,
         favorite: 50,
         comment: 25,
@@ -188,6 +188,22 @@ const posts = [
     },
 ]
 
+export const Post = ({ data = { ...posts[0] } }) => {
+    return (
+        <>
+            <PostWrapper>
+                <Link to={data.id}>
+                    <PostName data={data} />
+                </Link>
+                <Paragraph expand info={{ read: data.read, favorite: data.favorite, comment: data.comment }}>
+                    {data.content}
+                </Paragraph>
+            </PostWrapper>
+            <Divider variant="middle" sx={{ marginTop: "15px", marginBottom: "20px" }} />
+        </>
+    )
+}
+
 function Community() {
     return (
         <Container>
@@ -196,17 +212,7 @@ function Community() {
                 <Divider variant="middle" sx={{ marginY: "15px" }} />
                 <PostsContainer>
                     {posts.map(item =>
-                        <>
-                            <PostWrapper>
-<Link to={item.id}>
-<PostName data={item} />
-</Link>
-                                <Paragraph expand info={{read: item.read, favorite: item.favorite, comment: item.comment}}>
-                                    {item.content}
-                                </Paragraph>
-                            </PostWrapper>
-                            <Divider variant="middle" sx={{ marginTop: "15px", marginBottom: "20px" }} />
-                        </>
+                        <Post data={item} />
                     )}
                     <Pagination right path={"community"} />
                 </PostsContainer>
@@ -215,13 +221,12 @@ function Community() {
                 <FlexWrapper column>
                     <FlexWrapper style={{ alignItems: 'center', justifyContent: 'space-between' }}>
                         <h3>发帖</h3>
-                        <Selector data={tags} label={"话题"} noDefault/>
+                        <Selector data={tags} label={"话题"} noDefault />
                     </FlexWrapper>
                     <TextArea />
-                    <Button type="secondary" style={{alignSelf: 'flex-end', width: '200px'}}>提交</Button>
+                    <Button type="secondary" style={{ alignSelf: 'flex-end', width: '200px' }}>提交</Button>
                 </FlexWrapper>
             </MainContainer>
-            <PaginationLink right/>
         </Container>
     )
 }

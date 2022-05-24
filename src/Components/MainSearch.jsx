@@ -53,8 +53,8 @@ function MainSearch() {
         </IconButton>
         <StyledInputBase
           sx={{ ml: 1, flex: 1 }}
-          placeholder="Search Google Maps"
-          inputProps={{ 'aria-label': 'search google maps' }}
+          placeholder="Find Your Pet"
+          inputProps={{ 'aria-label': 'search pet' }}
           onFocus={() => { setIsFocused(true) }}
           onBlur={() => { setIsFocused(false) }}
           onChange={handleChange("keyword")}
