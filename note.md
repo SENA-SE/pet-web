@@ -7,7 +7,7 @@ backbutton
 否弹通知 
 是弹表格=》发送请求，弹通知成功/失败
 
-社区 做多选tabfilter（2级）， 1 text自动收缩，1 postname（头像昵称时间），readInfo（icon和数字），textfield（文字框1个，和按钮）
+社区 做多选tabfilter（2级）， 1 text自动收缩，1 postname（头像昵称时间），1 readInfo（icon和数字），1 textfield（文字框1个，和按钮）
 社区/科普帖子页面：
 内容 Title，postname，readInfo
 评论 Title，postname，评论内容

@@ -13,6 +13,10 @@ import Navbar from "./Components/Navbar";
 import PetDetail from "./Pages/PetDetail";
 import Community from "./Pages/Community";
 import PostDetail from "./Pages/PostDetail"
+import Notice from "./Pages/Notice";
+import NoticeDetail from "./Pages/NoticeDetail";
+import SendPet from "./Pages/SendPet";
+// TODO: 正则
 export default function App() {
   return (
     <>
@@ -28,6 +32,10 @@ export default function App() {
           <Route path="/adoption/:id" element={<PetDetail />}></Route>
           <Route path="/community" element={<Community />}></Route>
           <Route path="/community/:id" element={<PostDetail />}></Route>
+          <Route path="/notice" element={<Notice />}></Route>
+          <Route path="/notice/:id" element={<NoticeDetail />}></Route>
+          <Route path="/send" element={<SendPet />}></Route>
+
 
 
           {/* <Route path="/products/:category" element={<ProductList />}></Route>

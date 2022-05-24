@@ -35,7 +35,7 @@ const Expand = styled.span`
 `;
 
 
-function Paragraph({ info, children, ...rest }) {
+function Paragraph({ info, expand, children, ...rest }) {
     const [status, setStatus] = useState({ ellipsis: true, });
     const handleExpand = () => {
         setStatus({ ...status, ellipsis: !status.ellipsis })
@@ -49,13 +49,15 @@ function Paragraph({ info, children, ...rest }) {
             <StyledParagraph as="p" status={status} {...rest}>
                 {children}
             </StyledParagraph>
-            <Bottom info={info}>
+            {expand && 
+                <Bottom info={info}>
                 {info && <ViewInfo data={info} style={{marginTop: '10px'}}/>}
                 {children.length > maxWord && (status.ellipsis ? <Expand status={status} onClick={handleExpand}>展开</Expand>
                 :
                 <Expand status={status} onClick={handleExpand}>收回</Expand>)
             }
             </Bottom>
+            }
         </Container>
     );
 }

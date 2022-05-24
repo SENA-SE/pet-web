@@ -44,7 +44,7 @@ function Search({...rest}) {
                 <StyledInputBase
                     sx={{ ml: 1, flex: 1 }}
                     placeholder="Search "
-                    inputProps={{ 'aria-label': 'search google maps' }}
+                    inputProps={{ 'aria-label': 'search' }}
                     onFocus={() => { setIsFocused(true) }}
                     onBlur={() => { setIsFocused(false) }}
                     onChange={handleChange}

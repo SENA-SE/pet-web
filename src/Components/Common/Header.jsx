@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+
 // import Divider from '@mui/material/Divider';
 
 const Container = styled.div`
@@ -13,7 +14,11 @@ const Container = styled.div`
 function Header({title="title", children, back, ...rest}) {
   return (
     <Container {...rest}>
-{   back&&                         <ArrowBackIosIcon color="secondary" sx={{ cursor: 'pointer', fontSize: 30 }} />
+{   back&&                         <ArrowBackIosIcon 
+color="secondary" 
+sx={{ cursor: 'pointer', fontSize: 25 }} 
+onClick={()=>window.history.back()}
+/>
 }
                     <h3>{title}</h3>
                     {children}

@@ -1,9 +1,8 @@
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
 import styled from 'styled-components'
-
+import { useNavigate } from 'react-router-dom'
 const StyledTabs = styled(Tabs)`
     & .MuiTabs-indicator {
         height: 100%;
@@ -38,18 +37,21 @@ export default function TabFilter({ filters = [
   },
 ], ...rest }) {
   const [value, setValue] = React.useState(filters[0].value);
-
+  const navigate = useNavigate();
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    //TODO: 动态路由category
+    // navigate(newValue);
   };
 
+// useeffect 依赖tabvalue更改时跳转网址
   return (
     <StyledTabs
       value={value}
       onChange={handleChange}
       textColor="secondary"
       indicatorColor="secondary"
-      aria-label="secondary tabs example"
+      aria-label="category tabs"
       {...rest}
     >
       {filters.map(item =>

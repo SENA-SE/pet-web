@@ -16,6 +16,7 @@ import Pagination from '../Components/Common/Pagination';
 import TextArea from '../Components/Common/TextArea';
 import Selector from '../Components/Common/Selector';
 import Button from '../Components/Common/Button';
+import PaginationLink from '../Components/Common/Pagination';
 const Container = styled.div`
     width: 100%;
     padding: 20px;
@@ -33,7 +34,6 @@ const FlexWrapper = styled.div`
     gap: 20px;
     flex-direction: ${({ column }) => column ? "column" : "row"};
     font-size: 18px;
-
 `
 const PostsContainer = styled.div``
 const PostWrapper = styled.div`
@@ -201,7 +201,7 @@ function Community() {
 <Link to={item.id}>
 <PostName data={item} />
 </Link>
-                                <Paragraph info={{read: item.read, favorite: item.favorite, comment: item.comment}}>
+                                <Paragraph expand info={{read: item.read, favorite: item.favorite, comment: item.comment}}>
                                     {item.content}
                                 </Paragraph>
                             </PostWrapper>
@@ -221,6 +221,7 @@ function Community() {
                     <Button type="secondary" style={{alignSelf: 'flex-end', width: '200px'}}>提交</Button>
                 </FlexWrapper>
             </MainContainer>
+            <PaginationLink right/>
         </Container>
     )
 }
