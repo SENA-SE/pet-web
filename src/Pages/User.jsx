@@ -10,7 +10,10 @@ import TextArea from '../Components/Common/TextArea';
 import Selector from '../Components/Common/Selector';
 import Button from '../Components/Common/Button';
 import Header from '../Components/Common/Header';
+import { Form, Field } from 'react-final-form'
 import { Post } from './Community';
+import FormInput from '../Components/Common/FormInput';
+import AutoSave from '../util/AutoSave';
 const Container = styled.div`
     width: 100%;
     padding: 20px;
@@ -37,11 +40,85 @@ const Right = styled(MainContainer)`
 const Info = () => {
     return (
         <>
-            <Header title={"基本资料"} />
-            <Divider sx={{marginBottom: '15px'}} />
+            <Header title={"编辑资料"} />
+            <Divider sx={{ marginBottom: '15px' }} />
         </>
     )
 }
+
+const initialData = {
+    firstName: "222",
+    bio: "333"
+}
+const onSubmit = (e) => {
+    console.log("submit")
+    debugger
+}
+
+const validate = (e) => {
+    const errors = {}
+
+    // if (e.firstName && e.firstName.length < 5) {
+    //     errors.firstName = 'Too Short'
+
+    // }
+    if (e.bio && e.bio.length < 5) {
+        errors.bio = 'Too Short'
+
+    }
+    return errors
+}
+
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
+const save = async values => {
+    console.log('Saving', values)
+    await sleep(2000)
+}
+const MyForm = () => (
+    <Form
+        onSubmit={save}
+        validate={validate}
+        initialValues={initialData}
+        render={({ handleSubmit }) => (
+            <form onSubmit={handleSubmit}>
+                <AutoSave debounce={1000} save={save} />
+
+                <div>
+                    <label>First Name</label>
+                    <Field name="firstName" component="input" placeholder="First Name" />
+                </div>
+
+                <div>
+                    <label>Bio</label>
+
+                    <Field
+                        name="bio"
+                        render={({ input, meta }) => (
+                            <div>
+                                <textarea {...input} />
+                                {meta.touched && meta.error && <span>{meta.error}</span>}
+                            </div>
+                        )}
+                    />
+                </div>
+
+                <div>
+                    <Field
+                        name="secondName"
+                        render={({ input, meta }) => (
+                            <div>
+                                <FormInput label="secondName" {...input} />
+                                {meta.touched && meta.error && <span>{meta.error}</span>}
+                            </div>
+                        )}
+                    />
+                </div>
+                <button type='submit'>Submit</button>
+            </form>
+        )}
+    />
+)
 function User() {
     return (
         <Container>
@@ -51,7 +128,7 @@ function User() {
                 </Left>
                 <Right>
                     <Info />
-                    <Post />
+                    <MyForm />
                 </Right>
             </Wrapper>
         </Container>
