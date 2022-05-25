@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 const Container = styled.div`
     width: 100%;
     display: grid;
@@ -26,53 +27,35 @@ const Wrapper = styled.div`
 
     label {
         font-size: 16px;
-
-
     }
 `
-const StyledInput = styled(TextField)`
+const StyledSelect = styled(Select)`
     width: 100%;
-    & .MuiOutlinedInput-root:hover  {
+    &.MuiOutlinedInput-root:hover  {
         .MuiOutlinedInput-notchedOutline {
             border-color: ${({ theme }) => theme.palette.primary.main};
         }
     }
 
-    .Mui-focused {
+    &.Mui-focused {
         .MuiOutlinedInput-notchedOutline {
             border: 1px solid ${({ theme }) => theme.palette.primary.main};
         }
     }
-    input::-webkit-input-placeholder { 
-        font-size: 16px;
-    }
-    input::-moz-input-placeholder { 
-        font-size: 16px;
-    }
-    input::-ms-input-placeholder { 
-        font-size: 16px;
-    }
-
-    textarea::-webkit-input-placeholder { 
-        font-size: 16px;
-    }
-    textarea::-moz-input-placeholder { 
-        font-size: 16px;
-    }
-    textarea::-ms-input-placeholder { 
-        font-size: 16px;
-    }
-
-
 `
-function FormInput({ label, children, ...rest }) {
+function FormSelect({ label, options, children, ...rest }) {
     return (
         <Container>
             <Wrapper>
                 <label>{label}</label>
             </Wrapper>
             <Wrapper>
-                <StyledInput size="small" type="outlined" {...rest}></StyledInput>
+                <StyledSelect size="small" type="outlined" {...rest}>
+                    {options.map(item => (
+                        <MenuItem value={item.value}> {item.name} </MenuItem>
+
+                    ))}
+                </StyledSelect>
             </Wrapper>
             <Wrapper>
                 {children}
@@ -81,4 +64,4 @@ function FormInput({ label, children, ...rest }) {
     )
 }
 
-export default FormInput
+export default FormSelect

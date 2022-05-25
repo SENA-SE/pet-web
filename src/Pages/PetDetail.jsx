@@ -1,5 +1,6 @@
 // TODO: 获取detail data
 // TODO: 点击提交申请，进行权限验证，否弹通知（请至我的资料处进行实名认证），是弹弹窗，提交表格，发送请求
+// TODO: 联系人地址和电话
 import React from 'react'
 import MainContainer from '../Components/Common/MainContainer'
 import styled from 'styled-components'

@@ -224,7 +224,7 @@ function Community() {
                         <Selector data={tags} label={"话题"} noDefault />
                     </FlexWrapper>
                     <TextArea />
-                    <Button type="secondary" style={{ alignSelf: 'flex-end', width: '200px' }}>提交</Button>
+                    <Button variants="secondary" style={{ alignSelf: 'flex-end', width: '200px' }}>提交</Button>
                 </FlexWrapper>
             </MainContainer>
         </Container>

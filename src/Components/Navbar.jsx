@@ -71,8 +71,8 @@ export default function NavTabs() {
                 <LinkTab label="公告" href="/notice" />
             </TabContainer>
             <ItemContainer>
-                <Button>登录</Button>
-                <Button type="secondary">注册</Button>
+                <Button href="/user">登录</Button>
+                <Button href="/user" variants="secondary">注册</Button>
             </ItemContainer>
         </Container>
     );
