@@ -62,8 +62,8 @@ const validate = (e) => {
     //     errors.firstName = 'Too Short'
 
     // }
-    if (e.bio && e.bio.length < 5) {
-        errors.bio = 'Too Short'
+    if (e.secondName && e.secondName.length < 5) {
+        errors.secondName = 'Too Short'
 
     }
     return errors
@@ -82,9 +82,9 @@ const MyForm = () => (
         initialValues={initialData}
         render={({ handleSubmit }) => (
             <form onSubmit={handleSubmit}>
-                <AutoSave debounce={1000} save={save} />
+                {/* <AutoSave debounce={800} save={save} /> */}
 
-                <div>
+                {/* <div>
                     <label>First Name</label>
                     <Field name="firstName" component="input" placeholder="First Name" />
                 </div>
@@ -101,15 +101,41 @@ const MyForm = () => (
                             </div>
                         )}
                     />
-                </div>
+                </div> */}
 
                 <div>
                     <Field
                         name="secondName"
                         render={({ input, meta }) => (
                             <div>
-                                <FormInput label="secondName" {...input} />
-                                {meta.touched && meta.error && <span>{meta.error}</span>}
+                                <FormInput label="性别" {...input} >
+                                {meta.touched && meta.error && <span className="error">{meta.error}</span>}
+                                </FormInput>
+                            </div>
+                        )}
+                    />
+                </div>
+
+                <div>
+                    <Field
+                        name="userName"
+                        render={({ input, meta }) => (
+                            <div>
+                                <FormInput label="昵称" {...input} >
+                                {meta.touched && meta.error && <span className="error">{meta.error}</span>}
+                                </FormInput>
+                            </div>
+                        )}
+                    />
+                </div>
+                <div>
+                    <Field
+                        name="location"
+                        render={({ input, meta }) => (
+                            <div>
+                                <FormInput label="常住地" {...input} >
+                                {meta.touched && meta.error && <span className="error">{meta.error}</span>}
+                                </FormInput>
                             </div>
                         )}
                     />
