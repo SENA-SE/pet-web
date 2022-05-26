@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import TextField from '@mui/material/TextField';
+import ImageUpload from './ImageUpload';
 const Container = styled.div`
     width: 100%;
     display: grid;
@@ -26,7 +27,6 @@ const Wrapper = styled.div`
 
     label {
         font-size: 16px;
-
 
     }
 `
@@ -65,14 +65,22 @@ const StyledInput = styled(TextField)`
 
 
 `
-function FormInput({ label, children, ...rest }) {
+function FormInput({ label, file, children, ...rest }) {
+    // const [value, setValue] = React.useState("");
+    // const handleNumber = (e) => {
+    //     let numberVal = e.target.value.replace(/[^\d]/, '');
+    //     setValue(numberVal)
+    // }
     return (
         <Container>
             <Wrapper>
                 <label>{label}</label>
             </Wrapper>
             <Wrapper>
-                <StyledInput size="small" type="outlined" {...rest}></StyledInput>
+                {file ? <ImageUpload {...rest} />
+                    :
+                    <StyledInput size="small" type="outlined" {...rest}></StyledInput>
+                }
             </Wrapper>
             <Wrapper>
                 {children}

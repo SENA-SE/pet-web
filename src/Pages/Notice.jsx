@@ -102,7 +102,7 @@ function Notice() {
                     )}
 
                 </NoticeContainer>
-                <PaginationLink right />
+                <PaginationLink right  path={"notice"}/>
             </MainContainer>
 
         </Container>

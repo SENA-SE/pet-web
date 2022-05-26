@@ -11,7 +11,7 @@ import PetInfo from '../Components/Common/PetInfo';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import Carousel from '../Components/Common/Carousel'
-import InfoForm from '../Components/InfoForm'
+import InfoForm from '../Components/AdoptionRequest'
 import Header from '../Components/Common/Header'
 const Container = styled.div`
     width: 100%;

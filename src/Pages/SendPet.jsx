@@ -15,6 +15,7 @@ import AutoSave from '../util/AutoSave';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormSelect from '../Components/Common/FormSelect';
+import ImageUpload from '../Components/Common/ImageUpload';
 const Container = styled.div`
     width: 100%;
     padding: 20px;
@@ -44,6 +45,17 @@ const onSubmit = (e) => {
 
 const validate = (e) => {
   const errors = {}
+
+  if (e.description?.length > 200) {
+    errors.description = `字数超出限制 ${e.description?.length} / 200`
+  }
+  if (e.condition?.length > 200) {
+    errors.condition = `字数超出限制 ${e.description?.length} / 200`
+  }
+  let emailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+  if (!emailReg.test(e.email)) {
+    errors.email = "邮箱不符合格式"
+  }
   if (!e.age) {
     errors.age = "不能为空"
   }
@@ -62,8 +74,8 @@ const validate = (e) => {
   if (!e.petName) {
     errors.petName = "不能为空"
   }
-  if (!e.phone) {
-    errors.phone = "不能为空"
+  if (!e.email) {
+    errors.email = "不能为空"
   }
   if (!e.size) {
     errors.size = "不能为空"
@@ -78,12 +90,7 @@ const validate = (e) => {
     errors.condition = "不能为空"
   }
 
-  if (e.description?.length > 200) {
-    errors.description = `字数超出限制 ${e.description?.length} / 200`
-  }
-  if (e.condition?.length > 200) {
-    errors.condition = `字数超出限制 ${e.description?.length} / 200`
-  }
+
   return errors
 }
 
@@ -143,38 +150,38 @@ const inputData = [
   {
     name: "age",
     label: "年龄",
-    placeholder: "请输入宠物年龄",
+    placeholder: "请输入宠物年龄（必填）",
   },
   {
     name: "petName",
     label: "宠物昵称",
-    placeholder: "请输入宠物昵称",
+    placeholder: "请输入宠物昵称（必填）",
   },
   {
     name: "location",
     label: "联系人地址",
-    placeholder: "请输入联系人地址",
+    placeholder: "请输入联系人地址（必填）",
   },
   {
     name: "owner",
     label: "联系人称呼",
-    placeholder: "请输入联系人称呼",
+    placeholder: "请输入联系人称呼（必填）",
   },
   {
-    name: "phone",
-    label: "联系人电话",
-    placeholder: "请输入联系人电话",
+    name: "email",
+    label: "联系人邮箱",
+    placeholder: "请输入联系人邮箱（必填）",
   },
   {
     name: "description",
     label: "宠物描述",
-    placeholder: "可填写宠物的性格特征等，200字以内",
+    placeholder: "可填写宠物的性格特征等，200字以内（必填）",
     multiline: true,
   },
   {
     name: "condition",
     label: "领养要求",
-    placeholder: "请输入领养要求，200字以内",
+    placeholder: "请输入领养要求，200字以内（必填）",
     multiline: true,
   },
 ]
@@ -216,8 +223,17 @@ const PetForm = () => (
             />
           ))
         }
+        <Field
+          name={"images"}
+          render={({ input, meta }) => (
+            <FormInput label={"宠物图片"} file {...input} >
+              {meta.touched && meta.error && <span className="error">{meta.error}</span>}
+            </FormInput>
+          )}
+        />
 
-        <Button variants="secondary" type="submit"  style={{  width: "60%", marginTop: "30px", marginLeft: "1rem" }}>提交</Button>
+
+        <Button variants="secondary" type="submit" style={{ width: "60%", marginTop: "30px", marginLeft: "1rem" }}>提交</Button>
       </StyledForm>
     )}
   />
@@ -228,7 +244,7 @@ const PetForm = () => (
 function SendPet() {
   return (
     <Container>
-      <MainContainer style={{ width: " 30% " }}>
+      <MainContainer style={{ width: " 40% ", minWidth: "610px" }}>
         <Header title="送养" />
         <Divider variant="middle" sx={{ marginY: "15px" }} />
         <FormContainer>
