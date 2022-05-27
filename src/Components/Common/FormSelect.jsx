@@ -52,7 +52,7 @@ function FormSelect({ label, options, children, ...rest }) {
             <Wrapper>
                 <StyledSelect size="small" type="outlined" {...rest}>
                     {options.map(item => (
-                        <MenuItem value={item.value}> {item.name} </MenuItem>
+                        <MenuItem value={item.value} key={item.value}> {item.name} </MenuItem>
 
                     ))}
                 </StyledSelect>

@@ -16,6 +16,13 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormSelect from '../Components/Common/FormSelect';
 import ImageUpload from '../Components/Common/ImageUpload';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormRadio from '../Components/Common/FormRadio';
+
 const Container = styled.div`
     width: 100%;
     padding: 20px;
@@ -89,6 +96,7 @@ const validate = (e) => {
   if (!e.condition) {
     errors.condition = "不能为空"
   }
+  
 
 
   return errors
@@ -184,6 +192,13 @@ const inputData = [
     placeholder: "请输入领养要求，200字以内（必填）",
     multiline: true,
   },
+  {
+    name: "gender",
+    label: "性别",
+    radioOptions: [{label: "男", value: "male", name: "gender"}, 
+    {label: "女", value: "female", name: "gender"},
+    {label: "其他", value: "other", name: "gender"},]
+  }
 ]
 
 const PetForm = () => (
@@ -210,19 +225,36 @@ const PetForm = () => (
         }
 
         {
-          inputData.map(item => (
-            <Field
+          inputData.map((item, index) => (
+            !item.radioOptions? <Field
               name={item.name}
               required={true}
               key={item.name}
               render={({ input, meta }) => (
-                <FormInput label={item.label} placeholder={item.placeholder} multiline={item.multiline} rows={4} {...input} >
+                <FormInput 
+                label={item.label} 
+                placeholder={item.placeholder} 
+                multiline={item.multiline} 
+                rows={4} 
+                {...input} >
                   {meta.touched && meta.error && <span className="error">{meta.error}</span>}
                 </FormInput>
               )}
             />
+            :
+
+            <FormRadio label={item.label} radioOptions={item.radioOptions}/>
+
           ))
         }
+                {/* <Field
+          name={"images"}
+          render={({ input, meta }) => (
+            <input {...input}>
+              
+            </input>
+          )}
+        /> */}
         <Field
           name={"images"}
           render={({ input, meta }) => (

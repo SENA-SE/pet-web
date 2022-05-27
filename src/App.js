@@ -37,6 +37,8 @@ export default function App() {
           <Route path="/notice/:id" element={<NoticeDetail />}></Route>
           <Route path="/send" element={<SendPet />}></Route>
           <Route path="/user" element={<User />}></Route>
+          <Route path="/user/:title/:sub" element={<User />}></Route>
+
 
 
 
