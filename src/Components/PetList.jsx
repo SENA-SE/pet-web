@@ -158,7 +158,7 @@ const data = [
         id: "ee4"
     },
 ]
-function PetList({ category, filters, sort }) {
+function PetList({ category, filters, sort, ...rest }) {
     // console.log(category,filters,sort);
     const [pets, setPets] = useState([]);
     const [filteredPets, setFilteredPets] = useState([]);
@@ -204,7 +204,7 @@ function PetList({ category, filters, sort }) {
     //     }
     // }, [sort]);
     return (
-        <Container>
+        <Container {...rest}>
             {/* {category ? filteredProducts.map(item => (
                 <Product item={item} key={item.id}/>
             )) : products.slice(0, 10).map(item => (

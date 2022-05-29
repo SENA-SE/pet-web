@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import Divider from '@mui/material/Divider';
 import FilterHeader from '../Components/FilterHeader';
 import Paragraph from '../Components/Common/Paragraph';
-import Pagination from '../Components/Common/Pagination';
 import TextArea from '../Components/Common/TextArea';
 import Button from '../Components/Common/Button';
 import Header from '../Components/Common/Header';
@@ -96,18 +95,18 @@ const validate = (e) => {
   if (!e.condition) {
     errors.condition = "不能为空"
   }
-  
+
 
 
   return errors
 }
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+// const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-const save = async values => {
-  console.log('Saving', values)
-  await sleep(2000)
-}
+// const save = async values => {
+//   console.log('Saving', values)
+//   await sleep(2000)
+// }
 
 const selectData = [
   {
@@ -195,9 +194,9 @@ const inputData = [
   {
     name: "gender",
     label: "性别",
-    radioOptions: [{label: "男", value: "male", name: "gender"}, 
-    {label: "女", value: "female", name: "gender"},
-    {label: "其他", value: "other", name: "gender"},]
+    radioOptions: [{ label: "男", value: "male", name: "gender" },
+    { label: "女", value: "female", name: "gender" },
+    { label: "其他", value: "other", name: "gender" },]
   }
 ]
 
@@ -226,35 +225,27 @@ const PetForm = () => (
 
         {
           inputData.map((item, index) => (
-            !item.radioOptions? <Field
+            !item.radioOptions ? <Field
               name={item.name}
               required={true}
               key={item.name}
               render={({ input, meta }) => (
-                <FormInput 
-                label={item.label} 
-                placeholder={item.placeholder} 
-                multiline={item.multiline} 
-                rows={4} 
-                {...input} >
+                <FormInput
+                  label={item.label}
+                  placeholder={item.placeholder}
+                  multiline={item.multiline}
+                  rows={4}
+                  {...input} >
                   {meta.touched && meta.error && <span className="error">{meta.error}</span>}
                 </FormInput>
               )}
             />
-            :
+              :
 
-            <FormRadio label={item.label} radioOptions={item.radioOptions}/>
+              <FormRadio label={item.label} radioOptions={item.radioOptions} />
 
           ))
         }
-                {/* <Field
-          name={"images"}
-          render={({ input, meta }) => (
-            <input {...input}>
-              
-            </input>
-          )}
-        /> */}
         <Field
           name={"images"}
           render={({ input, meta }) => (

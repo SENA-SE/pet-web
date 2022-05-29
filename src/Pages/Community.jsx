@@ -12,7 +12,6 @@ import MainContainer from '../Components/Common/MainContainer'
 import FilterHeader from '../Components/FilterHeader';
 import PostName from '../Components/Common/PostInfo';
 import Paragraph from '../Components/Common/Paragraph';
-import Pagination from '../Components/Common/Pagination';
 import TextArea from '../Components/Common/TextArea';
 import Selector from '../Components/Common/Selector';
 import Button from '../Components/Common/Button';
@@ -203,7 +202,21 @@ export const Post = ({ data = { ...posts[0] } }) => {
         </>
     )
 }
+export const Comment = ({ header }) => {
 
+    return (
+        <MainContainer>
+            <FlexWrapper column>
+                {header && <FlexWrapper style={{ alignItems: 'center', justifyContent: 'space-between' }}>
+                    <h3>发帖</h3>
+                    <Selector data={tags} label={"话题"} noDefault />
+                </FlexWrapper>}
+                <TextArea />
+                <Button variants="secondary" style={{ alignSelf: 'flex-end', width: '200px' }}>提交</Button>
+            </FlexWrapper>
+        </MainContainer>
+    )
+}
 function Community() {
     return (
         <Container>
@@ -214,19 +227,10 @@ function Community() {
                     {posts.map(item =>
                         <Post data={item} />
                     )}
-                    <Pagination right path={"community"} />
+                    <PaginationLink right path={"community"} />
                 </PostsContainer>
             </MainContainer>
-            <MainContainer>
-                <FlexWrapper column>
-                    <FlexWrapper style={{ alignItems: 'center', justifyContent: 'space-between' }}>
-                        <h3>发帖</h3>
-                        <Selector data={tags} label={"话题"} noDefault />
-                    </FlexWrapper>
-                    <TextArea />
-                    <Button variants="secondary" style={{ alignSelf: 'flex-end', width: '200px' }}>提交</Button>
-                </FlexWrapper>
-            </MainContainer>
+            <Comment header/>
         </Container>
     )
 }

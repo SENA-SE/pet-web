@@ -7,7 +7,7 @@ import PetList from '../Components/PetList'
 import styled from 'styled-components'
 import Sidebar from '../Components/Sidebar'
 import PetsHeader from '../Components/FilterHeader'
-import Pagination from '../Components/Common/Pagination'
+import PaginationLink from '../Components/Common/Pagination'
 const Container = styled.div`
   width: 100%;
   display: flex;
@@ -27,7 +27,7 @@ function Adoption(props) {
       <ListContainer>
         <PetsHeader />
         <PetList />
-        <Pagination right sx={{ marginTop: '10px', marginRight: '15px' }} />
+        <PaginationLink right sx={{ marginTop: '10px', marginRight: '15px' }} />
       </ListContainer>
     </Container>
   )

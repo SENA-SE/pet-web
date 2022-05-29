@@ -62,10 +62,15 @@ const StyledInput = styled(TextField)`
     textarea::-ms-input-placeholder { 
         font-size: 16px;
     }
-
+    input[type="date"]::-webkit-datetime-edit {
+        user-select: none;
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        cursor: pointer;
+    }
 
 `
-function FormInput({ label, file, children, ...rest }) {
+function FormInput({ label, file, date, children, ...rest }) {
     // const [value, setValue] = React.useState("");
     // const handleNumber = (e) => {
     //     let numberVal = e.target.value.replace(/[^\d]/, '');
@@ -79,7 +84,8 @@ function FormInput({ label, file, children, ...rest }) {
             <Wrapper>
                 {file ? <ImageUpload {...rest} />
                     :
-                    <StyledInput size="small" type="outlined" {...rest}></StyledInput>
+                    <StyledInput size="small" type={date ? "date" : "outlined"} {...rest}>
+                    </StyledInput>
                 }
             </Wrapper>
             <Wrapper>

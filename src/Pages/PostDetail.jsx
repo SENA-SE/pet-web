@@ -6,7 +6,6 @@ import Divider from '@mui/material/Divider';
 import FilterHeader from '../Components/FilterHeader';
 import PostName from '../Components/Common/PostInfo';
 import Paragraph from '../Components/Common/Paragraph';
-import Pagination from '../Components/Common/Pagination';
 import TextArea from '../Components/Common/TextArea';
 import Selector from '../Components/Common/Selector';
 import Button from '../Components/Common/Button';
@@ -14,6 +13,8 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Header from '../Components/Common/Header';
 import PostInfo from '../Components/Common/PostInfo';
 import ViewInfo from '../Components/Common/ViewInfo';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { Comment as WriteComment } from './Community'
 const Container = styled.div`
     width: 100%;
     padding: 20px;
@@ -83,7 +84,8 @@ function PostDetail({ post = {
             <MainContainer >
                 <Wrapper>
                     <Header title={"查看帖子"} back>
-                        <div></div>
+                        <FavoriteIcon sx={{ cursor: 'pointer' }} />
+
                     </Header>
                     <Divider variant="middle" />
                     <PostInfo data={{ user: post.user, createdAt: post.createdAt }} />
@@ -104,8 +106,10 @@ function PostDetail({ post = {
                     {post.comments.map(item =>
                         <Comment comment={item} />
                     )}
+
                 </Wrapper>
             </MainContainer>
+            <WriteComment />
         </Container>
     )
 }

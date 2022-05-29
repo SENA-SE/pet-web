@@ -28,36 +28,6 @@ const PreviewContainer = styled.div`
     }
 `
 function ImageUpload({ ...rest }) {
-    //     const {
-    //         acceptedFiles,
-    //         fileRejections,
-    //         getRootProps,
-    //         getInputProps
-    //     } = useDropzone({
-    // accept: {
-    //     'image/jpeg': [],
-    //     'image/png': []
-    // }
-    //     });
-
-    //     const acceptedFileItems = acceptedFiles.map(file => (
-    //         // <li key={file.path}>
-    //         //     {file.path} - {file.size} bytes
-    //         // </li>
-    //         console.log(file)
-
-    //     ));
-
-    // const fileRejectionItems = fileRejections.map(({ file, errors }) => (
-    //     <li key={file.path}>
-    //         {file.path} - {file.size} bytes
-    //         <ul>
-    //             {errors.map(e => (
-    //                 <li key={e.code}>{e.message}</li>
-    //             ))}
-    //         </ul>
-    //     </li>
-    // ));
 
     const [selectedImages, setSelectedImages] = useState([])
     const onDrop = useCallback(acceptedFiles => {

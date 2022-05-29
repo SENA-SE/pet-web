@@ -11,18 +11,18 @@ const Container = styled.div`
     justify-content: space-between;
     align-items: center;
 `
-function Header({title="title", children, back, ...rest}) {
+function Header({ title = "title", children, back, ...rest }) {
   return (
     <Container {...rest}>
-{   back&&                         <ArrowBackIosIcon 
-color="secondary" 
-sx={{ cursor: 'pointer', fontSize: 25 }} 
-onClick={()=>window.history.back()}
-/>
-}
-                    <h3>{title}</h3>
-                    {children}
-        </Container>
+      {back && <ArrowBackIosIcon
+        color="secondary"
+        sx={{ cursor: 'pointer', fontSize: 25 }}
+        onClick={() => window.history.back()}
+      />
+      }
+      <h3>{title}</h3>
+      {children}
+    </Container>
 
   )
 }

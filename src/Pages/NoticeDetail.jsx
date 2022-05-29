@@ -6,7 +6,6 @@ import Divider from '@mui/material/Divider';
 import FilterHeader from '../Components/FilterHeader';
 import PostName from '../Components/Common/PostInfo';
 import Paragraph from '../Components/Common/Paragraph';
-import Pagination from '../Components/Common/Pagination';
 import TextArea from '../Components/Common/TextArea';
 import Selector from '../Components/Common/Selector';
 import Button from '../Components/Common/Button';

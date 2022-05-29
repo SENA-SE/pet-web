@@ -12,11 +12,22 @@ import Adoption from "./Pages/Adoption";
 import Navbar from "./Components/Navbar";
 import PetDetail from "./Pages/PetDetail";
 import Community from "./Pages/Community";
-import PostDetail from "./Pages/PostDetail"
+import PostDetail from "./Pages/PostDetail";
 import Notice from "./Pages/Notice";
 import NoticeDetail from "./Pages/NoticeDetail";
 import SendPet from "./Pages/SendPet";
 import User from "./Pages/User";
+import {
+  AdoptionRequest,
+  CommunityFavorite,
+  CommunityPost,
+  DataForm,
+  Identification,
+  KnowledgeFavorite,
+  PetsFavorite,
+  PetsSend,
+  SendPost,
+} from "./Pages/UserPanel";
 // TODO: 正则
 export default function App() {
   return (
@@ -36,11 +47,30 @@ export default function App() {
           <Route path="/notice" element={<Notice />}></Route>
           <Route path="/notice/:id" element={<NoticeDetail />}></Route>
           <Route path="/send" element={<SendPet />}></Route>
-          <Route path="/user" element={<User />}></Route>
-          <Route path="/user/:title/:sub" element={<User />}></Route>
-
-
-
+          <Route path="/user" element={<User />}>
+            <Route path="info/main" element={<DataForm />}></Route>
+            <Route
+              path="info/identification"
+              element={<Identification />}
+            ></Route>
+            <Route path="post/send" element={<SendPost />}></Route>
+            <Route path="post/community" element={<CommunityPost />}></Route>
+            <Route path="favorite/pets" element={<PetsFavorite />}></Route>
+            <Route
+              path="favorite/community"
+              element={<CommunityFavorite />}
+            ></Route>
+            <Route
+              path="favorite/knowledge"
+              element={<KnowledgeFavorite />}
+            ></Route>
+            <Route path="send/" element={<PetsSend />}></Route>
+            <Route
+              path="adoption/request"
+              element={<AdoptionRequest />}
+            ></Route>
+          </Route>
+          {/* <Route path="/user/:title/:sub" element={<User />}></Route> */}
 
           {/* <Route path="/products/:category" element={<ProductList />}></Route>
     <Route path="/product/:id" element={<SingleProduct />}></Route>
