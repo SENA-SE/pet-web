@@ -28,6 +28,8 @@ import {
   PetsSend,
   SendPost,
 } from "./Pages/UserPanel";
+import Knowledge from "./Pages/Knowledge";
+import KnowledgePostDetail from "./Pages/KnowledgePostDetail";
 // TODO: 正则
 export default function App() {
   return (
@@ -44,6 +46,9 @@ export default function App() {
           <Route path="/adoption/:id" element={<PetDetail />}></Route>
           <Route path="/community" element={<Community />}></Route>
           <Route path="/community/:id" element={<PostDetail />}></Route>
+          <Route path="/knowledge" element={<Knowledge />}></Route>
+          <Route path="/knowledge/:id" element={<KnowledgePostDetail />}></Route>
+
           <Route path="/notice" element={<Notice />}></Route>
           <Route path="/notice/:id" element={<NoticeDetail />}></Route>
           <Route path="/send" element={<SendPet />}></Route>

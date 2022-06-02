@@ -14,6 +14,7 @@ import PetList from '../Components/PetList';
 import PaginationLink from '../Components/Common/Pagination';
 import { Post } from './Community';
 import TabFilter from '../Components/Common/TabFilter';
+import { KnowledgePost } from './Knowledge';
 const Container = styled.div`
 
 `
@@ -310,8 +311,8 @@ export const KnowledgeFavorite = ({ data }) => {
                 <Header title={"科普"} />
                 <Divider sx={{ marginBottom: '15px' }} />
             </>
-            <Post />
-            <Post />
+            <KnowledgePost />
+            <KnowledgePost />
             <PaginationLink right sx={{ marginTop: '10px', marginRight: '15px' }} />
         </Container>
     )

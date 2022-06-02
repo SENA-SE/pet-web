@@ -16,6 +16,7 @@ import TextArea from '../Components/Common/TextArea';
 import Selector from '../Components/Common/Selector';
 import Button from '../Components/Common/Button';
 import PaginationLink from '../Components/Common/Pagination';
+import { Comment } from './Community';
 const Container = styled.div`
     width: 100%;
     padding: 20px;
@@ -51,24 +52,29 @@ const PostWrapper = styled.div`
 const tags = [
     {
         value: "search",
-        name: "#紧急寻宠"
+        name: "种类介绍"
     },
     {
         value: "question",
-        name: "#提问求助"
+        name: "日常饮食"
     },
     {
         value: "story",
-        name: "#萌宠故事"
+        name: "日常护理"
+    },
+    {
+        value: "train",
+        name: "行为训练"
     },
     {
         value: "others",
-        name: "#其他"
+        name: "其他"
     },];
 const posts = [
     {
         user: "用户名",
         createdAt: "05-11",
+        title: "标题-标题",
         content: "Nulla facilisi. Phasa facilisi. Phasellus sollicitudin . Aliquam eget icitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
         tag: "#紧急寻宠",
         id: "222",
@@ -79,6 +85,7 @@ const posts = [
     {
         user: "用户名",
         createdAt: "05-11",
+        title: "标题-标题",
         content: "Nulla facilisi. Phasellus sollicitudin nulsellus sollicitudin nulsellus sollicitudin nulsellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
         tag: "#提问求助",
         id: "22",
@@ -90,6 +97,7 @@ const posts = [
     {
         user: "用户名",
         createdAt: "05-11",
+        title: "标题-标题",
         content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
         tag: "#紧急寻宠",
         id: "222",
@@ -101,6 +109,7 @@ const posts = [
     {
         user: "用户名",
         createdAt: "05-11",
+        title: "标题-标题",
         content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
         tag: "#紧急寻宠",
         id: "222",
@@ -112,6 +121,7 @@ const posts = [
     {
         user: "用户名",
         createdAt: "05-11",
+        title: "标题-标题",
         content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
         tag: "#提问求助",
         id: "222",
@@ -123,6 +133,7 @@ const posts = [
     {
         user: "用户名",
         createdAt: "05-11",
+        title: "标题-标题",
         content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
         tag: "#紧急寻宠",
         id: "222",
@@ -134,6 +145,7 @@ const posts = [
     {
         user: "用户名",
         createdAt: "05-11",
+        title: "标题-标题",
         content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
         tag: "#提问求助",
         id: "222",
@@ -145,6 +157,7 @@ const posts = [
     {
         user: "用户名",
         createdAt: "05-11",
+        title: "标题-标题",
         content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
         tag: "#紧急寻宠",
         id: "222",
@@ -156,6 +169,7 @@ const posts = [
     {
         user: "用户名",
         createdAt: "05-11",
+        title: "标题-标题",
         content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
         tag: "#提问求助",
         id: "222",
@@ -167,6 +181,7 @@ const posts = [
     {
         user: "用户名",
         createdAt: "05-11",
+        title: "标题-标题",
         content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
         tag: "#紧急寻宠",
         id: "222",
@@ -178,6 +193,7 @@ const posts = [
     {
         user: "用户名",
         createdAt: "05-11",
+        title: "标题-标题",
         content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
         tag: "#提问求助",
         id: "222",
@@ -186,13 +202,15 @@ const posts = [
         comment: 25,
     },
 ]
-
-export const Post = ({ data = { ...posts[0] } }) => {
+const Title = styled.h3`
+    cursor: pointer;
+`
+export const KnowledgePost = ({ data = { ...posts[0] } }) => {
     return (
         <>
             <PostWrapper>
                 <Link to={data.id}>
-                    <PostName data={data} />
+                    <Title>{data.title}</Title>
                 </Link>
                 <Paragraph expand info={{ read: data.read, favorite: data.favorite, comment: data.comment }}>
                     {data.content}
@@ -202,22 +220,8 @@ export const Post = ({ data = { ...posts[0] } }) => {
         </>
     )
 }
-export const Comment = ({ header, data, label }) => {
 
-    return (
-        <MainContainer>
-            <FlexWrapper column>
-                {header && <FlexWrapper style={{ alignItems: 'center', justifyContent: 'space-between' }}>
-                    <h3>发帖</h3>
-                    <Selector data={data} label={label} noDefault />
-                </FlexWrapper>}
-                <TextArea />
-                <Button variants="secondary" style={{ alignSelf: 'flex-end', width: '200px' }}>提交</Button>
-            </FlexWrapper>
-        </MainContainer>
-    )
-}
-function Community() {
+function Knowledge() {
     return (
         <Container>
             <MainContainer>
@@ -225,14 +229,14 @@ function Community() {
                 <Divider variant="middle" sx={{ marginY: "15px" }} />
                 <PostsContainer>
                     {posts.map(item =>
-                        <Post data={item} />
+                        <KnowledgePost data={item} />
                     )}
-                    <PaginationLink right path={"community"} />
+                    <PaginationLink right path={"knowledge"} />
                 </PostsContainer>
             </MainContainer>
-            <Comment header label={"话题"} data={tags}/>
+            <Comment header label={"分类"} data={tags}/>
         </Container>
     )
 }
 
-export default Community
+export default Knowledge
