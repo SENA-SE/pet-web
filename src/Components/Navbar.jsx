@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import styled from 'styled-components'
@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import Logo from './Common/Logo';
 import Button from './Common/Button';
+import {useLocation} from 'react-router-dom';
 
 const Container = styled.div`
     width: 100vw;
@@ -53,11 +54,20 @@ function LinkTab({ href, ...rest }) {
 }
 
 export default function NavTabs() {
-    const [value, setValue] = React.useState(0);
-
+    const location = useLocation();
+    const tabKey = location.pathname.split('/')[1];
+    const idxArr = ["home", "adoption", "send", "knowledge", "community", "notice"]
+    const index = idxArr.indexOf(tabKey)
+    const [value, setValue] = useState(index);
+    useEffect(() => {
+        if(index === -1) {
+            setValue(0);
+        }
+    }, [index]);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
 
     return (
         <Container>
@@ -71,8 +81,8 @@ export default function NavTabs() {
                 <LinkTab label="公告" href="/notice" />
             </TabContainer>
             <ItemContainer>
-                <Button href="/user">登录</Button>
-                <Button href="/user" variants="secondary">注册</Button>
+                <Button href="/login">登录</Button>
+                <Button href="/register" variants="secondary">注册</Button>
             </ItemContainer>
         </Container>
     );

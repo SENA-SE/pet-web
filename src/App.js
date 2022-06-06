@@ -17,6 +17,8 @@ import Notice from "./Pages/Notice";
 import NoticeDetail from "./Pages/NoticeDetail";
 import SendPet from "./Pages/SendPet";
 import User from "./Pages/User";
+import Login from "./Pages/Login"
+import Register from "./Pages/Register";
 import {
   AdoptionRequest,
   CommunityFavorite,
@@ -30,8 +32,11 @@ import {
 } from "./Pages/UserPanel";
 import Knowledge from "./Pages/Knowledge";
 import KnowledgePostDetail from "./Pages/KnowledgePostDetail";
+import {useSelector} from 'react-redux';
 // TODO: 正则
 export default function App() {
+  const user = useSelector(state => state.user.currentUser);
+  const userLogin = user === null ? false : true;
   return (
     <>
       <GlobalStyle />
@@ -52,6 +57,8 @@ export default function App() {
           <Route path="/notice" element={<Notice />}></Route>
           <Route path="/notice/:id" element={<NoticeDetail />}></Route>
           <Route path="/send" element={<SendPet />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<Register />}></Route>
           <Route path="/user" element={<User />}>
             <Route path="info/main" element={<DataForm />}></Route>
             <Route

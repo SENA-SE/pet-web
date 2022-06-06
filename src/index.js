@@ -4,13 +4,21 @@ import CssBaseline from "@mui/material/CssBaseline";
 import App from "./App";
 import { ThemeProvider } from "styled-components";
 import Theme from "./Theme";
-import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from "./serviceWorker";
+import { Provider } from "react-redux";
+import { store, persistor } from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 ReactDOM.render(
   <React.Fragment>
     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
     <CssBaseline />
     <ThemeProvider theme={Theme}>
-      <App />
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
+      </Provider>
+      ,
     </ThemeProvider>
   </React.Fragment>,
   document.getElementById("root")

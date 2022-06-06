@@ -34,7 +34,12 @@ const StyledButton = styled(Button)`
    ${({ variants }) => typeVariants[variants]};
    ${({ size }) => sizeVariants[size]};
 
-    
+   &:disabled{
+    cursor:not-allowed;
+    color:teal;
+    background-color:white;
+    border:1px solid teal;
+}
     // transform: scale(1);
     // transition:.4s;
     // &:hover{
