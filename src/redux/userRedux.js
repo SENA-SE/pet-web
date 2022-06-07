@@ -15,6 +15,7 @@ const userRedux = createSlice({
         loginSuccess: (state, action) => {
             state.isFetching = false;
             state.currentUser = action.payload;
+            console.log(state.currentUser)
         },
         loginFailure: (state,action) => {
             state.isFetching = false;

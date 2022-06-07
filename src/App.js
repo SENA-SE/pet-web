@@ -51,8 +51,8 @@ export default function App() {
           <Route path="/adoption/:id" element={<PetDetail />}></Route>
           <Route path="/community" element={<Community />}></Route>
           <Route path="/community/:id" element={<PostDetail />}></Route>
-          <Route path="/knowledge" element={<Knowledge />}></Route>
-          <Route path="/knowledge/:id" element={<KnowledgePostDetail />}></Route>
+          {/* <Route path="/knowledge" element={<Knowledge />}></Route>
+          <Route path="/knowledge/:id" element={<KnowledgePostDetail />}></Route> */}
 
           <Route path="/notice" element={<Notice />}></Route>
           <Route path="/notice/:id" element={<NoticeDetail />}></Route>

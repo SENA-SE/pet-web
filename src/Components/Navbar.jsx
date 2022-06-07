@@ -56,9 +56,9 @@ function LinkTab({ href, ...rest }) {
 export default function NavTabs() {
     const location = useLocation();
     const tabKey = location.pathname.split('/')[1];
-    const idxArr = ["home", "adoption", "send", "knowledge", "community", "notice"]
+    const idxArr = ["home", "adoption", "send", "community", "notice"]
     const index = idxArr.indexOf(tabKey)
-    const [value, setValue] = useState(index);
+    const [value, setValue] = useState(index===-1 ? 0 : index);
     useEffect(() => {
         if(index === -1) {
             setValue(0);
@@ -76,7 +76,7 @@ export default function NavTabs() {
                 <LinkTab label="首页" href="/home" />
                 <LinkTab label="领养" href="/adoption" />
                 <LinkTab label="送养" href="/send" />
-                <LinkTab label="科普" href="/knowledge" />
+                {/* <LinkTab label="科普" href="/knowledge" /> */}
                 <LinkTab label="社区" href="/community" />
                 <LinkTab label="公告" href="/notice" />
             </TabContainer>

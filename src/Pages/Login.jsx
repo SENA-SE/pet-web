@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-// import {login} from '../redux/apiCalls';
+import {login} from '../redux/apiCalls';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../Components/Common/Button'
 import { Link } from 'react-router-dom';
@@ -79,7 +79,7 @@ const Error = styled.span`
     color:red;
 `
 export default function Login() {
-    const [username, setUsername] = useState('');
+    const [tel, setTel] = useState('');
     const [password, setPassword] = useState('');
     const focusFn = (e) => {
         e.target.classList.add('selected');
@@ -91,8 +91,8 @@ export default function Login() {
     const dispatch = useDispatch();
     const handleLogin = (e) => {
         e.preventDefault();
-        console.log(username, password)
-        // login(dispatch,{username,password})
+        console.log(tel, password)
+        login(dispatch,{tel,password})
     }
     const { isFetching, isError, message } = useSelector(state => state.user);
     return (
@@ -101,7 +101,7 @@ export default function Login() {
                 <Title>登录</Title>
                 {isError && <Error>{message}</Error>}
                 <Form>
-                    <Label for="username">用户名</Label><Input id="username" onFocus={focusFn} onBlur={blurFn} onChange={(e) => setUsername(e.target.value)} />
+                    <Label for="tel">手机号码</Label><Input id="tel" onFocus={focusFn} onBlur={blurFn} onChange={(e) => setTel(e.target.value)} />
                     <Label for="password">密码</Label><Input id="password" onFocus={focusFn} onBlur={blurFn} onChange={(e) => setPassword(e.target.value)} type="password" />
                     <Button onClick={handleLogin} disabled={isFetching} style={{ width: "100%" }}>登录</Button>
                     {/* <Link>DO NOT REMEMBER YOUR PASSWORD?</Link> */}
