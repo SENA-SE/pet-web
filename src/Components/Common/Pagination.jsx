@@ -22,7 +22,7 @@ function Content({ right, path="adoption", ...rest }) {
     <StyledPagination
       page={page}
       count={8}
-      right={right}
+      right={right.toString()}
       {...rest}
       renderItem={(item) => (
         <PaginationItem

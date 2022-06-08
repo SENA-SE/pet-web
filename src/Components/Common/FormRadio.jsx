@@ -36,8 +36,8 @@ const Wrapper = styled.div`
 
     }
 `
-function FormRadio({ label="label", radioOptions=[{label: "男", value: "male", name: "gender"}, 
-{label: "女", value: "female", name: "gender"},{label: "其他", value: "other", name: "gender"},], children, ...rest }) {
+function FormRadio({ label="label", radioOptions=[{label: "男", value: "male", name: "sex"}, 
+{label: "女", value: "female", name: "sex"},{label: "其他", value: "other", name: "sex"},], children, ...rest }) {
   return (
     <Container>
     <Wrapper>

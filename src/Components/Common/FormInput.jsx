@@ -43,6 +43,9 @@ const StyledInput = styled(TextField)`
             border: 1px solid ${({ theme }) => theme.palette.primary.main};
         }
     }
+    input, textarea {
+        font-size: 16px;
+    }
     input::-webkit-input-placeholder { 
         font-size: 16px;
     }

@@ -12,7 +12,7 @@ import {
 import Logo from './Common/Logo';
 import Button from './Common/Button';
 import {useLocation} from 'react-router-dom';
-
+import {useSelector} from 'react-redux';
 const Container = styled.div`
     width: 100vw;
     height: 10vh;
@@ -68,7 +68,8 @@ export default function NavTabs() {
         setValue(newValue);
     };
 
-
+    const user = useSelector(state => state.user.currentUser);
+    const userLogin = user === null ? false : true;
     return (
         <Container>
             <Logo style={{flex: 1}} />
@@ -81,8 +82,17 @@ export default function NavTabs() {
                 <LinkTab label="公告" href="/notice" />
             </TabContainer>
             <ItemContainer>
-                <Button href="/login">登录</Button>
+                {userLogin ? 
+                <Button href="/user" variants="secondary" style={{width: "initial"}}>{user.username}</Button>
+                :
+              <>
+                              <Button href="/login">登录</Button>
                 <Button href="/register" variants="secondary">注册</Button>
+              </>  
+                }
+
+                
+                
             </ItemContainer>
         </Container>
     );

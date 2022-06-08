@@ -55,7 +55,7 @@ export default function TabFilter({ filters = [
       {...rest}
     >
       {filters.map(item =>
-        <StyledTab value={item.value} label={item.name} />
+        <StyledTab value={item.value} label={item.name} key={item.value}/>
       )}
     </StyledTabs>
   );

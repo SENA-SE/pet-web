@@ -24,7 +24,7 @@ import {
   CommunityFavorite,
   CommunityPost,
   DataForm,
-  Identification,
+  LogOut,
   KnowledgeFavorite,
   PetsFavorite,
   PetsSend,
@@ -37,6 +37,7 @@ import {useSelector} from 'react-redux';
 export default function App() {
   const user = useSelector(state => state.user.currentUser);
   const userLogin = user === null ? false : true;
+  console.log(userLogin)
   return (
     <>
       <GlobalStyle />
@@ -57,13 +58,13 @@ export default function App() {
           <Route path="/notice" element={<Notice />}></Route>
           <Route path="/notice/:id" element={<NoticeDetail />}></Route>
           <Route path="/send" element={<SendPet />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="/user" element={<User />}>
+          <Route path="/login" element={userLogin? <Navigate to="/"/> : <Login />}></Route>
+          <Route path="/register" element={userLogin? <Navigate to="/"/> : <Register />}></Route>
+          <Route path="/user" element={userLogin? <User user={user}/> : <Navigate to="/"/>}>
             <Route path="info/main" element={<DataForm />}></Route>
             <Route
-              path="info/identification"
-              element={<Identification />}
+              path="info/logout"
+              element={<LogOut />}
             ></Route>
             <Route path="post/send" element={<SendPost />}></Route>
             <Route path="post/community" element={<CommunityPost />}></Route>

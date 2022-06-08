@@ -10,7 +10,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Outlet } from 'react-router-dom';
 import {userRequest} from '../requestMethods';
-
+import {useSelector} from 'react-redux';
 const Container = styled.div`
     width: 100%;
     padding: 20px;
@@ -52,6 +52,13 @@ const IconContainer = styled.div`
     border-radius: 50%;
     background-color: ${({ theme }) => theme.status.bg2}; 
     margin-top: 30px;
+    overflow: hidden;
+
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
 `
 const MenuItem = ({ title = "个人资料", options = [{ name: "已申请", path: "/info" }] }) => {
 
@@ -84,10 +91,10 @@ const MenuItem = ({ title = "个人资料", options = [{ name: "已申请", path
     );
 }
 
-const MenuList = ({ data = [
+const MenuList = ({user, data = [
     {
         title: "个人资料",
-        options: [{ name: "基本资料", path: "/info/main" }, { name: "实名认证", path: "/info/identification" }]
+        options: [{ name: "基本资料", path: "/info/main" }, { name: "退出登陆", path: "/info/logout" }]
     },
     {
         title: "发布内容",
@@ -111,11 +118,10 @@ const MenuList = ({ data = [
         ]
     },
 ], ...rest }) => {
-
     return (
         <ListContainer>
             <IconContainer>
-
+                <img src={user.user.avatar} />
             </IconContainer>
             <List
                 sx={{ width: '100%', maxWidth: 360, minHeight: '30vh', bgcolor: 'background.paper' }}
@@ -133,16 +139,15 @@ const MenuList = ({ data = [
     )
 }
 
-function User() {
-
+function User(user) {
     return (
         <Container>
             <Wrapper>
                 <Left>
-                    <MenuList />
+                    <MenuList user={user}/>
                 </Left>
                 <Right>
-                    <Outlet />
+                    <Outlet user={user}/>
                 </Right>
             </Wrapper>
         </Container>

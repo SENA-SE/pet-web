@@ -7,7 +7,7 @@ export const login = async (dispatch, userForm) => {
         const {tel, password} = userForm
         const res = await publicRequest.get(`/login/login?password=${password}&tel=${tel}`);
         if(res.data.code === 200) {
-            dispatch(loginSuccess(res.data));
+            dispatch(loginSuccess(res.data.data.user));
         } else {
             throw new Error(res.data.data)
         }

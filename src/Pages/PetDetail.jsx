@@ -105,8 +105,8 @@ function PetDetail({ data = {
                     <FlexWrapper style={{ width: "100%", justifyContent: "space-between" }}>
                         <PetInfo data={{ age: data.age, species: data.species, gender: data.gender }} style={{ fontSize: "20px" }} />
                         <FlexWrapper>                       {
-                            Object.keys(data.status).map((key) => {
-                                return <Status confirm={data.status[key] && true}>{key}</Status>
+                            Object.keys(data.status).map((key, index) => {
+                                return <Status confirm={data.status[key] && true} key={index}>{key}</Status>
                             })
                         }</FlexWrapper>
                     </FlexWrapper>
