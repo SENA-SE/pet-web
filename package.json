@@ -44,6 +44,7 @@
       "last 1 safari version"
     ]
   },
+  "proxy": "http://cyjspace.5gzvip.91tunnel.com:80",
   "devDependencies": {
     "@craco/craco": "latest"
   }

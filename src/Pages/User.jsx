@@ -9,6 +9,8 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Outlet } from 'react-router-dom';
+import {userRequest} from '../requestMethods';
+
 const Container = styled.div`
     width: 100%;
     padding: 20px;
@@ -132,6 +134,7 @@ const MenuList = ({ data = [
 }
 
 function User() {
+
     return (
         <Container>
             <Wrapper>
