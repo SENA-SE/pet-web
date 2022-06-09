@@ -27,7 +27,7 @@ function PostName({data}) {
         <Container>
             <AccountCircleIcon sx={{ fontSize: 60 }} color='secondary' />
             <InfoContainer>
-                <Name>{data.username}</Name>
+                <Name>{data?.username}</Name>
                 <Time>{data.createTime}</Time>
             </InfoContainer>
         </Container>

@@ -179,7 +179,6 @@ export const DataForm = () => {
                 const update = await userRequest.post(`/update`, e);
                 const newInfo = await userRequest.post('/information');
 
-            console.log(newInfo)
                 dispatch(loginSuccess({...newInfo.data.data, token: TOKEN}));
                 setAlert({on: true, content: "修改成功", type:"success"})
                 setTimeout(() => setAlert({on: false}), 3000)
@@ -316,38 +315,6 @@ export const DataForm = () => {
         </Container>
     )
 };
-// export const Identification = ({ data = { name: "李刚", idNum: "350*******0000", phone: "135****4332", time: "2002-05-02" } }) => (
-//     <Container>
-//         <>
-//             <Header title={"实名认证"} />
-//             <Divider sx={{ marginBottom: '15px' }} />
-//         </>
-//         <FormContainer>
-//             <StyledForm>
-//                 <FormInput
-//                     label={"昵称"}
-//                     value={data.name}
-//                     disabled >
-//                 </FormInput>
-//                 <FormInput
-//                     label={"身份证号"}
-//                     value={data.idNum}
-//                     disabled >
-//                 </FormInput>
-//                 <FormInput
-//                     label={"手机号"}
-//                     value={data.phone}
-//                     disabled >
-//                 </FormInput>
-//                 <FormInput
-//                     label={"认证时间"}
-//                     value={data.time}
-//                     disabled >
-//                 </FormInput>
-//             </StyledForm>
-//         </FormContainer>
-//     </Container>
-// );
 
 export const LogOut = () => {
     const dispatch = useDispatch();
@@ -401,16 +368,36 @@ export const PetsFavorite = ({ data }) => {
     )
 }
 
-export const CommunityFavorite = ({ data }) => {
+export const CommunityFavorite = () => {
+    const user = useSelector(state => state.user.currentUser);
+const [posts, setPosts] = useState([])
+    const getPosts = async () => {
+        try {
+            if(user) {
+                const TOKEN = user.token;
+                const userRequest = axios.create({
+                    baseURL: 'http://cyjspace.5gzvip.91tunnel.com:80',
+                    headers:{token:`${TOKEN}`}
+                });
+            const res = await userRequest.post(`/post/findMyLike?categoriesId=-1&page=1&pageSize=1000`)
+            setPosts(res.data.data)
+            } 
+        } catch (e) {
+            console.log(e)
+        }
+        
+ }   
+ getPosts()
     return (
         <Container>
             <>
                 <Header title={"社区"} />
                 <Divider sx={{ marginBottom: '15px' }} />
             </>
-            <Post />
-            <Post />
-            <PaginationLink right sx={{ marginTop: '10px', marginRight: '15px' }} />
+            {posts.map(item => 
+                <Post data={item}/>
+                )}
+            {/* <PaginationLink right sx={{ marginTop: '10px', marginRight: '15px' }} pages={pages} /> */}
         </Container>
     )
 }

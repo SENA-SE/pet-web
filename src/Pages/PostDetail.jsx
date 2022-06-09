@@ -1,15 +1,14 @@
-import React from 'react'
-import MainContainer from '../Components/Common/MainContainer'
-import { Link } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components'
+import MainContainer from '../Components/Common/MainContainer'
+
 import Divider from '@mui/material/Divider';
-import FilterHeader from '../Components/FilterHeader';
-import PostName from '../Components/Common/PostInfo';
-import Paragraph from '../Components/Common/Paragraph';
-import TextArea from '../Components/Common/TextArea';
-import Selector from '../Components/Common/Selector';
-import Button from '../Components/Common/Button';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import {publicRequest} from '../requestMethods';
+import {useDispatch, useSelector} from 'react-redux';
+import RequestNotification from '../Components/Common/RequestNotification';
+import axios from 'axios';
+import { Link, MemoryRouter, Route, Routes, useLocation, useParams } from 'react-router-dom';
+
 import Header from '../Components/Common/Header';
 import PostInfo from '../Components/Common/PostInfo';
 import ViewInfo from '../Components/Common/ViewInfo';
@@ -36,10 +35,9 @@ const Wrapper = styled.div`
 `
 
 const Comment = ({ comment }) => {
-
     return (
         <Wrapper>
-            <PostInfo data={{ user: comment.user, createdAt: comment.createdAt }} />
+            <PostInfo data={comment} />
             <p>{comment.content}</p>
             <Divider variant="middle" />
 
@@ -56,60 +54,79 @@ const Comment = ({ comment }) => {
 
 //发送请求请求data
 
-function PostDetail({ post = {
-    user: "用户名",
-    createdAt: "2002-05",
-    content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
-
-    read: 100,
-    favorite: 50,
-    comment: 25,
-    tag: "#提问求助",
-    id: "222",
-    comments: [
-        {
-            user: "用户名2",
-            createdAt: "2天前",
-            content: "评论内容2"
-        },
-        {
-            user: "用户名3",
-            createdAt: "3天前",
-            content: "评论内容3"
+function PostDetail() {
+    const {id} = useParams()
+    const [post, setPost] = useState([])
+    const [comments, setComments] = useState([])
+    useEffect(() => {
+        const getPost = async () => {
+            const res = await publicRequest.post(`/post/findById?id=${id}`); 
+            await publicRequest.post(`/post/hit?postId=${id}`);
+            // console.log(res.data.data)
+           setPost(res.data.data)
         }
-    ]
-} }) {
-    return (
+        const getComments = async () => {
+        try {
+            const res = await publicRequest.post(`/comment/findComment?postId=${id}`); 
+            setComments(res.data.data)
+        } catch (e) {
+            console.log(e)
+        }
+    };
+    getPost();
+    getComments();
+}, [id]);
+const user = useSelector(state => state.user.currentUser);
+const [like, setLike] = useState("1")
+    const handleLike = async () => {
+        try {
+            if(user) {
+                const TOKEN = user.token;
+                const userRequest = axios.create({
+                    baseURL: 'http://cyjspace.5gzvip.91tunnel.com:80',
+                    headers:{token:`${TOKEN}`}
+                });
+            const res = await userRequest.post(`/post/like?postId=${id}&like=${like}`); 
+            // const test = await userRequest.post(`/post/findMyLike?categoriesId=-1&page=1&pageSize=10`)
+            setLike(like==="1"? "0" : "1")
+            // console.log(res)
+            } 
+        } catch (e) {
+            console.log(e)
+        }
+        
+ }   
+  return (
         <Container>
             <MainContainer >
                 <Wrapper>
                     <Header title={"查看帖子"} back>
-                        <FavoriteIcon sx={{ cursor: 'pointer' }} />
+                        {user? <FavoriteIcon sx={{ cursor: 'pointer' }} color={like==="1" ? "gray" : "primary"} onClick={handleLike}/> : <></>}
 
                     </Header>
                     <Divider variant="middle" />
-                    <PostInfo data={{ user: post.user, createdAt: post.createdAt }} />
+                    <PostInfo data={post} />
                     <p>{post.content}</p>
                     <ViewInfo
-                        data={{ read: post.read, favorite: post.favorite, comment: post.comment }}
+                        data={{ read: post.hitCount, favorite: post.likeCount, comment: comments.length }}
                         style={{ alignSelf: 'flex-start', marginLeft: '10px' }}
                     />
                 </Wrapper>
             </MainContainer>
             <MainContainer>
                 <Wrapper>
-                    <Header title={`评论 (${post.comments.length})`}>
+                    <Header title={`评论 (${comments.length})`}>
                     </Header>
                     <Divider variant="middle" />
 
 
-                    {post.comments.map(item =>
-                        <Comment comment={item} />
+                    {comments.map(item =>
+                        <Comment comment={item} key={item.id}/>
                     )}
 
                 </Wrapper>
             </MainContainer>
-            <WriteComment />
+            <WriteComment postId={id}/>
         </Container>
     )
 }

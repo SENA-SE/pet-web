@@ -79,7 +79,7 @@ export default function NavTabs() {
                 <LinkTab label="送养" href="/send" />
                 {/* <LinkTab label="科普" href="/knowledge" /> */}
                 <LinkTab label="社区" href="/community?category=1" />
-                <LinkTab label="公告" href="/notice" />
+                <LinkTab label="公告" href="/notice?category=0" />
             </TabContainer>
             <ItemContainer>
                 {userLogin ? 

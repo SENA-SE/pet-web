@@ -1,6 +1,5 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react';
 import MainContainer from '../Components/Common/MainContainer'
-import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import Divider from '@mui/material/Divider';
 import FilterHeader from '../Components/FilterHeader';
@@ -13,6 +12,13 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Header from '../Components/Common/Header';
 import PostInfo from '../Components/Common/PostInfo';
 import ViewInfo from '../Components/Common/ViewInfo';
+
+import {publicRequest} from '../requestMethods';
+import {useDispatch, useSelector} from 'react-redux';
+import RequestNotification from '../Components/Common/RequestNotification';
+import axios from 'axios';
+import { Link, MemoryRouter, Route, Routes, useLocation, useParams } from 'react-router-dom';
+
 const Container = styled.div`
     width: 100%;
     padding: 20px;
@@ -46,30 +52,32 @@ const ContentWrapper = styled.div`
 
 // useEffect path依赖更改时发送请求请求data
 
-function NoticeDetail({ post = {
-    id: "222",
-    title: "标题",
-    createdAt: "2002-05",
-    content: "Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
-} }) {
+function NoticeDetail() {
+    const {id} = useParams()
+    const [notice, setNotice] = useState([])
+    useEffect(() => {
+        const getNotice = async () => {
+            const res = await publicRequest.post(`/notice/findById?id=${id}`); 
+            console.log(res.data.data)
+           setNotice(res.data.data)
+        };
+    getNotice()
+}, [id]);
     return (
         <Container>
             <MainContainer style={{ minHeight: "50vh" }}>
                 <Wrapper>
-                    <Header title={post.title} back>
+                    <Header title={notice.title} back>
                         <div></div>
                     </Header>
                     <Divider variant="middle" />
 
                     <ContentWrapper>
-                        <span>发布时间：{post.createdAt}</span>
-                        <p>{post.content}</p>
+                        <span>发布时间：{notice.createTime}</span>
+                        <p>{notice.content}</p>
                     </ContentWrapper>
-                    {/* <ViewInfo 
-                data={{read: post.read, favorite: post.favorite, comment: post.comment}}
-                style={{alignSelf: 'flex-start', marginLeft: '10px'}}
-                /> */}
-                </Wrapper>
+
+                </Wrapper> 
             </MainContainer>
         </Container>
     )

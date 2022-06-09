@@ -78,7 +78,7 @@ export const Post = ({ data }) => {
     return (
         <>
             <PostWrapper>
-                <Link to={data.id}>
+                <Link to={`/community/${data.id}`}>
                     <PostName data={data} />
                 </Link>
                 <Paragraph expand info={{ read: data.hitCount, favorite: data.likeCount, comment: data.commentCount }}>
@@ -89,8 +89,8 @@ export const Post = ({ data }) => {
         </>
     )
 }
-export const Comment = ({ header, data, label }) => {
-    const [postCategory, setPostCategory] = useState("")
+export const Comment = ({ header, data, label, postId }) => {
+    const [postCategory, setPostCategory] = useState("1")
     const [postContent, setPostContent] = useState("")
     const user = useSelector(state => state.user.currentUser);
     const [alert, setAlert] = useState({on: false})
@@ -103,14 +103,19 @@ export const Comment = ({ header, data, label }) => {
                 baseURL: 'http://cyjspace.5gzvip.91tunnel.com:80',
                 headers:{token:`${TOKEN}`}
             });
-            if(postCategory === "" || postContent==="") {
-                throw new Error("请选择话题并填写内容")
+            if(postContent==="") {
+                throw new Error("请填写内容")
                } 
-            const post = {categoriesId: postCategory, content: postContent}
+            if(header) {
+                const post = {categoriesId: postCategory, content: postContent}
             const res = await userRequest.post(`/post/add`, post);
+            } else {
+                const postComment = {postId, content: postContent}
+                const res = await userRequest.post(`/comment/add`, postComment);
+                console.log(res)
+            }
             setAlert({on: true, content: "发布成功", type:"success"})
             setTimeout(() => setAlert({on: false}), 3000)
-                    console.log(res)
            } 
            else {
                throw new Error("请先登录")
@@ -144,29 +149,29 @@ export const Comment = ({ header, data, label }) => {
 function Community({search, sort}) {
     const [posts, setPosts] = useState([]);
     const [pages, setPages] = useState(1);
-    const [keyword, setKeyWord] = useState("")
-    console.log(keyword)
+    // const [keyword, setKeyWord] = useState("")
+    // console.log(keyword)
     const location = useLocation();
     const query = new URLSearchParams(location.search);
     const page = parseInt(query.get('page') || '1', 10);
     const category = parseInt(query.get('category') || '1', 10);
-    const [filteredPosts, setFilteredPosts] = useState([]);
     useEffect(() => {
         const getPosts = async () => {
         try {
-        const res = await publicRequest.post(`/post/findPost?categoriesId=${category}&page=${page}&pageSize=10&keyword=${keyword}`)
+        const res = await publicRequest.post(`/post/findPost?categoriesId=${category}&page=${page}&pageSize=10`)
+        const getAll = await publicRequest.post(`/post/findPost?categoriesId=${category}&page=1&pageSize=50`)
             setPosts(res.data.data)
-            setPages(parseInt(res.data.data.length / 10))
+            setPages(Math.ceil(getAll.data.data.length / 10))
         } catch (e) {
             console.log(e)
         }
     };
     getPosts();
-}, [category, keyword]);
+}, [category, page]);
     return (
         <Container>
             <MainContainer>
-                <FilterHeader tabData={tags} setKeyWord={setKeyWord} />
+                <FilterHeader filter={false} tabData={tags}  />
                 <Divider variant="middle" sx={{ marginY: "15px" }} />
                 <PostsContainer>
                     {posts.map(item =>

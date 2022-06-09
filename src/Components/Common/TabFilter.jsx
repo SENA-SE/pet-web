@@ -48,7 +48,7 @@ export default function TabFilter({ filters = [
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const category = query.get('category');
-  const [value, setValue] = useState(category);
+  const [value, setValue] = useState(category || "0");
   const navigate = useNavigate();
   useEffect(() => {
     setValue(category);

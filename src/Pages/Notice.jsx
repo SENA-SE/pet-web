@@ -1,13 +1,16 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react';
 import MainContainer from '../Components/Common/MainContainer'
-import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import Divider from '@mui/material/Divider';
 import FilterHeader from '../Components/FilterHeader';
 import Paragraph from '../Components/Common/Paragraph';
 import PaginationLink from '../Components/Common/Pagination';
 import TabFilter from '../Components/Common/TabFilter';
-
+import {publicRequest} from '../requestMethods';
+import {useDispatch, useSelector} from 'react-redux';
+import RequestNotification from '../Components/Common/RequestNotification';
+import axios from 'axios';
+import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 const Container = styled.div`
     width: 100%;
     padding: 20px;
@@ -41,40 +44,40 @@ const FlexWrapper = styled.div`
 `;
 const filters = [
     {
-        value: "announcement",
+        value: "0",
         name: "全部公告"
     },
     {
-        value: "volunteer",
+        value: "1",
         name: "志愿服务"
     },
     {
-        value: "rescueStation",
+        value: "2",
         name: "救助基地"
     },
 ];
-const notices = [
-    {
-        id: "1",
-        title: "标题标题",
-        content: "Nulla facilisi. Phasellus sollicitudin nulsellus sollicitudin nulsellus sollicitudin nulsellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
-        createdAt: "2001-01-08"
-    },
-    {
-        id: "122",
-        title: "标题2",
-        content: "Nulla facilisi. Phasellus sollicitudin nulsellus sollicitudin nulsellus sollicitudin nulsellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
-        createdAt: "2001-01-08"
-    },
-    {
-        id: "133",
-        title: "标题3",
-        content: "Nulla facilisi. Phasellus sollicitudin nulsellus sollicitudin nulsellus sollicitudin nulsellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget maximus est, id dignissim quam.",
-        createdAt: "2001-01-30"
-    },
-]
+
 // useEffect path改变时获取数据
 function Notice() {
+    const location = useLocation();
+    const query = new URLSearchParams(location.search);
+    const page = parseInt(query.get('page') || '1', 10);
+    const category = parseInt(query.get('category') || '1', 10);
+    const [notices, setNotices] = useState([])
+    const [pages, setPages] = useState(1);
+    useEffect(() => {
+        const getNotice = async () => {
+        try {
+        const res = await publicRequest.post(`/notice/findNotice?${category===0 ? "" : `categoriesId=${category}&`}page=${page}&pageSize=5`)
+        const getAll = await publicRequest.post(`/notice/findNotice?${category===0 ? "" : `categoriesId=${category}&`}page=1&pageSize=100`)
+        setNotices(res.data.data)
+            setPages(Math.ceil(getAll.data.data.length / 5))
+        } catch (e) {
+            console.log(e)
+        }
+    };
+    getNotice();
+}, [category, page]);
     return (
         <Container>
             <MainContainer>
@@ -83,7 +86,7 @@ function Notice() {
                 <NoticeContainer>
                     {notices.map(item =>
                         <>
-                            <Link to={item.id}>
+                            <Link to={`/notice/${item.id}`}>
                                 <NoticeWrapper>
                                     <h3>{item.title}</h3>
                                     {/* <Paragraph info={{read: item.read, favorite: item.favorite, comment: item.comment}}>
@@ -93,7 +96,7 @@ function Notice() {
                                         {item.content}
                                     </Paragraph>
                                     <FlexWrapper>
-                                        <span>发布时间：{item.createdAt}</span>
+                                        <span>发布时间：{item.createTime}</span>
                                     </FlexWrapper>
                                 </NoticeWrapper>
                             </Link>
@@ -102,7 +105,7 @@ function Notice() {
                     )}
 
                 </NoticeContainer>
-                <PaginationLink right  path={"notice"}/>
+                <PaginationLink right path={"notice"} pages={pages}/>
             </MainContainer>
 
         </Container>
