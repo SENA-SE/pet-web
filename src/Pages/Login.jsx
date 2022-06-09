@@ -76,7 +76,9 @@ const StyledLink = styled.a`
 `;
 const Error = styled.span`
     margin-top:10px;
-    color:red;
+    color: #b30d0d;
+    font-size: 16px;
+    font-weight: 600;
 `
 export default function Login() {
     const [tel, setTel] = useState('');
@@ -91,7 +93,7 @@ export default function Login() {
     const dispatch = useDispatch();
     const handleLogin = (e) => {
         e.preventDefault();
-        console.log(tel, password)
+        // console.log(tel, password)
         login(dispatch,{tel,password})
     }
     const { isFetching, isError, message } = useSelector(state => state.user);
@@ -105,9 +107,10 @@ export default function Login() {
                     <Label for="password">密码</Label><Input id="password" onFocus={focusFn} onBlur={blurFn} onChange={(e) => setPassword(e.target.value)} type="password" />
                     <Button onClick={handleLogin} disabled={isFetching} style={{ width: "100%" }}>登录</Button>
                     {/* <Link>DO NOT REMEMBER YOUR PASSWORD?</Link> */}
-                    <Link to={"/register"}>
+                    <Link to={"/register"} style={{fontSize: "16px", marginTop: "10px"}}>
+                        没有账号？
                         <StyledLink>
-                            注册账号
+                            注册一个
                         </StyledLink>
                     </Link>
                 </Form>

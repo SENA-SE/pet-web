@@ -57,7 +57,7 @@ export default function App() {
 
           <Route path="/notice" element={<Notice />}></Route>
           <Route path="/notice/:id" element={<NoticeDetail />}></Route>
-          <Route path="/send" element={<SendPet />}></Route>
+          <Route path="/send" element={userLogin? <SendPet /> : <Navigate to="/login"/>}></Route>
           <Route path="/login" element={userLogin? <Navigate to="/"/> : <Login />}></Route>
           <Route path="/register" element={userLogin? <Navigate to="/"/> : <Register />}></Route>
           <Route path="/user" element={userLogin? <User user={user}/> : <Navigate to="/"/>}>

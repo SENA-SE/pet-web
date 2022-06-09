@@ -1,5 +1,6 @@
 import {loginStart, loginSuccess, loginFailure} from './userRedux';
 import {publicRequest} from '../requestMethods';
+import {registerStart, registerSuccess, registerFailure} from './registerRedux';
 
 export const login = async (dispatch, userForm) => {
     dispatch(loginStart());
@@ -7,7 +8,7 @@ export const login = async (dispatch, userForm) => {
         const {tel, password} = userForm
         const res = await publicRequest.get(`/login/login?password=${password}&tel=${tel}`);
         if(res.data.code === 200) {
-            dispatch(loginSuccess(res.data.data.user));
+            dispatch(loginSuccess({...res.data.data.user, token: res.data.data.token}));
         } else {
             throw new Error(res.data.data)
         }
@@ -43,3 +44,21 @@ export const login = async (dispatch, userForm) => {
 //            console.log(err)
 //        })
 };
+
+export const register = async (dispatch, userForm) => {
+    dispatch(registerStart());
+    try {
+        const {tel, password} = userForm
+        const res = await publicRequest.post(`/login/register?password=${password}&tel=${tel}`);
+        console.log(res)
+        if(res.data.code === 200) {
+            dispatch(registerSuccess(res.data));
+        } else {
+            throw new Error(res.data.msg)
+        }
+    } catch (e) {
+        // dispatch(loginFailure(e.response.data.msg));
+        // console.log(e.response.data.msg);
+        dispatch(registerFailure(e.message+", 请重试"));
+    }
+}

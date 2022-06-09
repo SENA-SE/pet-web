@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Form, Field } from 'react-final-form'
 import Button from '../Components/Common/Button'
+import {publicRequest} from '../requestMethods'
+import {login} from '../redux/apiCalls';
+import { useDispatch, useSelector } from 'react-redux';
+import {register} from '../redux/apiCalls';
+
 const Container = styled.div`
     width:100vw;
     height:100vh;
@@ -55,31 +60,13 @@ const Agreement = styled.div`
     font-size:15px;
     margin:20px 0;
 `;
+const Error = styled.span`
+    margin-top:10px;
+    color: #b30d0d;
+    font-size: 16px;
+    font-weight: 600;
+`
 
-const onSubmit = (e) => {
-    console.log(e)
-}
-
-const validate = (e) => {
-    const errors = {}
-    if(!e.userName) {
-        errors.userName = "不能为空"
-    }
-    if(!e.password) {
-        errors.password = "不能为空"
-    }
-    if(!e.confirm) {
-        errors.confirm = "不能为空"
-    }
-
-    if(e.password !== e.confirm) {
-        errors.confirm = "前后密码不一致"
-    }
-    return errors
-}
-const initialData = {
-    
-}
 export default function Register() {
     const focusFn = (e) => {
         e.target.classList.add('selected');
@@ -87,11 +74,54 @@ export default function Register() {
     const blurFn = (e) => {
         e.target.classList.remove('selected');
     }
-
+    const dispatch = useDispatch();
+    const { isFetching, isError, message } = useSelector(state => state.register);
+    const onSubmit = async (e) => {
+        try {
+            // console.log(e)
+            const {tel, password} = e
+            register(dispatch,{tel,password})
+            .then(() => login(dispatch,{tel, password}))
+                // setAlert({on: true, content: "修改成功", type:"success"})
+                // setTimeout(() => setAlert({on: false}), 3000)
+        } catch (e) {
+            // setAlert({on: true, content: "修改失败，请重试", type:"error"})
+            //     setTimeout(() => setAlert({on: false}), 3000)
+            console.log(e)
+    
+        } finally {
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+        }
+    
+    }
+    
+    const validate = (e) => {
+        const errors = {}
+        if(!e.tel) {
+            errors.tel = "不能为空"
+        }
+        if(!e.password) {
+            errors.password = "不能为空"
+        }
+        if(!e.confirm) {
+            errors.confirm = "不能为空"
+        }
+        if(e?.password?.length < 8) {
+            errors.password = "密码长度应大于8位"
+        } 
+        if(e.password !== e.confirm) {
+            errors.confirm = "前后密码不一致"
+        }
+        return errors
+    }
+    const initialData = {
+        
+    }
     return (
         <Container>
             <Wrapper>
                 <Title>注册</Title>
+                {isError && <Error>{message}</Error>}
                 <Form
                     onSubmit={onSubmit}
                     validate={validate}
@@ -100,13 +130,13 @@ export default function Register() {
                         <StyledForm onSubmit={handleSubmit}>
 
                             <Field
-                                name={"userName"}
+                                name={"tel"}
                                 required={true}
-                                key={"userName"}
+                                key={"tel"}
                                 render={({ input, meta }) => (
                                     <>
-                                        <Label for="username">用户名</Label>
-                                        <Input id="username" onFocus={focusFn} onBlur={blurFn} {...input} />
+                                        <Label for="tel">电话号码</Label>
+                                        <Input id="tel" onFocus={focusFn} onBlur={blurFn} {...input} />
                                         {meta.touched && meta.error && <span className="error">{meta.error}</span>}
 
                                     </>
@@ -139,8 +169,10 @@ export default function Register() {
                                 )}
                             />
 
-
-                            <Button variants="secondary" type="submit" style={{ width: "100%", marginTop: "30px" }}>提交</Button>
+<Agreement>
+                        通过创建该帐户，我同意根据<b>隐私政策</b>处理我的个人数据
+                    </Agreement>
+                            <Button variants="secondary" type="submit" disabled={isFetching} style={{ width: "100%", marginTop: "30px" }}>提交</Button>
                         </StyledForm>
                     )}
                 />

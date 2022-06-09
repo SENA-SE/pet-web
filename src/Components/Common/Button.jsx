@@ -36,9 +36,9 @@ const StyledButton = styled(Button)`
 
    &:disabled{
     cursor:not-allowed;
-    color:teal;
+    color:black;
     background-color:white;
-    border:1px solid teal;
+    border:1px solid black;
 }
     // transform: scale(1);
     // transition:.4s;
