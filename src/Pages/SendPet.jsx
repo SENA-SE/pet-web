@@ -110,7 +110,7 @@ const validate = (e) => {
 
 const selectData = [
   {
-    name: "type",
+    name: "categoriesId",
     label: "类型",
     options: [
       {
@@ -121,32 +121,40 @@ const selectData = [
         value: "dog",
         name: "狗"
       },
+      {
+        value: "other", 
+        name: "其他"
+      }
     ]
   },
-  {
-    name: "species",
-    label: "品种",
-    options: [
-      {
-        value: "cat",
-        name: "猫"
-      },
-      {
-        value: "dog",
-        name: "狗"
-      },
-    ]
-  },
+  // {
+  //   name: "species",
+  //   label: "品种",
+  //   options: [
+  //     {
+  //       value: "cat",
+  //       name: "猫"
+  //     },
+  //     {
+  //       value: "dog",
+  //       name: "狗"
+  //     },
+  //   ]
+  // },
   {
     name: "size",
     label: "尺寸",
     options: [
       {
-        value: "small",
+        value: "1",
         name: "小"
       },
       {
-        value: "big",
+        value: "2",
+        name: "中"
+      },
+      {
+        value: "3",
         name: "大"
       },
     ]
@@ -160,24 +168,24 @@ const inputData = [
     placeholder: "请输入宠物年龄（必填）",
   },
   {
-    name: "petName",
+    name: "name",
     label: "宠物昵称",
     placeholder: "请输入宠物昵称（必填）",
   },
   {
-    name: "location",
+    name: "address",
     label: "联系人地址",
     placeholder: "请输入联系人地址（必填）",
   },
   {
-    name: "owner",
-    label: "联系人称呼",
-    placeholder: "请输入联系人称呼（必填）",
+    name: "nickname",
+    label: "联系人昵称",
+    placeholder: "请输入联系人昵称（必填）",
   },
   {
-    name: "email",
-    label: "联系人邮箱",
-    placeholder: "请输入联系人邮箱（必填）",
+    name: "tel",
+    label: "联系人电话",
+    placeholder: "请输入联系人电话（必填）",
   },
   {
     name: "description",
@@ -186,17 +194,17 @@ const inputData = [
     multiline: true,
   },
   {
-    name: "condition",
+    name: "requirement",
     label: "领养要求",
     placeholder: "请输入领养要求，200字以内（必填）",
     multiline: true,
   },
   {
-    name: "gender",
+    name: "sex",
     label: "性别",
-    radioOptions: [{ label: "男", value: "male", name: "gender" },
-    { label: "女", value: "female", name: "gender" },
-    { label: "其他", value: "other", name: "gender" },]
+    radioOptions: [{ label: "男", value: "male", name: "sex" },
+    { label: "女", value: "female", name: "sex" },
+    { label: "其他", value: "other", name: "sex" },]
   }
 ]
 

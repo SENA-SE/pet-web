@@ -22,13 +22,13 @@ const Time = styled.span`
     color:${({ theme }) => theme.palette.secondary.main};
 `;
 
-function PostName({data={user: "名字", createdAt:"2天前"}}) {
+function PostName({data}) {
     return (
         <Container>
             <AccountCircleIcon sx={{ fontSize: 60 }} color='secondary' />
             <InfoContainer>
-                <Name>{data.user}</Name>
-                <Time>{data.createdAt}</Time>
+                <Name>{data.username}</Name>
+                <Time>{data.createTime}</Time>
             </InfoContainer>
         </Container>
     )

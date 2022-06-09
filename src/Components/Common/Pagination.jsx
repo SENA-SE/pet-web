@@ -14,20 +14,21 @@ const StyledPagination = styled(Pagination)`
     }
   }
 `;
-function Content({ right, path="adoption", ...rest }) {
+function Content({ right, path="adoption", pages=10, ...rest }) {
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const page = parseInt(query.get('page') || '1', 10);
+  const category = parseInt(query.get('category') || '1', 10);
   return (
     <StyledPagination
       page={page}
-      count={8}
+      count={pages}
       right={right.toString()}
       {...rest}
       renderItem={(item) => (
         <PaginationItem
           component={Link}
-          to={`/${path}${item.page === 1 ? '' : `?page=${item.page}`}`}
+          to={`/${path}?category=${category}${item.page === 1 ? '' : `&page=${item.page}`}`}
           {...item}
         />
       )}

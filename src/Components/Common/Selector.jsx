@@ -33,11 +33,14 @@ export default function Selector({ data = [
         value: "size",
         name: "按尺寸"
     },
-], label = "排序", noDefault, ...rest }) {
+], label = "排序", setValue, noDefault, ...rest }) {
     const [selected, setSelected] = React.useState('');
 
     const handleChange = (event) => {
         setSelected(event.target.value);
+        if(setValue) {
+            setValue(event.target.value);
+        }
     };
 
     return (

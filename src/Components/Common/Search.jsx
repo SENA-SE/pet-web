@@ -31,12 +31,12 @@ const Wrapper = styled.div`
 const StyledInputBase = styled(InputBase)`
 
 `
-function Search({...rest}) {
+function Search({setKeyWord, ...rest}) {
     const [isFocused, setIsFocused] = useState(false);
     const [value, setValue] = React.useState("");
     const handleChange = (event) => {
+        setKeyWord(event.target.value);
         setValue(event.target.value);
-        console.log(value)
     };
     return (
         <Container {...rest}>

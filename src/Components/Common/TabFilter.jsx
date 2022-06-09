@@ -1,8 +1,14 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
+import {
+  Navigate,
+  Link,
+  MemoryRouter, Route, Routes, useLocation
+} from "react-router-dom";
+
 const StyledTabs = styled(Tabs)`
     & .MuiTabs-indicator {
         height: 100%;
@@ -24,27 +30,35 @@ const StyledTab = styled(Tab)`
 `
 export default function TabFilter({ filters = [
   {
-    value: "cat",
-    name: "猫"
+    value: "1",
+    name: "猫",
+    href: "/category=1"
   },
   {
-    value: "dog",
-    name: "狗"
+    value: "2",
+    name: "狗",
+    href: "/category=2"
   },
   {
-    value: "others",
-    name: "其他"
+    value: "3",
+    name: "其他",
+    href: "/category=3"
   },
 ], ...rest }) {
-  const [value, setValue] = React.useState(filters[0].value);
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const category = query.get('category');
+  const [value, setValue] = useState(category);
   const navigate = useNavigate();
+  useEffect(() => {
+    setValue(category);
+    navigate(`?category=${category}`);
+}, [category]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    //TODO: 动态路由category
-    // navigate(newValue);
+    navigate(`?category=${newValue}`);
   };
 
-// useeffect 依赖tabvalue更改时跳转网址
   return (
     <StyledTabs
       value={value}
@@ -55,7 +69,9 @@ export default function TabFilter({ filters = [
       {...rest}
     >
       {filters.map(item =>
+
         <StyledTab value={item.value} label={item.name} key={item.value}/>
+
       )}
     </StyledTabs>
   );

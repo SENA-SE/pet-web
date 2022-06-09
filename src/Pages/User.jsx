@@ -103,7 +103,6 @@ const MenuList = ({user, data = [
         title: "收藏夹",
         options: [{ name: "宠物", path: "/favorite/pets" },
         { name: "社区", path: "/favorite/community" },
-        { name: "科普", path: "/favorite/knowledge" },
         ]
     },
     {

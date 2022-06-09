@@ -9,12 +9,12 @@ const Container = styled.div`
     align-items: center;
     padding-right: 20px;
 `
-function FilterHeader({tabData, ...rest }) {
+function FilterHeader({tabData, setKeyWord, ...rest }) {
     return (
         <Container {...rest}>
             <Sort style={{ flex: 1 }} />
             <TabFilter filters={tabData} style={{ flex: 8 }} />
-            <Search style={{ flex: 2 }} />
+            <Search setKeyWord={setKeyWord} style={{ flex: 2 }} />
         </Container>
     )
 }

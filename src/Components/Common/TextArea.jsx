@@ -16,12 +16,18 @@ const StyledTextArea = styled(TextareaAutosize)`
     }
 
 `;
-export default function MinHeightTextarea() {
+export default function MinHeightTextarea({setValue}) {
+  const handleChange = (event) => {
+    if (setValue) {
+      setValue(event.target.value);
+    }
+};
   return (
     <StyledTextArea
       aria-label="minimum height"
       minRows={8}
       placeholder="请输入您想发表的内容"
+      onChange={handleChange}
     />
   );
 }
