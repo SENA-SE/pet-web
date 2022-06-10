@@ -13,6 +13,7 @@ import logo from '../img/logo2.png'
 const Container = styled.div`
     width: 100vw;
     height: 10vh;
+    padding: 0 10px;
     display: flex;
     align-items: center;
     justify-content: center;

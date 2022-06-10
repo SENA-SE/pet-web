@@ -3,7 +3,7 @@ import { publicRequest } from '../requestMethods';
 import { useDispatch, useSelector } from 'react-redux';
 import RequestNotification from '../Components/Common/RequestNotification';
 import axios from 'axios';
-import { Link, MemoryRouter, Route, Routes, useLocation, useParams } from 'react-router-dom';
+import { Link, MemoryRouter, Route, Routes, useLocation, useParams, useNavigate } from 'react-router-dom';
 import MainContainer from '../Components/Common/MainContainer'
 import styled from 'styled-components'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -48,81 +48,103 @@ const FlexWrapper = styled.div`
     font-size: 18px;
 `
 
-function PetDetail({ data = {
-    name: "名字",
-    isCollected: true,
-    species: "萨摩耶",
-    age: "3个月",
-    gender: "female",
-    location: "福州",
-    created: "2002-05-01",
-    description: "格里芬大约45磅，大约2到3岁，他喜欢玩耍",
-    condition: "1. 仅限同城 2. 不得遗弃、转让",
-    imageUrl: ["1", "2"],
-    status: {
-        "已免疫": true,
-        "已绝育": false,
-        "已驱虫": false
-    },
-    owner: "主人昵称",
-    id: "1",
-} }) {
+function PetDetail() {
     const { id } = useParams();
-    const [pet, setPet] = useState([])
+    const [pet, setPet] = useState({})
+    const [like, setLike] = useState("0")
     const [operation, setOperation] = useState("apply")
     const user = useSelector(state => state.user.currentUser);
-
+    const navigate = useNavigate()
     useEffect(() => {
-        // const getPets = async () => {
-        //     try {
-        //         const res = await publicRequest.post(`/post/findById?id=${id}`);
-        //         await publicRequest.post(`/post/hit?postId=${id}`);
-        //         setPet(res.data.data)
-        //     } catch (e) {
-        //         console.log(e)
-        //     }
-        // };
-        // getPets();
-        // if (user.id === pet.userId) {
-        //     setOperation("delete")
-        // }
+        const query = {
+            deleted: "0",
+            id: id,
+            page: 1,
+            pagesize: 10
+        }
+        const getPet = async () => {
+            try {
+                const res = await publicRequest.post(`/adopt/findAdopt`, query)
+                // console.log(res.data.data)
+                setPet(res.data.data[0])
+                if (user.id === res.data.data[0].userId) {
+                    setOperation("delete")
+                }
+
+            } catch (e) {
+                console.log(e)
+            }
+        };
+        getPet();
     }, [id]);
-    const handleDelete = () => {
-        console.log(1)
+    const handleDelete = async () => {
+        try {
+            if (user) {
+                const TOKEN = user.token;
+                const userRequest = axios.create({
+                    baseURL: 'http://cyjspace.5gzvip.91tunnel.com:80',
+                    headers: { token: `${TOKEN}` }
+                });
+                const res = await userRequest.post(`/adopt/delete?id=${id}`);
+                // console.log(res)
+            }
+        } catch (e) {
+            console.log(e)
+        } finally {
+            navigate('/adoption?category=10')
+        }
+    }
+    const handleLike = async () => {
+        try {
+            if (user) {
+                const TOKEN = user.token;
+                const userRequest = axios.create({
+                    baseURL: 'http://cyjspace.5gzvip.91tunnel.com:80',
+                    headers: { token: `${TOKEN}` }
+                });
+                const res = await userRequest.post(`/adopt/star?adoptId=${id}&value=${like === "1" ? "0" : "1"}`);
+                // console.log(res)
+                setLike(like === "1" ? "0" : "1")
+            }
+        } catch (e) {
+            console.log(e)
+        }
+
     }
     return (
         <Container>
             <MainContainer>
-                <Header title={data.name} back>
-                    <FavoriteIcon sx={{ cursor: 'pointer' }} />
+                <Header title={pet?.name} back>
+                    {user && <FavoriteIcon sx={{ cursor: 'pointer', transition: '0.25s' }} color={like === "0" ? "secondary" : "primary"} onClick={handleLike} />}
                 </Header>
                 <Divider variant="middle" sx={{ marginBottom: "15px" }} />
-                <Carousel />
+                <Carousel images={pet?.images} />
                 <InfoContainer>
                     <FlexWrapper style={{ width: "100%", justifyContent: "space-between" }}>
-                        <PetInfo data={{ age: data.age, species: data.species, gender: data.gender }} style={{ fontSize: "20px" }} />
-                        <FlexWrapper>                       {
-                            Object.keys(data.status).map((key, index) => {
-                                return <Status confirm={data.status[key] && true} key={index}>{key}</Status>
+                        <PetInfo data={{ age: pet?.age, gender: pet?.sex }} style={{ fontSize: "20px" }} />
+                        {/* <FlexWrapper>                       {
+                            Object.keys(pet.status).map((key, index) => {
+                                return <Status confirm={pet.status[key] && true} key={index}>{key}</Status>
                             })
-                        }</FlexWrapper>
+                        }</FlexWrapper> */}
+                        <Status confirm={parseInt(pet?.status)}>{pet?.status === "0" ? "未绝育" : "已绝育"}</Status>
                     </FlexWrapper>
-                    <FlexWrapper>创建时间： {data.created}</FlexWrapper>
+                    <FlexWrapper>创建时间： {pet?.createTime}</FlexWrapper>
                     <FlexWrapper>
                         <AccountCircleIcon />
-                        {data.owner}
+                        {pet?.nickname}
                     </FlexWrapper>
                     <FlexWrapper>
                         <LocationOnOutlinedIcon />
-                        {data.location}
+                        {pet?.address}
                     </FlexWrapper>
                     <FlexWrapper column>
                         <h3>主人描述： </h3>
-                        {data.description}
+                        {pet?.description}
                     </FlexWrapper>
                     <FlexWrapper column>
                         <h3>领养条件： </h3>
-                        {data.condition}
+                        {pet?.requirement}
                     </FlexWrapper>
                     {operation === "delete" ?
                         <Button variants="secondary" style={{ alignSelf: "flex-end", width: "initial" }} onClick={handleDelete}>删除该送养</Button>

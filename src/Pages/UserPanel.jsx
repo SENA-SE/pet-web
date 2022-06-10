@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
@@ -201,7 +201,7 @@ export const DataForm = () => {
             </>
             {alert.on && <RequestNotification content={alert.content} type={alert.type} />}
             <FormContainer>
-                <IconContainer onClick={() => console.log(1)} />
+                <IconContainer onClick={() => console.log('uploadImg')} />
                 <Form
                     onSubmit={onSubmit}
                     validate={validate}
@@ -328,42 +328,112 @@ export const LogOut = () => {
     )
 };
 
-export const SendPost = ({ data }) => {
+export const DeletedSend = ({ data }) => {
+    const user = useSelector(state => state.user.currentUser);
+    const [pets, setPets] = useState([])
+    const query = {
+        userId: user.id,
+        deleted: 1,
+        page: 1,
+        pagesize: 1000
+    }
+    useEffect(() => {
+        const getPets = async () => {
+            try {
+                if (user) {
+                    const TOKEN = user.token;
+                    const userRequest = axios.create({
+                        baseURL: 'http://cyjspace.5gzvip.91tunnel.com:80',
+                        headers: { token: `${TOKEN}` }
+                    });
+                    const res = await userRequest.post(`/adopt/findAdopt`, query)
+                    // console.log(res.data.data)
+                    setPets(res.data.data)
+                }
+            } catch (e) {
+                console.log(e)
+            }
+
+        }
+        getPets()
+    }, [user])
     return (
         <Container>
             <>
-                <Header title={"送养发布"} />
+                <Header title={"已删除"} />
+                <span style={{ fontSize: 16, marginLeft: 10, color: "#6E6D7A" }}>已删除的送养仅自己可见</span>
                 <Divider sx={{ marginBottom: '15px' }} />
             </>
-            <PetList style={{ gap: "18px" }} />
-            <PaginationLink right sx={{ marginTop: '10px', marginRight: '15px' }} />
+            <PetList data={pets} style={{ gap: "18px" }} />
         </Container>
     )
 }
 
 export const CommunityPost = ({ data }) => {
+    const user = useSelector(state => state.user.currentUser);
+    const [posts, setPosts] = useState([])
+    useEffect(() => {
+        const getPosts = async () => {
+            try {
+                if (user) {
+                    const TOKEN = user.token;
+                    const userRequest = axios.create({
+                        baseURL: 'http://cyjspace.5gzvip.91tunnel.com:80',
+                        headers: { token: `${TOKEN}` }
+                    });
+                    const res = await userRequest.post(`/post/queryMyPost?categoriesId=-1&page=1&pageSize=1000`)
+                    console.log(res.data.data)
+                    setPosts(res.data.data)
+                }
+            } catch (e) {
+                console.log(e)
+            }
+
+        }
+        getPosts();
+    }, [user])
     return (
         <Container>
             <>
                 <Header title={"社区发布"} />
                 <Divider sx={{ marginBottom: '15px' }} />
             </>
-            <Post />
-            <Post />
-            <PaginationLink right sx={{ marginTop: '10px', marginRight: '15px' }} />
+            {/* <Post />
+            <Post /> */}
         </Container>
     )
 }
 
 export const PetsFavorite = ({ data }) => {
+    const user = useSelector(state => state.user.currentUser);
+    const [pets, setPets] = useState([])
+    useEffect(() => {
+        const getPets = async () => {
+            try {
+                if (user) {
+                    const TOKEN = user.token;
+                    const userRequest = axios.create({
+                        baseURL: 'http://cyjspace.5gzvip.91tunnel.com:80',
+                        headers: { token: `${TOKEN}` }
+                    });
+                    const res = await userRequest.post(`/adopt/queryMyLike`)
+                    // console.log(res.data.data)
+                    setPets(res.data.data)
+                }
+            } catch (e) {
+                console.log(e)
+            }
+
+        }
+        getPets()
+    }, [user])
     return (
         <Container>
             <>
                 <Header title={"宠物"} />
                 <Divider sx={{ marginBottom: '15px' }} />
             </>
-            <PetList style={{ gap: "18px" }} />
-            <PaginationLink right sx={{ marginTop: '10px', marginRight: '15px' }} />
+            <PetList data={pets} style={{ gap: "18px" }} />
         </Container>
     )
 }
@@ -371,23 +441,26 @@ export const PetsFavorite = ({ data }) => {
 export const CommunityFavorite = () => {
     const user = useSelector(state => state.user.currentUser);
     const [posts, setPosts] = useState([])
-    const getPosts = async () => {
-        try {
-            if (user) {
-                const TOKEN = user.token;
-                const userRequest = axios.create({
-                    baseURL: 'http://cyjspace.5gzvip.91tunnel.com:80',
-                    headers: { token: `${TOKEN}` }
-                });
-                const res = await userRequest.post(`/post/findMyLike?categoriesId=-1&page=1&pageSize=1000`)
-                setPosts(res.data.data)
+    useEffect(() => {
+        const getPosts = async () => {
+            try {
+                if (user) {
+                    const TOKEN = user.token;
+                    const userRequest = axios.create({
+                        baseURL: 'http://cyjspace.5gzvip.91tunnel.com:80',
+                        headers: { token: `${TOKEN}` }
+                    });
+                    const res = await userRequest.post(`/post/queryMyLike?categoriesId=-1&page=1&pageSize=1000`)
+                    setPosts(res.data.data)
+                }
+            } catch (e) {
+                console.log(e)
             }
-        } catch (e) {
-            console.log(e)
-        }
 
-    }
-    getPosts()
+        }
+        getPosts()
+    }, [user])
+
     return (
         <Container>
             <>
@@ -417,6 +490,34 @@ export const KnowledgeFavorite = ({ data }) => {
 }
 
 export const PetsSend = ({ data }) => {
+    const user = useSelector(state => state.user.currentUser);
+    const [pets, setPets] = useState([])
+    const query = {
+        userId: user.id,
+        deleted: 0,
+        page: 1,
+        pagesize: 1000
+    }
+    useEffect(() => {
+        const getPets = async () => {
+            try {
+                if (user) {
+                    const TOKEN = user.token;
+                    const userRequest = axios.create({
+                        baseURL: 'http://cyjspace.5gzvip.91tunnel.com:80',
+                        headers: { token: `${TOKEN}` }
+                    });
+                    const res = await userRequest.post(`/adopt/findAdopt`, query)
+                    // console.log(res.data.data)
+                    setPets(res.data.data)
+                }
+            } catch (e) {
+                console.log(e)
+            }
+
+        }
+        getPets()
+    }, [user])
     return (
         <Container>
             <>
@@ -434,9 +535,7 @@ export const PetsSend = ({ data }) => {
                     name: "已发布"
                 },
             ]} /> */}
-            <PetList style={{ gap: "18px" }} />
-
-            <PaginationLink right sx={{ marginTop: '10px', marginRight: '15px' }} />
+            <PetList data={pets} style={{ gap: "18px" }} />
         </Container>
     )
 }

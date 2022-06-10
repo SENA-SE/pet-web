@@ -37,7 +37,7 @@ const size = [
         value: "3"
     },
 ]
-function Sidebar() {
+function Sidebar({ setValue }) {
     // const [selected, setSelected] = React.useState(
     //     {
     //         species:["all"],
@@ -49,9 +49,9 @@ function Sidebar() {
     // );
     return (
         <Container>
-            <Filter data={gender} label="宠物性别" />
+            <Filter data={gender} setValue={setValue} label="宠物性别" />
             <Divider variant="middle" />
-            <Filter data={size} label="宠物尺寸" />
+            <Filter data={size} setValue={setValue} label="宠物尺寸" />
 
             {/* //TODO: 清除所有 
             // 年龄*/}

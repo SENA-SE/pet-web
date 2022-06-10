@@ -28,7 +28,7 @@ import {
   KnowledgeFavorite,
   PetsFavorite,
   PetsSend,
-  SendPost,
+  DeletedSend,
 } from "./Pages/UserPanel";
 import Knowledge from "./Pages/Knowledge";
 import KnowledgePostDetail from "./Pages/KnowledgePostDetail";
@@ -74,7 +74,7 @@ export default function App() {
           >
             <Route path="info/main" element={<DataForm />}></Route>
             <Route path="info/logout" element={<LogOut />}></Route>
-            <Route path="post/send" element={<SendPost />}></Route>
+            <Route path="post/send" element={<PetsSend />}></Route>
             <Route path="post/community" element={<CommunityPost />}></Route>
             <Route path="favorite/pets" element={<PetsFavorite />}></Route>
             <Route
@@ -85,11 +85,8 @@ export default function App() {
               path="favorite/knowledge"
               element={<KnowledgeFavorite />}
             ></Route>
-            <Route path="send/" element={<PetsSend />}></Route>
-            <Route
-              path="adoption/request"
-              element={<AdoptionRequest />}
-            ></Route>
+            {/* <Route path="send/" element={<PetsSend />}></Route> */}
+            <Route path="adoption/deleted" element={<DeletedSend />}></Route>
           </Route>
         </Routes>
       </Router>

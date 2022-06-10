@@ -19,15 +19,20 @@ const Container = styled.div`
     opacity: .5;
   }
 `
+
 const ImgContainer = styled.div`
-  & .test {
-    width:100%;
-    height: 300px;
+  & .petImg, img {
+    height: 400px;
     background: ${({ theme }) => theme.status.bg2};
     color: white;
   }
+
+  img {
+    object-fit: cover;
+    width: 100%;
+  }
 `
-export default function SimpleSlider({ ...rest }) {
+export default function SimpleSlider({ images = [""], ...rest }) {
   let settings = {
     dots: true,
     // infinite: true,
@@ -45,27 +50,41 @@ export default function SimpleSlider({ ...rest }) {
   };
   return (
     <Container {...rest}>
-      <Slider {...settings}>
 
-        <ImgContainer>
-          <div class="test">1</div>
-        </ImgContainer>
-        <ImgContainer>
-          <div class="test">2</div>
-        </ImgContainer>
-        <ImgContainer>
-          <div class="test">3</div >
-        </ImgContainer>
-        <ImgContainer>
-          <div class="test">4</div >
-        </ImgContainer>
-        {/* <ImgContainer>
-        <h3>5</h3>
-      </ImgContainer>
-      <ImgContainer>
-        <h3>6</h3>
-      </ImgContainer> */}
-      </Slider>
+
+      {
+        images.length < 2 ?
+          <Slider {...settings}>
+            <ImgContainer>
+              <div className="petImg"></div>
+            </ImgContainer>
+            {images.map(item =>
+              <ImgContainer>
+                <div className="petImg"><img src={item} /></div>
+              </ImgContainer>
+            )}
+            <ImgContainer>
+              <div className="petImg"></div >
+            </ImgContainer>
+          </Slider>
+
+          :
+          <Slider {...settings}>
+            {images.map(item =>
+              <ImgContainer>
+                <div className="petImg"><img src={item} /></div>
+              </ImgContainer>
+            )}
+            <ImgContainer>
+              <div className="petImg"></div>
+            </ImgContainer>
+
+
+          </Slider>
+
+      }
+
+
     </Container>
   );
 }

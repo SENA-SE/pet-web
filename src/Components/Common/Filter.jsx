@@ -18,14 +18,14 @@ const StyledList = styled(List)`
     font-size: 18px;
   }
 `;
-export default function NestedList({ data, label = "title" }) {
+export default function NestedList({ data, setValue, label = "title" }) {
   const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = React.useState(["all"]);
   //handle clear，点击all触发
   const handleClick = () => {
     setOpen(!open);
   };
-  const handleFilter = (name) => {
+  const handleFilter = async (name) => {
     let newArr = selected;
     if (newArr.includes(name)) {
       newArr = selected.filter((item) => item !== name)
@@ -34,6 +34,8 @@ export default function NestedList({ data, label = "title" }) {
       newArr = [...newArr, name]
     }
     setSelected(newArr)
+    console.log(selected)
+
   };
   const handleAll = () => {
     setSelected(["all"])

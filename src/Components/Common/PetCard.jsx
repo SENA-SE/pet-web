@@ -6,6 +6,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 // import MaleIcon from '@mui/icons-material/Male';
 import { Link } from 'react-router-dom';
 import PetInfo from './PetInfo';
+import logo1 from '../../img/logo1.png'
 
 const Container = styled.div`
     display: flex;
@@ -46,7 +47,6 @@ const InfoContainer = styled.div`
     }
 `
 function PetCard({ data }) {
-    // usestate储存favorite,点击favorite传送data
     const [collected, setCollected] = React.useState(data.isCollected)
     const handleCollect = () => {
         setCollected(!collected)
@@ -59,21 +59,13 @@ function PetCard({ data }) {
                 </Link>
             </ImgContainer>
             <InfoContainer style={{ fontSize: '18px' }}>
-                <FavoriteIcon color={collected ? "primary" : "secondary"} fontSize="small" sx={{ cursor: 'pointer', transition: '0.3s' }} onClick={handleCollect} />
+                {/* <FavoriteIcon color={collected ? "primary" : "secondary"} fontSize="small" sx={{ cursor: 'pointer', transition: '0.3s' }} onClick={handleCollect} /> */}
+                <img src={logo1} style={{ height: "20px" }} />
+
                 <Link to={`/adoption/${data.id}`}>
                     {data.name || "无名"}</Link>
 
             </InfoContainer>
-            {/* <InfoContainer>
-                {data.age}
-                <Divider orientation="vertical" variant="middle" flexItem />
-                {data.species}
-                <Divider orientation="vertical" variant="middle" flexItem />
-                {data.gender === "female" ? <FemaleIcon color="primary" fontSize="small" />
-                    :
-                    <MaleIcon color="primary" fontSize="small" />
-                }
-            </InfoContainer> */}
             <PetInfo data={data} style={{ marginBottom: "6px" }} />
             <InfoContainer>
                 {data.address}

@@ -10,7 +10,7 @@ const Container = styled.div`
     gap: 30px;
 `
 
-function PetList({ data, category, filters, sort, ...rest }) {
+function PetList({ data=[], category, filters, sort, ...rest }) {
     const [filteredPets, setFilteredPets] = useState([]);
 
 

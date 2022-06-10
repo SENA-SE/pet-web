@@ -25,7 +25,9 @@ const ListContainer = styled.div`
 function Adoption() {
   const [pets, setPets] = useState([]);
   const [pages, setPages] = useState([]);
-
+  const [sort, setSort] = useState('Tasc');
+  const [defaultArr, setDefaultArr] = useState([])
+  const [filters, setFilters] = useState({})
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const page = parseInt(query.get('page') || '1', 10);
@@ -35,7 +37,8 @@ function Adoption() {
   useEffect(() => {
     const query = {
       deleted: "0",
-      categoriesId:category,
+      categoriesId: category,
+      keyword: search || "",
       page: 1,
       pagesize: 10
     }
@@ -50,6 +53,7 @@ function Adoption() {
         const getAll = await publicRequest.post(`/adopt/findAdopt`, query)
         console.log(res.data.data)
         setPets(res.data.data)
+        setDefaultArr(res.data.data)
         setPages(Math.ceil(getAll.data.data.length / 10))
       } catch (e) {
         console.log(e)
@@ -57,12 +61,62 @@ function Adoption() {
     };
     getPets();
   }, [category, page, search]);
+
+  useEffect(() => {
+    console.log(sort)
+    if (pets) {
+      if (sort === 'Sasc') {
+        setPets((prev) => {
+          const newArr = [...prev].sort((a, b) => parseInt(a.size) - parseInt(b.size))
+          return newArr
+        }
+        );
+        // console.log([...filteredProducts].sort((a, b) => a.createdAt - b.createdAt));
+      } else if (sort === 'Sdsc') {
+        setPets((prev) => {
+          const newArr = [...prev].sort((a, b) => parseInt(b.size) - parseInt(a.size))
+          return newArr
+        }
+        );
+        // console.log([...filteredProducts].sort((a, b) => a.createdAt - b.createdAt));
+      } else if (sort === 'Tasc') {
+        setPets(() => {
+          return defaultArr
+        }
+        );
+      } else if (sort === 'Tdsc') {
+        setPets(() => {
+          const newArr = [...defaultArr].reverse()
+          return newArr
+        }
+        );
+      } else if (sort === 'gender') {
+        setPets((prev) => {
+          const newArr = [...prev].sort((a, b) => parseInt(b.sex.length) - parseInt(a.sex.length))
+          return newArr
+        }
+        );
+      }
+    }
+    //  else if (sort === 'Pasc') {
+    //     setFilteredProducts((prev) =>
+    //         [...prev].sort((a, b) => a.price - b.price)
+    //     );
+    //     // console.log([...filteredProducts].sort((a, b) => a.price - b.price));
+    // } 
+    //else if (sort === 'Pdesc') {
+    //     setFilteredProducts((prev) =>
+    //         [...prev].sort((a, b) => b.price - a.price)
+    //     );
+    //     // console.log([...filteredProducts].sort((a, b) => b.price - a.price));
+    // }
+  }, [sort])
   return (
     <Container>
-      <Sidebar />
+      <Sidebar setValue={setFilters} />
       <ListContainer>
-        <PetsHeader filter />
-        <PetList data={pets}/>
+        <PetsHeader setSort={setSort} filter />
+        <PetList data={pets} />
         <PaginationLink right sx={{ marginTop: '10px', marginRight: '15px' }} pages={pages} />
       </ListContainer>
     </Container>

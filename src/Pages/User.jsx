@@ -97,7 +97,10 @@ const MenuList = ({ user, data = [
     },
     {
         title: "发布内容",
-        options: [{ name: "送养发布", path: "/post/send" }, { name: "社区发布", path: "/post/community" }]
+        options: [
+            { name: "送养发布", path: "/post/send" },
+            { name: "社区发布", path: "/post/community" }
+        ]
     },
     {
         title: "收藏夹",
@@ -107,7 +110,7 @@ const MenuList = ({ user, data = [
     },
     {
         title: "送养",
-        options: [{ name: "已发布", path: "/send" },
+        options: [{ name: "已删除", path: "/adoption/deleted" },
         ]
     },
     // {

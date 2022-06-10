@@ -79,6 +79,7 @@ function PostDetail() {
                 });
                 const res = await userRequest.post(`/post/like?postId=${id}&like=${like}`);
                 // const test = await userRequest.post(`/post/findMyLike?categoriesId=-1&page=1&pageSize=10`)
+                console.log(like)
                 setLike(like === "1" ? "0" : "1")
                 // console.log(res)
             }
@@ -92,7 +93,7 @@ function PostDetail() {
             <MainContainer >
                 <Wrapper>
                     <Header title={"查看帖子"} back>
-                        {user ? <FavoriteIcon sx={{ cursor: 'pointer', transition: "0.25s" }} color={like === "1" ? "gray" : "primary"} onClick={handleLike} /> : <></>}
+                        {user ? <FavoriteIcon sx={{ cursor: 'pointer', transition: "0.25s" }} color={like === "1" ? "secondary" : "primary"} onClick={handleLike} /> : <></>}
 
                     </Header>
                     <Divider variant="middle" />

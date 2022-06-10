@@ -22,24 +22,33 @@ const StyledSelect = styled(Select)`
 `
 export default function Selector({ data = [
     {
-        value: "time",
+        value: "gender",
+        name: "按性别"
+    },
+    {
+        value: "Sasc",
+        name: "按尺寸"
+    },
+    {
+        value: "Sdsc",
+        name: "按尺寸（倒序）"
+    },
+    {
+        value: "Tasc",
         name: "按发布时间"
     },
     {
-        value: "age",
-        name: "按年龄"
+        value: "Tdsc",
+        name: "按发布时间（倒序）"
     },
-    {
-        value: "size",
-        name: "按尺寸"
-    },
-], label = "排序", setValue, noDefault, ...rest }) {
+
+], label = "排序", setSort, noDefault, ...rest }) {
     const [selected, setSelected] = React.useState('');
 
     const handleChange = (event) => {
         setSelected(event.target.value);
-        if(setValue) {
-            setValue(event.target.value);
+        if(setSort) {
+            setSort(event.target.value);
         }
     };
 
