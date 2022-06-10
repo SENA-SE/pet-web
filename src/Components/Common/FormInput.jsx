@@ -73,7 +73,7 @@ const StyledInput = styled(TextField)`
     }
 
 `
-function FormInput({ label, file, date, children, ...rest }) {
+function FormInput({ label, file, date, setValue, children, ...rest }) {
     // const [value, setValue] = React.useState("");
     // const handleNumber = (e) => {
     //     let numberVal = e.target.value.replace(/[^\d]/, '');
@@ -85,7 +85,7 @@ function FormInput({ label, file, date, children, ...rest }) {
                 <label>{label}</label>
             </Wrapper>
             <Wrapper>
-                {file ? <ImageUpload {...rest} />
+                {file ? <ImageUpload setValue={setValue} {...rest} />
                     :
                     <StyledInput size="small" type={date ? "date" : "outlined"} {...rest}>
                     </StyledInput>

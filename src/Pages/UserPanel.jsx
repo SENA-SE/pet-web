@@ -1,5 +1,5 @@
 import React from 'react'
-import {useState} from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 
@@ -16,8 +16,8 @@ import PaginationLink from '../Components/Common/Pagination';
 import { Post } from './Community';
 import TabFilter from '../Components/Common/TabFilter';
 import { KnowledgePost } from './Knowledge';
-import {useDispatch, useSelector} from 'react-redux';
-import {loginStart, loginSuccess, loginFailure} from '../redux/userRedux';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginStart, loginSuccess, loginFailure } from '../redux/userRedux';
 // import {userRequest} from '../requestMethods';
 import axios from 'axios';
 import RequestNotification from '../Components/Common/RequestNotification';
@@ -25,7 +25,7 @@ import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
+});
 const Container = styled.div`
 
 `
@@ -145,7 +145,7 @@ export const DataForm = () => {
     const TOKEN = user.token;
     const userRequest = axios.create({
         baseURL: 'http://cyjspace.5gzvip.91tunnel.com:80',
-        headers:{token:`${TOKEN}`}
+        headers: { token: `${TOKEN}` }
     });
     const initialData = {
         sex: user.sex,
@@ -155,17 +155,17 @@ export const DataForm = () => {
     }
     const validate = (e) => {
         const errors = {}
-        if(e?.username?.length > 18) {
+        if (e?.username?.length > 18) {
             errors.username = `昵称不能超过18字`
         }
         return errors
     }
 
     const dispatch = useDispatch();
-    const [alert, setAlert] = useState({on: false})
+    const [alert, setAlert] = useState({ on: false })
     const onSubmit = async (e) => {
         try {
-            if(!e.username) {
+            if (!e.username) {
                 e.username = user.username
             }
 
@@ -176,16 +176,16 @@ export const DataForm = () => {
             // } catch (err) {
             //     console.log(err)
             // }
-                const update = await userRequest.post(`/update`, e);
-                const newInfo = await userRequest.post('/information');
+            const update = await userRequest.post(`/update`, e);
+            const newInfo = await userRequest.post('/information');
 
-                dispatch(loginSuccess({...newInfo.data.data, token: TOKEN}));
-                setAlert({on: true, content: "修改成功", type:"success"})
-                setTimeout(() => setAlert({on: false}), 3000)
+            dispatch(loginSuccess({ ...newInfo.data.data, token: TOKEN }));
+            setAlert({ on: true, content: "修改成功", type: "success" })
+            setTimeout(() => setAlert({ on: false }), 3000)
         } catch (e) {
             console.log(e)
-            setAlert({on: true, content: "修改失败，请重试", type:"error"})
-                setTimeout(() => setAlert({on: false}), 3000)
+            setAlert({ on: true, content: "修改失败，请重试", type: "error" })
+            setTimeout(() => setAlert({ on: false }), 3000)
 
         } finally {
             document.body.scrollTop = document.documentElement.scrollTop = 0;
@@ -199,7 +199,7 @@ export const DataForm = () => {
                 <Header title={"编辑资料"} />
                 <Divider sx={{ marginBottom: '15px' }} />
             </>
-            {alert.on && <RequestNotification content={alert.content} type={alert.type}/>}
+            {alert.on && <RequestNotification content={alert.content} type={alert.type} />}
             <FormContainer>
                 <IconContainer onClick={() => console.log(1)} />
                 <Form
@@ -208,7 +208,7 @@ export const DataForm = () => {
                     initialValues={initialData}
                     render={({ handleSubmit }) => (
                         <StyledForm onSubmit={handleSubmit}>
-    
+
                             <Field
                                 name={"username"}
                                 required={true}
@@ -223,7 +223,7 @@ export const DataForm = () => {
                                 )}
                             />
                             <FormRadio label='性别' />
-    
+
                             <Field
                                 name={"location"}
                                 required={true}
@@ -238,7 +238,7 @@ export const DataForm = () => {
                                 )}
                             />
 
-<Field
+                            <Field
                                 name={"email"}
                                 required={true}
                                 key={"email"}
@@ -252,7 +252,7 @@ export const DataForm = () => {
                                 )}
                             />
 
-<Field
+                            <Field
                                 name={"introduce"}
                                 required={true}
                                 key={"introduce"}
@@ -261,7 +261,7 @@ export const DataForm = () => {
                                         label={"自我介绍"}
                                         placeholder={user.introduce}
                                         multiline
-                  rows={3}
+                                        rows={3}
 
                                         {...input} >
                                         {meta.touched && meta.error && <span className="error">{meta.error}</span>}
@@ -269,18 +269,18 @@ export const DataForm = () => {
                                 )}
                             />
 
-               <FormInput
-                     label={"电话号码"}
-                   value={user.tel}
-                    disabled >
-                 </FormInput>
+                            <FormInput
+                                label={"电话号码"}
+                                value={user.tel}
+                                disabled >
+                            </FormInput>
 
-                 <FormInput
-                     label={"账号创建于"}
-                   value={user.createTime}
-                    disabled >
-                 </FormInput>
-    
+                            <FormInput
+                                label={"账号创建于"}
+                                value={user.createTime}
+                                disabled >
+                            </FormInput>
+
                             {/* <Field
                                 name={"birthday"}
                                 required={true}
@@ -305,8 +305,8 @@ export const DataForm = () => {
                                 </FormInput>
                             )}
                         /> */}
-    
-    
+
+
                             <Button variants="secondary" type="submit" style={{ width: "60%", marginTop: "30px", marginLeft: "1rem" }}>提交</Button>
                         </StyledForm>
                     )}
@@ -323,7 +323,7 @@ export const LogOut = () => {
     }
     return (
         <Container>
-            <Button  variants="secondary" style={{width: "initial"}} onClick={onLogout}>点此退出登录</Button>
+            <Button variants="secondary" style={{ width: "initial" }} onClick={onLogout}>点此退出登录</Button>
         </Container>
     )
 };
@@ -370,33 +370,33 @@ export const PetsFavorite = ({ data }) => {
 
 export const CommunityFavorite = () => {
     const user = useSelector(state => state.user.currentUser);
-const [posts, setPosts] = useState([])
+    const [posts, setPosts] = useState([])
     const getPosts = async () => {
         try {
-            if(user) {
+            if (user) {
                 const TOKEN = user.token;
                 const userRequest = axios.create({
                     baseURL: 'http://cyjspace.5gzvip.91tunnel.com:80',
-                    headers:{token:`${TOKEN}`}
+                    headers: { token: `${TOKEN}` }
                 });
-            const res = await userRequest.post(`/post/findMyLike?categoriesId=-1&page=1&pageSize=1000`)
-            setPosts(res.data.data)
-            } 
+                const res = await userRequest.post(`/post/findMyLike?categoriesId=-1&page=1&pageSize=1000`)
+                setPosts(res.data.data)
+            }
         } catch (e) {
             console.log(e)
         }
-        
- }   
- getPosts()
+
+    }
+    getPosts()
     return (
         <Container>
             <>
                 <Header title={"社区"} />
                 <Divider sx={{ marginBottom: '15px' }} />
             </>
-            {posts.map(item => 
-                <Post data={item}/>
-                )}
+            {posts.map(item =>
+                <Post data={item} />
+            )}
             {/* <PaginationLink right sx={{ marginTop: '10px', marginRight: '15px' }} pages={pages} /> */}
         </Container>
     )
@@ -420,7 +420,8 @@ export const PetsSend = ({ data }) => {
     return (
         <Container>
             <>
-                <Header title={"待审核送养"} />
+                <Header title={"已发布的送养"} />
+                <span style={{ fontSize: 16, marginLeft: 10, color: "#6E6D7A" }}>请在详情页中进行操作</span>
                 <Divider sx={{ marginBottom: '15px' }} />
             </>
             {/* <TabFilter filters={[

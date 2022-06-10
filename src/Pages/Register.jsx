@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Form, Field } from 'react-final-form'
 import Button from '../Components/Common/Button'
-import {publicRequest} from '../requestMethods'
-import {login} from '../redux/apiCalls';
+import { publicRequest } from '../requestMethods'
+import { login } from '../redux/apiCalls';
 import { useDispatch, useSelector } from 'react-redux';
-import {register} from '../redux/apiCalls';
+import { register } from '../redux/apiCalls';
 
 const Container = styled.div`
     width:100vw;
@@ -79,43 +79,39 @@ export default function Register() {
     const onSubmit = async (e) => {
         try {
             // console.log(e)
-            const {tel, password} = e
-            register(dispatch,{tel,password})
-            .then(() => login(dispatch,{tel, password}))
-                // setAlert({on: true, content: "修改成功", type:"success"})
-                // setTimeout(() => setAlert({on: false}), 3000)
+            const { tel, password } = e
+            register(dispatch, { tel, password })
+                .then(() => login(dispatch, { tel, password }))
         } catch (e) {
-            // setAlert({on: true, content: "修改失败，请重试", type:"error"})
-            //     setTimeout(() => setAlert({on: false}), 3000)
             console.log(e)
-    
+
         } finally {
             document.body.scrollTop = document.documentElement.scrollTop = 0;
         }
-    
+
     }
-    
+
     const validate = (e) => {
         const errors = {}
-        if(!e.tel) {
+        if (!e.tel) {
             errors.tel = "不能为空"
         }
-        if(!e.password) {
+        if (!e.password) {
             errors.password = "不能为空"
         }
-        if(!e.confirm) {
+        if (!e.confirm) {
             errors.confirm = "不能为空"
         }
-        if(e?.password?.length < 8) {
+        if (e?.password?.length < 8) {
             errors.password = "密码长度应大于8位"
-        } 
-        if(e.password !== e.confirm) {
+        }
+        if (e.password !== e.confirm) {
             errors.confirm = "前后密码不一致"
         }
         return errors
     }
     const initialData = {
-        
+
     }
     return (
         <Container>
@@ -169,9 +165,9 @@ export default function Register() {
                                 )}
                             />
 
-<Agreement>
-                        通过创建该帐户，我同意根据<b>隐私政策</b>处理我的个人数据
-                    </Agreement>
+                            <Agreement>
+                                通过创建该帐户，我同意根据<b>隐私政策</b>处理我的个人数据
+                            </Agreement>
                             <Button variants="secondary" type="submit" disabled={isFetching} style={{ width: "100%", marginTop: "30px" }}>提交</Button>
                         </StyledForm>
                     )}

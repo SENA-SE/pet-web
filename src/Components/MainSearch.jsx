@@ -1,16 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import DirectionsIcon from '@mui/icons-material/Directions';
 import { useState } from 'react'
-import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import logo from '@mui/icons-material/LocationOnOutlined';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
+import logo1 from '../img/logo1.png'
 const Container = styled.div`
     width: 70%;
     display: flex;
@@ -48,8 +45,8 @@ function MainSearch() {
       sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '100%' }}
     > */}
       <Wrapper focus={isFocused}>
-        <IconButton sx={{ p: '10px' }} aria-label="menu">
-          <LocationOnOutlinedIcon />
+        <IconButton sx={{ p: 0, m: 0.5, height: 35 }} aria-label="menu">
+          <img src={logo1} style={{ height: "100%" }} />
         </IconButton>
         <StyledInputBase
           sx={{ ml: 1, flex: 1 }}

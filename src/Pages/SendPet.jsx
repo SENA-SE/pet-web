@@ -1,25 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { publicRequest } from '../requestMethods';
+import { useDispatch, useSelector } from 'react-redux';
+import RequestNotification from '../Components/Common/RequestNotification';
+import axios from 'axios';
+import { Link, MemoryRouter, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import MainContainer from '../Components/Common/MainContainer'
-import { Link } from 'react-router-dom';
+
 import styled from 'styled-components'
 import Divider from '@mui/material/Divider';
-import FilterHeader from '../Components/FilterHeader';
-import Paragraph from '../Components/Common/Paragraph';
-import TextArea from '../Components/Common/TextArea';
+
 import Button from '../Components/Common/Button';
 import Header from '../Components/Common/Header';
 import { Form, Field } from 'react-final-form';
 import FormInput from '../Components/Common/FormInput';
-import AutoSave from '../util/AutoSave';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+// import AutoSave from '../util/AutoSave';
+// import Select from '@mui/material/Select';
+// import MenuItem from '@mui/material/MenuItem';
 import FormSelect from '../Components/Common/FormSelect';
-import ImageUpload from '../Components/Common/ImageUpload';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import FormControlLabel from '@mui/material/FormControlLabel';
+// import Radio from '@mui/material/Radio';
+// import RadioGroup from '@mui/material/RadioGroup';
+// import FormControl from '@mui/material/FormControl';
+// import FormLabel from '@mui/material/FormLabel';
+// import FormControlLabel from '@mui/material/FormControlLabel';
 import FormRadio from '../Components/Common/FormRadio';
 
 const Container = styled.div`
@@ -41,65 +43,8 @@ const StyledForm = styled.form`
   align-items: center;
   justify-content: center;
 `
-const initialData = {
-
-}
-const onSubmit = (e) => {
-  console.log(e)
-  debugger
-}
-
-const validate = (e) => {
-  const errors = {}
-
-  if (e.description?.length > 200) {
-    errors.description = `字数超出限制 ${e.description?.length} / 200`
-  }
-  if (e.condition?.length > 200) {
-    errors.condition = `字数超出限制 ${e.description?.length} / 200`
-  }
-  let emailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
-  if (!emailReg.test(e.email)) {
-    errors.email = "邮箱不符合格式"
-  }
-  if (!e.age) {
-    errors.age = "不能为空"
-  }
-  if (!e.condition) {
-    errors.condition = "不能为空"
-  }
-  if (!e.description) {
-    errors.description = "不能为空"
-  }
-  if (!e.location) {
-    errors.location = "不能为空"
-  }
-  if (!e.owner) {
-    errors.owner = "不能为空"
-  }
-  if (!e.petName) {
-    errors.petName = "不能为空"
-  }
-  if (!e.email) {
-    errors.email = "不能为空"
-  }
-  if (!e.size) {
-    errors.size = "不能为空"
-  }
-  if (!e.species) {
-    errors.species = "不能为空"
-  }
-  if (!e.type) {
-    errors.type = "不能为空"
-  }
-  if (!e.condition) {
-    errors.condition = "不能为空"
-  }
 
 
-
-  return errors
-}
 
 // const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -122,25 +67,11 @@ const selectData = [
         name: "狗"
       },
       {
-        value: "other", 
+        value: "other",
         name: "其他"
       }
     ]
   },
-  // {
-  //   name: "species",
-  //   label: "品种",
-  //   options: [
-  //     {
-  //       value: "cat",
-  //       name: "猫"
-  //     },
-  //     {
-  //       value: "dog",
-  //       name: "狗"
-  //     },
-  //   ]
-  // },
   {
     name: "size",
     label: "尺寸",
@@ -203,76 +134,140 @@ const inputData = [
     name: "sex",
     label: "性别",
     radioOptions: [{ label: "男", value: "male", name: "sex" },
-    { label: "女", value: "female", name: "sex" },
-    { label: "其他", value: "other", name: "sex" },]
+    { label: "女", value: "female", name: "sex" }, { label: "其他", value: "other", name: "sex" }]
   }
 ]
 
-const PetForm = () => (
-  <Form
-    onSubmit={onSubmit}
-    validate={validate}
-    initialValues={initialData}
-    render={({ handleSubmit }) => (
-      <StyledForm onSubmit={handleSubmit}>
-        {/* <AutoSave debounce={800} save={save} /> */}
-        {
-          selectData.map(item => (
-            <Field
-              name={item.name}
-              required={true}
-              key={item.name}
-              render={({ input, meta }) => (
-                <FormSelect label={item.label} options={item.options} {...input} >
-                  {meta.touched && meta.error && <span className="error">{meta.error}</span>}
-                </FormSelect>
-              )}
-            />
-          ))
-        }
+const PetForm = () => {
+  const [images, setImages] = useState([])
+  const onSubmit = (e) => {
+    console.log(e)
+    console.log(images)
+    debugger
+  }
+  const validate = (e) => {
+    console.log(e)
+    const errors = {}
 
-        {
-          inputData.map((item, index) => (
-            !item.radioOptions ? <Field
-              name={item.name}
-              required={true}
-              key={item.name}
-              render={({ input, meta }) => (
-                <FormInput
-                  label={item.label}
-                  placeholder={item.placeholder}
-                  multiline={item.multiline}
-                  rows={4}
-                  {...input} >
-                  {meta.touched && meta.error && <span className="error">{meta.error}</span>}
-                </FormInput>
-              )}
-            />
-              :
+    if (e.description?.length > 200) {
+      errors.description = `字数超出限制 ${e.description?.length} / 200`
+    }
+    if (e.requirement?.length > 200) {
+      errors.condition = `字数超出限制 ${e.description?.length} / 200`
+    }
+    // let emailReg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+    // if (!emailReg.test(e.email)) {
+    //   errors.email = "邮箱不符合格式"
+    // }
 
-              <FormRadio label={item.label} radioOptions={item.radioOptions} />
+    if (!e.categoriesId) {
+      errors.categoriesId = "不能为空"
+    }
+    if (!e.size) {
+      errors.size = "不能为空"
+    }
+    if (!e.age) {
+      errors.age = "不能为空"
+    }
+    if (!e.name) {
+      errors.name = "不能为空"
+    }
+    if (!e.description) {
+      errors.description = "不能为空"
+    }
+    if (!e.address) {
+      errors.address = "不能为空"
+    }
+    if (!e.nickname) {
+      errors.nickname = "不能为空"
+    }
+    if (!e.tel) {
+      errors.tel = "不能为空"
+    }
+    if (!e.requirement) {
+      errors.requirement = "不能为空"
+    }
 
-          ))
-        }
-        <Field
-          name={"images"}
-          render={({ input, meta }) => (
-            <FormInput label={"宠物图片"} file {...input} >
-              {meta.touched && meta.error && <span className="error">{meta.error}</span>}
-            </FormInput>
-          )}
-        />
+    if (images.length === 0) {
+      errors.images = "请上传至少1张图片"
+    }
+
+    return errors
+  }
+
+  const initialData = {
+
+  }
 
 
-        <Button variants="secondary" type="submit" style={{ width: "60%", marginTop: "30px", marginLeft: "1rem" }}>提交</Button>
-      </StyledForm>
-    )}
-  />
-);
+  return (
+    <Form
+      onSubmit={onSubmit}
+      validate={validate}
+      initialValues={initialData}
+      render={({ handleSubmit }) => (
+        <StyledForm onSubmit={handleSubmit}>
+          {/* <AutoSave debounce={800} save={save} /> */}
+          {
+            selectData.map(item => (
+              <Field
+                name={item.name}
+                required={true}
+                key={item.name}
+                render={({ input, meta }) => (
+                  <FormSelect label={item.label} options={item.options} {...input} >
+                    {meta.touched && meta.error && <span className="error">{meta.error}</span>}
+                  </FormSelect>
+                )}
+              />
+            ))
+          }
+
+          {
+            inputData.map((item, index) => (
+              !item.radioOptions ? <Field
+                name={item.name}
+                required={true}
+                key={item.name}
+                render={({ input, meta }) => (
+                  <FormInput
+                    label={item.label}
+                    placeholder={item.placeholder}
+                    multiline={item.multiline}
+                    rows={4}
+                    {...input} >
+                    {meta.touched && meta.error && <span className="error">{meta.error}</span>}
+                  </FormInput>
+                )}
+              />
+                :
+
+                // <FormRadio label={item.label} radioOptions={item.radioOptions} />
+                <FormRadio label='性别' />
+
+            ))
+          }
+          <Field
+            name={"images"}
+            render={({ input, meta }) => (
+              <FormInput label={"宠物图片"} file setValue={setImages} {...input} >
+                {meta.touched && meta.error && <span className="error">{meta.error}</span>}
+              </FormInput>
+            )}
+          />
+
+
+          <Button variants="secondary" type="submit" style={{ width: "60%", marginTop: "30px", marginLeft: "1rem" }}>提交</Button>
+        </StyledForm>
+      )}
+    />
+  )
+};
 
 
 // TODO: notice
 function SendPet() {
+
   return (
     <Container>
       <MainContainer style={{ width: " 40% ", minWidth: "610px" }}>

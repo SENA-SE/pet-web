@@ -1,7 +1,9 @@
-// TODO: 获取detail data
-// TODO: 点击提交申请，进行权限验证，否弹通知（请至我的资料处进行实名认证），是弹弹窗，提交表格，发送请求
-// TODO: 联系人地址和电话
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { publicRequest } from '../requestMethods';
+import { useDispatch, useSelector } from 'react-redux';
+import RequestNotification from '../Components/Common/RequestNotification';
+import axios from 'axios';
+import { Link, MemoryRouter, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import MainContainer from '../Components/Common/MainContainer'
 import styled from 'styled-components'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -13,6 +15,7 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import Carousel from '../Components/Common/Carousel'
 import InfoForm from '../Components/AdoptionRequest'
 import Header from '../Components/Common/Header'
+import Button from '../Components/Common/Button'
 const Container = styled.div`
     width: 100%;
     padding: 20px;
@@ -22,12 +25,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
 `
-// const Header = styled.div`
-//     margin: 0 10px 15px 10px;
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-// `
+
 const InfoContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -49,24 +47,7 @@ const FlexWrapper = styled.div`
     flex-direction: ${({ column }) => column ? "column" : "row"};
     font-size: 18px;
 `
-// const data = {
-//         name: "名字",
-//         isCollected: true,
-//         species: "萨摩耶",
-//         age: "3个月",
-//         gender: "female",
-//         location: "福州",
-//         created:"2002-05-01",
-//         description:"格里芬大约45磅，大约2到3岁，他喜欢玩耍",
-//         condition:"1. 仅限同城 2. 不得遗弃、转让",
-//         imageUrl:["1","2"],
-//         status:{
-//             "已免疫": true,
-//             "已绝育": false,
-//             "已驱虫": false
-//         },
-//         id: "1",
-// }
+
 function PetDetail({ data = {
     name: "名字",
     isCollected: true,
@@ -86,7 +67,29 @@ function PetDetail({ data = {
     owner: "主人昵称",
     id: "1",
 } }) {
-    // console.log(data)
+    const { id } = useParams();
+    const [pet, setPet] = useState([])
+    const [operation, setOperation] = useState("apply")
+    const user = useSelector(state => state.user.currentUser);
+
+    useEffect(() => {
+        // const getPets = async () => {
+        //     try {
+        //         const res = await publicRequest.post(`/post/findById?id=${id}`);
+        //         await publicRequest.post(`/post/hit?postId=${id}`);
+        //         setPet(res.data.data)
+        //     } catch (e) {
+        //         console.log(e)
+        //     }
+        // };
+        // getPets();
+        // if (user.id === pet.userId) {
+        //     setOperation("delete")
+        // }
+    }, [id]);
+    const handleDelete = () => {
+        console.log(1)
+    }
     return (
         <Container>
             <MainContainer>
@@ -127,7 +130,12 @@ function PetDetail({ data = {
                         <h3>领养条件： </h3>
                         {data.condition}
                     </FlexWrapper>
-                    <InfoForm style={{ alignSelf: "flex-end" }} />
+                    {operation === "delete" ?
+                        <Button variants="secondary" style={{ alignSelf: "flex-end", width: "initial" }} onClick={handleDelete}>删除该送养</Button>
+                        :
+                        <InfoForm style={{ alignSelf: "flex-end" }} />
+                    }
+
                 </InfoContainer>
 
             </MainContainer>

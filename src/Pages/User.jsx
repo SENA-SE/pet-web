@@ -107,7 +107,7 @@ const MenuList = ({user, data = [
     },
     {
         title: "送养",
-        options: [{ name: "待审核", path: "/send" },
+        options: [{ name: "已发布", path: "/send" },
         ]
     },
     {

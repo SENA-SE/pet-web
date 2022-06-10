@@ -27,11 +27,20 @@ const PreviewContainer = styled.div`
         object-fit: cover;
     }
 `
-function ImageUpload({ ...rest }) {
+function ImageUpload({ setValue, ...rest }) {
 
     const [selectedImages, setSelectedImages] = useState([])
     const onDrop = useCallback(acceptedFiles => {
         // TODO: 储存至全局变量
+        if (setValue) {
+            setValue(
+                acceptedFiles.map(file => (
+                    Object.assign(file, {
+                        preview: URL.createObjectURL(file)
+                    })
+                ))
+            )
+        }
         setSelectedImages(acceptedFiles.map(file => (
             Object.assign(file, {
                 preview: URL.createObjectURL(file)
