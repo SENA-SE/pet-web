@@ -17,7 +17,7 @@ import Notice from "./Pages/Notice";
 import NoticeDetail from "./Pages/NoticeDetail";
 import SendPet from "./Pages/SendPet";
 import User from "./Pages/User";
-import Login from "./Pages/Login"
+import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import {
   AdoptionRequest,
@@ -32,12 +32,11 @@ import {
 } from "./Pages/UserPanel";
 import Knowledge from "./Pages/Knowledge";
 import KnowledgePostDetail from "./Pages/KnowledgePostDetail";
-import {useSelector} from 'react-redux';
-// TODO: 正则
+import { useSelector } from "react-redux";
 export default function App() {
-  const user = useSelector(state => state.user.currentUser);
+  const user = useSelector((state) => state.user.currentUser);
   const userLogin = user === null ? false : true;
-  console.log(userLogin)
+  console.log(userLogin);
   return (
     <>
       <GlobalStyle />
@@ -57,15 +56,24 @@ export default function App() {
 
           <Route path="/notice" element={<Notice />}></Route>
           <Route path="/notice/:id" element={<NoticeDetail />}></Route>
-          <Route path="/send" element={userLogin? <SendPet /> : <Navigate to="/login"/>}></Route>
-          <Route path="/login" element={userLogin? <Navigate to="/"/> : <Login />}></Route>
-          <Route path="/register" element={userLogin? <Navigate to="/"/> : <Register />}></Route>
-          <Route path="/user" element={userLogin? <User user={user}/> : <Navigate to="/"/>}>
+          <Route
+            path="/send"
+            element={userLogin ? <SendPet /> : <Navigate to="/login" />}
+          ></Route>
+          <Route
+            path="/login"
+            element={userLogin ? <Navigate to="/" /> : <Login />}
+          ></Route>
+          <Route
+            path="/register"
+            element={userLogin ? <Navigate to="/" /> : <Register />}
+          ></Route>
+          <Route
+            path="/user"
+            element={userLogin ? <User user={user} /> : <Navigate to="/" />}
+          >
             <Route path="info/main" element={<DataForm />}></Route>
-            <Route
-              path="info/logout"
-              element={<LogOut />}
-            ></Route>
+            <Route path="info/logout" element={<LogOut />}></Route>
             <Route path="post/send" element={<SendPost />}></Route>
             <Route path="post/community" element={<CommunityPost />}></Route>
             <Route path="favorite/pets" element={<PetsFavorite />}></Route>
@@ -83,19 +91,6 @@ export default function App() {
               element={<AdoptionRequest />}
             ></Route>
           </Route>
-          {/* <Route path="/user/:title/:sub" element={<User />}></Route> */}
-
-          {/* <Route path="/products/:category" element={<ProductList />}></Route>
-    <Route path="/product/:id" element={<SingleProduct />}></Route>
-    <Route path="/cart" element={<Cart />}></Route>
-    <Route
-      path="/login"
-      element={userLogin ? <Navigate to="/" /> : <Login />}
-    ></Route>
-    <Route
-      path="/register"
-      element={userLogin ? <Navigate to="/" /> : <Register />}
-    ></Route> */}
         </Routes>
       </Router>
     </>

@@ -1,13 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import styled from 'styled-components'
-import { useNavigate } from 'react-router-dom'
-import {
-  Navigate,
-  Link,
-  MemoryRouter, Route, Routes, useLocation
-} from "react-router-dom";
+import { useNavigate, useLocation } from 'react-router-dom'
+
 
 const StyledTabs = styled(Tabs)`
     & .MuiTabs-indicator {
@@ -30,33 +26,34 @@ const StyledTab = styled(Tab)`
 `
 export default function TabFilter({ filters = [
   {
-    value: "1",
+    value: "10",
     name: "猫",
-    href: "/category=1"
+    href: "/category=10"
   },
   {
-    value: "2",
+    value: "11",
     name: "狗",
-    href: "/category=2"
+    href: "/category=11"
   },
   {
-    value: "3",
+    value: "12",
     name: "其他",
-    href: "/category=3"
+    href: "/category=12"
   },
 ], ...rest }) {
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const category = query.get('category');
+  const search = query.get('search')
   const [value, setValue] = useState(category || "0");
   const navigate = useNavigate();
   useEffect(() => {
     setValue(category);
-    navigate(`?category=${category}`);
-}, [category]);
+    navigate(`?${search ? `search=${search}&` : ""}category=${category}`);
+  }, [category]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    navigate(`?category=${newValue}`);
+    navigate(`?${search ? `search=${search}&` : ""}category=${newValue}`);
   };
 
   return (
@@ -70,7 +67,7 @@ export default function TabFilter({ filters = [
     >
       {filters.map(item =>
 
-        <StyledTab value={item.value} label={item.name} key={item.value}/>
+        <StyledTab value={item.value} label={item.name} key={item.value} />
 
       )}
     </StyledTabs>

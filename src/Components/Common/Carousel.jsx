@@ -23,7 +23,7 @@ const ImgContainer = styled.div`
   & .test {
     width:100%;
     height: 300px;
-    background: gray;
+    background: ${({ theme }) => theme.status.bg2};
     color: white;
   }
 `

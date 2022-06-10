@@ -27,6 +27,11 @@ const ImgContainer = styled.div`
     background: ${({ theme }) => theme.status.bg2};
     height: 190px;
     margin-bottom: 10px;
+    img {
+        width: 100%;
+        object-fit: cover;
+        height: 100%;
+    }
 `
 const InfoContainer = styled.div`
     display: flex;
@@ -49,14 +54,14 @@ function PetCard({ data }) {
     return (
         <Container>
             <ImgContainer>
-                <Link to={data.id}>
-                    {/* img */}
+                <Link to={`/adoption/${data.id}`}>
+                    <img src={data.images[0]} />
                 </Link>
             </ImgContainer>
             <InfoContainer style={{ fontSize: '18px' }}>
                 <FavoriteIcon color={collected ? "primary" : "secondary"} fontSize="small" sx={{ cursor: 'pointer', transition: '0.3s' }} onClick={handleCollect} />
-                <Link to={data.id}>
-                    {data.name}</Link>
+                <Link to={`/adoption/${data.id}`}>
+                    {data.name || "无名"}</Link>
 
             </InfoContainer>
             {/* <InfoContainer>
@@ -71,7 +76,7 @@ function PetCard({ data }) {
             </InfoContainer> */}
             <PetInfo data={data} style={{ marginBottom: "6px" }} />
             <InfoContainer>
-                {data.location}
+                {data.address}
             </InfoContainer>
         </Container>
     )

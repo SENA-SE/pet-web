@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ListSubheader from '@mui/material/ListSubheader';
+// import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -62,7 +62,7 @@ export default function NestedList({ data, label = "title" }) {
         {data.map(item =>
           <List component="div" disablePadding key={item.name}>
             <ListItemButton sx={{ pl: 4 }} onClick={() => handleFilter(item.name)}>
-              <ListItemText primary={item.name}/>
+              <ListItemText primary={item.name} />
               <ListItemIcon>
                 <CheckIcon fontSize="16" color={selected.includes(item.name) ? "primary" : "secondary"} />
               </ListItemIcon>

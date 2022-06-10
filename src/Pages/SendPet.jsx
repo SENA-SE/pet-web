@@ -24,6 +24,7 @@ import FormSelect from '../Components/Common/FormSelect';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 import FormRadio from '../Components/Common/FormRadio';
 
+
 const Container = styled.div`
     width: 100%;
     padding: 20px;
@@ -45,7 +46,6 @@ const StyledForm = styled.form`
 `
 
 
-
 // const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 // const save = async values => {
@@ -59,15 +59,15 @@ const selectData = [
     label: "类型",
     options: [
       {
-        value: "cat",
+        value: "10",
         name: "猫"
       },
       {
-        value: "dog",
+        value: "11",
         name: "狗"
       },
       {
-        value: "other",
+        value: "12",
         name: "其他"
       }
     ]
@@ -87,6 +87,20 @@ const selectData = [
       {
         value: "3",
         name: "大"
+      },
+    ]
+  },
+  {
+    name: "status",
+    label: "是否绝育",
+    options: [
+      {
+        value: "1",
+        name: "是"
+      },
+      {
+        value: "0",
+        name: "否"
       },
     ]
   },
@@ -138,15 +152,51 @@ const inputData = [
   }
 ]
 
-const PetForm = () => {
+const PetForm = ({ setAlert }) => {
   const [images, setImages] = useState([])
-  const onSubmit = (e) => {
-    console.log(e)
-    console.log(images)
-    debugger
+
+  const user = useSelector(state => state.user.currentUser);
+
+  const onSubmit = async (e) => {
+    let url = `/adopt/add?address=${e.address}&age=${e.age}&categoriesId=${e.categoriesId}&description=${e.description}&name=${e.name}&nickname=${e.nickname}&requirement=${e.requirement}&sex=${e.sex}&size=${e.size}&status=${e.status}&tel=${e.tel}`
+    // url = `/adopt/add?address=1&age=3&description=3&nickname=a&sex=male&size=a&tel=a&categoriesId=12`
+    try {
+      if (user) {
+        const TOKEN = user.token;
+
+        const files = images;
+        const formData = new FormData();
+        for (let i = 0; i < files.length; i++) {
+          formData.append("files", files[i]);
+        }
+        console.log(formData.get("files"))
+        axios({
+          url: `http://cyjspace.5gzvip.91tunnel.com:80${url}`,
+          method: "post",
+          data: formData,
+          headers: {
+            token: `${TOKEN}`,
+          },
+        })
+          .then(res => {
+            // console.log(res);
+            setAlert({ on: true, content: "发布成功", type: "success" })
+            setTimeout(() => setAlert({ on: false }), 3000);
+            document.body.scrollTop = document.documentElement.scrollTop = 0;
+          })
+          .catch(err => {
+            console.log(err);
+            setAlert({ on: true, content: `${e.message || "发布失败， 请重试"}`, type: "error" })
+            setTimeout(() => setAlert({ on: false }), 3000);
+          });
+      }
+    } catch (e) {
+      console.log(e)
+    } finally {
+      // window.location.reload()
+    }
   }
   const validate = (e) => {
-    console.log(e)
     const errors = {}
 
     if (e.description?.length > 200) {
@@ -165,6 +215,9 @@ const PetForm = () => {
     }
     if (!e.size) {
       errors.size = "不能为空"
+    }
+    if (!e.status) {
+      errors.status = "不能为空"
     }
     if (!e.age) {
       errors.age = "不能为空"
@@ -267,14 +320,15 @@ const PetForm = () => {
 
 // TODO: notice
 function SendPet() {
-
+  const [alert, setAlert] = useState({ on: false })
   return (
     <Container>
       <MainContainer style={{ width: " 40% ", minWidth: "610px" }}>
         <Header title="送养" />
         <Divider variant="middle" sx={{ marginY: "15px" }} />
+        {alert.on && <RequestNotification content={alert.content} type={alert.type} />}
         <FormContainer>
-          <PetForm />
+          <PetForm setAlert={setAlert} />
         </FormContainer>
       </MainContainer>
     </Container>

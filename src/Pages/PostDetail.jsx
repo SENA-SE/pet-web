@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import MainContainer from '../Components/Common/MainContainer'
 
 import Divider from '@mui/material/Divider';
-import {publicRequest} from '../requestMethods';
-import {useDispatch, useSelector} from 'react-redux';
+import { publicRequest } from '../requestMethods';
+import { useDispatch, useSelector } from 'react-redux';
 import RequestNotification from '../Components/Common/RequestNotification';
 import axios from 'axios';
 import { Link, MemoryRouter, Route, Routes, useLocation, useParams } from 'react-router-dom';
@@ -44,64 +44,55 @@ const Comment = ({ comment }) => {
         </Wrapper>
     )
 }
-// const Header = styled.div`
-//     position: relative;
-//     margin: 0 10px 15px 10px;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-// `
-
-//发送请求请求data
 
 function PostDetail() {
-    const {id} = useParams()
+    const { id } = useParams()
     const [post, setPost] = useState([])
     const [comments, setComments] = useState([])
     useEffect(() => {
         const getPost = async () => {
-            const res = await publicRequest.post(`/post/findById?id=${id}`); 
+            const res = await publicRequest.post(`/post/findById?id=${id}`);
             await publicRequest.post(`/post/hit?postId=${id}`);
             // console.log(res.data.data)
-           setPost(res.data.data)
+            setPost(res.data.data)
         }
         const getComments = async () => {
-        try {
-            const res = await publicRequest.post(`/comment/findComment?postId=${id}`); 
-            setComments(res.data.data)
-        } catch (e) {
-            console.log(e)
-        }
-    };
-    getPost();
-    getComments();
-}, [id]);
-const user = useSelector(state => state.user.currentUser);
-const [like, setLike] = useState("1")
+            try {
+                const res = await publicRequest.post(`/comment/findComment?postId=${id}`);
+                setComments(res.data.data)
+            } catch (e) {
+                console.log(e)
+            }
+        };
+        getPost();
+        getComments();
+    }, [id]);
+    const user = useSelector(state => state.user.currentUser);
+    const [like, setLike] = useState("1")
     const handleLike = async () => {
         try {
-            if(user) {
+            if (user) {
                 const TOKEN = user.token;
                 const userRequest = axios.create({
                     baseURL: 'http://cyjspace.5gzvip.91tunnel.com:80',
-                    headers:{token:`${TOKEN}`}
+                    headers: { token: `${TOKEN}` }
                 });
-            const res = await userRequest.post(`/post/like?postId=${id}&like=${like}`); 
-            // const test = await userRequest.post(`/post/findMyLike?categoriesId=-1&page=1&pageSize=10`)
-            setLike(like==="1"? "0" : "1")
-            // console.log(res)
-            } 
+                const res = await userRequest.post(`/post/like?postId=${id}&like=${like}`);
+                // const test = await userRequest.post(`/post/findMyLike?categoriesId=-1&page=1&pageSize=10`)
+                setLike(like === "1" ? "0" : "1")
+                // console.log(res)
+            }
         } catch (e) {
             console.log(e)
         }
-        
- }   
-  return (
+
+    }
+    return (
         <Container>
             <MainContainer >
                 <Wrapper>
                     <Header title={"查看帖子"} back>
-                        {user? <FavoriteIcon sx={{ cursor: 'pointer' }} color={like==="1" ? "gray" : "primary"} onClick={handleLike}/> : <></>}
+                        {user ? <FavoriteIcon sx={{ cursor: 'pointer', transition: "0.25s" }} color={like === "1" ? "gray" : "primary"} onClick={handleLike} /> : <></>}
 
                     </Header>
                     <Divider variant="middle" />
@@ -121,12 +112,12 @@ const [like, setLike] = useState("1")
 
 
                     {comments.map(item =>
-                        <Comment comment={item} key={item.id}/>
+                        <Comment comment={item} key={item.id} />
                     )}
 
                 </Wrapper>
             </MainContainer>
-            <WriteComment postId={id}/>
+            <WriteComment postId={id} />
         </Container>
     )
 }

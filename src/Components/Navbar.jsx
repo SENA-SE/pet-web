@@ -72,7 +72,7 @@ export default function NavTabs() {
             <Logo src={logo} style={{ flex: 1 }} />
             <TabContainer value={value} onChange={handleChange} sx={{ width: "100%", flex: 4, justifyContent: 'center' }}>
                 <LinkTab label="首页" href="/home" />
-                <LinkTab label="领养" href="/adoption?category=1" />
+                <LinkTab label="领养" href="/adoption?category=10" />
                 <LinkTab label="送养" href="/send" />
                 {/* <LinkTab label="科普" href="/knowledge" /> */}
                 <LinkTab label="社区" href="/community?category=1" />

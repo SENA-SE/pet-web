@@ -9,7 +9,7 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { Outlet } from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 const Container = styled.div`
     width: 100%;
     padding: 20px;
@@ -90,7 +90,7 @@ const MenuItem = ({ title = "个人资料", options = [{ name: "已申请", path
     );
 }
 
-const MenuList = ({user, data = [
+const MenuList = ({ user, data = [
     {
         title: "个人资料",
         options: [{ name: "基本资料", path: "/info/main" }, { name: "退出登陆", path: "/info/logout" }]
@@ -110,11 +110,11 @@ const MenuList = ({user, data = [
         options: [{ name: "已发布", path: "/send" },
         ]
     },
-    {
-        title: "领养",
-        options: [{ name: "已申请", path: "/adoption/request" },
-        ]
-    },
+    // {
+    //     title: "领养",
+    //     options: [{ name: "已申请", path: "/adoption/request" },
+    //     ]
+    // },
 ], ...rest }) => {
     return (
         <ListContainer>
@@ -142,10 +142,10 @@ function User(user) {
         <Container>
             <Wrapper>
                 <Left>
-                    <MenuList user={user}/>
+                    <MenuList user={user} />
                 </Left>
                 <Right>
-                    <Outlet user={user}/>
+                    <Outlet user={user} />
                 </Right>
             </Wrapper>
         </Container>

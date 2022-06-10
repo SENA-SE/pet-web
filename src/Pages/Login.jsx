@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import {login} from '../redux/apiCalls';
+import { login } from '../redux/apiCalls';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../Components/Common/Button'
 import { Link } from 'react-router-dom';
-
+import bgImg from '../img/bg3.svg'
 const Container = styled.div`
-    width:100vw;
+    // width:100vw;
     height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
+    background: url(${bgImg}) no-repeat;
+    background-position: right top;
+    background-size: 1000px;
 `;
 const Wrapper = styled.div`
     width:450px;
@@ -18,6 +21,10 @@ const Wrapper = styled.div`
     display:flex;
     flex-direction:column;
     align-items:center;
+    transform: translate(-500px, 10px);
+    background: rgba(255,255,255,.95);
+    box-shadow: 0 2px 6px 0 rgba(0,0,0,0.1);
+    border-radius: 5px;
 `;
 const Title = styled.h1`
     font-size:45px;
@@ -94,7 +101,7 @@ export default function Login() {
     const handleLogin = (e) => {
         e.preventDefault();
         // console.log(tel, password)
-        login(dispatch,{tel,password})
+        login(dispatch, { tel, password })
     }
     const { isFetching, isError, message } = useSelector(state => state.user);
     return (
@@ -107,7 +114,7 @@ export default function Login() {
                     <Label for="password">密码</Label><Input id="password" onFocus={focusFn} onBlur={blurFn} onChange={(e) => setPassword(e.target.value)} type="password" />
                     <Button onClick={handleLogin} disabled={isFetching} style={{ width: "100%" }}>登录</Button>
                     {/* <Link>DO NOT REMEMBER YOUR PASSWORD?</Link> */}
-                    <Link to={"/register"} style={{fontSize: "16px", marginTop: "10px"}}>
+                    <Link to={"/register"} style={{ fontSize: "16px", marginTop: "10px" }}>
                         没有账号？
                         <StyledLink>
                             注册一个

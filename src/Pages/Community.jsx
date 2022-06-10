@@ -4,7 +4,7 @@
 // 或者直接获取tag后filter网络请求获取
 // 数据： filter，page
 // 提交时需要验证，并通知
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import Divider from '@mui/material/Divider';
 import MainContainer from '../Components/Common/MainContainer'
@@ -15,8 +15,8 @@ import TextArea from '../Components/Common/TextArea';
 import Selector from '../Components/Common/Selector';
 import Button from '../Components/Common/Button';
 import PaginationLink from '../Components/Common/Pagination';
-import {publicRequest} from '../requestMethods';
-import {useDispatch, useSelector} from 'react-redux';
+import { publicRequest } from '../requestMethods';
+import { useSelector } from 'react-redux';
 import RequestNotification from '../Components/Common/RequestNotification';
 import axios from 'axios';
 import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
@@ -93,39 +93,39 @@ export const Comment = ({ header, data, label, postId }) => {
     const [postCategory, setPostCategory] = useState("1")
     const [postContent, setPostContent] = useState("")
     const user = useSelector(state => state.user.currentUser);
-    const [alert, setAlert] = useState({on: false})
+    const [alert, setAlert] = useState({ on: false })
     const onSubmit = async () => {
-       try {
-           
-           if(user) {
-            const TOKEN = user.token;
-            const userRequest = axios.create({
-                baseURL: 'http://cyjspace.5gzvip.91tunnel.com:80',
-                headers:{token:`${TOKEN}`}
-            });
-            if(postContent==="") {
-                throw new Error("请填写内容")
-               } 
-            if(header) {
-                const post = {categoriesId: postCategory, content: postContent}
-            const res = await userRequest.post(`/post/add`, post);
-            } else {
-                const postComment = {postId, content: postContent}
-                const res = await userRequest.post(`/comment/add`, postComment);
-                console.log(res)
-            }
-            setAlert({on: true, content: "发布成功", type:"success"})
-            setTimeout(() => setAlert({on: false}), 3000)
-           } 
-           else {
-               throw new Error("请先登录")
-           }
+        try {
 
-    }
+            if (user) {
+                const TOKEN = user.token;
+                const userRequest = axios.create({
+                    baseURL: 'http://cyjspace.5gzvip.91tunnel.com:80',
+                    headers: { token: `${TOKEN}` }
+                });
+                if (postContent === "") {
+                    throw new Error("请填写内容")
+                }
+                if (header) {
+                    const post = { categoriesId: postCategory, content: postContent }
+                    const res = await userRequest.post(`/post/add`, post);
+                } else {
+                    const postComment = { postId, content: postContent }
+                    const res = await userRequest.post(`/comment/add`, postComment);
+                    console.log(res)
+                }
+                setAlert({ on: true, content: "发布成功", type: "success" })
+                setTimeout(() => setAlert({ on: false }), 3000)
+            }
+            else {
+                throw new Error("请先登录")
+            }
+
+        }
         catch (e) {
             console.log(e)
-            setAlert({on: true, content: `${e.message || "发布失败， 请重试"}`, type:"error"})
-                setTimeout(() => setAlert({on: false}), 3000)
+            setAlert({ on: true, content: `${e.message || "发布失败， 请重试"}`, type: "error" })
+            setTimeout(() => setAlert({ on: false }), 3000)
 
         } finally {
             window.location.reload()
@@ -133,20 +133,20 @@ export const Comment = ({ header, data, label, postId }) => {
     }
     return (
         <MainContainer>
-            {alert.on && <RequestNotification content={alert.content} type={alert.type}/>}
+            {alert.on && <RequestNotification content={alert.content} type={alert.type} />}
 
             <FlexWrapper column>
                 {header && <FlexWrapper style={{ alignItems: 'center', justifyContent: 'space-between' }}>
                     <h3>发帖</h3>
                     <Selector setValue={setPostCategory} data={data} label={label} noDefault />
                 </FlexWrapper>}
-                <TextArea setValue={setPostContent}/>
+                <TextArea setValue={setPostContent} />
                 <Button variants="secondary" style={{ alignSelf: 'flex-end', width: '200px' }} onClick={onSubmit}>提交</Button>
             </FlexWrapper>
         </MainContainer>
     )
 }
-function Community({search, sort}) {
+function Community({ search, sort }) {
     const [posts, setPosts] = useState([]);
     const [pages, setPages] = useState(1);
     // const [keyword, setKeyWord] = useState("")
@@ -157,30 +157,30 @@ function Community({search, sort}) {
     const category = parseInt(query.get('category') || '1', 10);
     useEffect(() => {
         const getPosts = async () => {
-        try {
-        const res = await publicRequest.post(`/post/findPost?categoriesId=${category}&page=${page}&pageSize=10`)
-        const getAll = await publicRequest.post(`/post/findPost?categoriesId=${category}&page=1&pageSize=50`)
-            setPosts(res.data.data)
-            setPages(Math.ceil(getAll.data.data.length / 10))
-        } catch (e) {
-            console.log(e)
-        }
-    };
-    getPosts();
-}, [category, page]);
+            try {
+                const res = await publicRequest.post(`/post/findPost?categoriesId=${category}&page=${page}&pageSize=10`)
+                const getAll = await publicRequest.post(`/post/findPost?categoriesId=${category}&page=1&pageSize=50`)
+                setPosts(res.data.data)
+                setPages(Math.ceil(getAll.data.data.length / 10))
+            } catch (e) {
+                console.log(e)
+            }
+        };
+        getPosts();
+    }, [category, page]);
     return (
         <Container>
             <MainContainer>
-                <FilterHeader filter={false} tabData={tags}  />
+                <FilterHeader filter={false} tabData={tags} />
                 <Divider variant="middle" sx={{ marginY: "15px" }} />
                 <PostsContainer>
                     {posts.map(item =>
                         <Post data={item} />
                     )}
-                    <PaginationLink right path={"community"} pages={pages}/>
+                    <PaginationLink right path={"community"} pages={pages} />
                 </PostsContainer>
             </MainContainer>
-            <Comment header label={"话题"} data={tags}/>
+            <Comment header label={"话题"} data={tags} />
         </Container>
     )
 }

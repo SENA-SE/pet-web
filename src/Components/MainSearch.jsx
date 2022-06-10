@@ -1,9 +1,10 @@
 import React from 'react'
+import { useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import { useState } from 'react'
 import logo from '@mui/icons-material/LocationOnOutlined';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
@@ -36,14 +37,15 @@ function MainSearch() {
   });
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
-    console.log(values)
+    // console.log(values)
   };
+
+  const navigate = useNavigate();
+  const handleSearch = () => {
+    navigate(`/adoption?search=${values.keyword}&category=10`)
+  }
   return (
     <Container>
-      {/* <Paper
-      component="form"
-      sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '100%' }}
-    > */}
       <Wrapper focus={isFocused}>
         <IconButton sx={{ p: 0, m: 0.5, height: 35 }} aria-label="menu">
           <img src={logo1} style={{ height: "100%" }} />
@@ -64,7 +66,7 @@ function MainSearch() {
           })} />
         </IconButton>
         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-        <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
+        <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions" onClick={handleSearch}>
           <TravelExploreIcon />
         </IconButton>
       </Wrapper>

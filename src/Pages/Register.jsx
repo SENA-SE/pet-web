@@ -6,14 +6,17 @@ import { publicRequest } from '../requestMethods'
 import { login } from '../redux/apiCalls';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../redux/apiCalls';
+import bgImg from '../img/bg4.svg'
 
 const Container = styled.div`
-    width:100vw;
+    // width:100vw;
     height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
-
+    background: url(${bgImg}) no-repeat;
+    background-position: left top;
+    background-size: 1100px;
     .error {
         color: #b30d0d;
         font-size: 16px;
@@ -21,11 +24,15 @@ const Container = styled.div`
     }
 `;
 const Wrapper = styled.div`
-    width:450px;
+    width:500px;
     padding:40px;
     display:flex;
     flex-direction:column;
     align-items:center;
+    transform: translate(450px, 10px);
+    background: rgba(255,255,255,.95);
+    box-shadow: 0 2px 6px 0 rgba(0,0,0,0.1);
+    border-radius: 5px;
 `;
 const Title = styled.h1`
     font-size:45px;

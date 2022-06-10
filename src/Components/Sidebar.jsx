@@ -9,20 +9,32 @@ width: 25%;
 padding: 10px;
 // background: pink;
 `
-const species = [
+const gender = [
     {
-        name: "萨摩耶",
+        name: "男",
+        value: "1"
     },
     {
-        name: "哈士奇",
+        name: "女",
+        value: "2"
+    },
+    {
+        name: "其他",
+        value: "3"
     },
 ]
 const size = [
     {
         name: "小",
+        value: "1"
     },
     {
         name: "中",
+        value: "2"
+    },
+    {
+        name: "大",
+        value: "3"
     },
 ]
 function Sidebar() {
@@ -37,11 +49,10 @@ function Sidebar() {
     // );
     return (
         <Container>
-            <Filter data={species} label="种类" />
+            <Filter data={gender} label="宠物性别" />
             <Divider variant="middle" />
-            <Filter data={size} label="尺寸" />
-            <Divider variant="middle" />
-            <Filter data={size} label="尺寸" />
+            <Filter data={size} label="宠物尺寸" />
+
             {/* //TODO: 清除所有 
             // 年龄*/}
         </Container>

@@ -93,12 +93,6 @@ function PetDetail({ data = {
     return (
         <Container>
             <MainContainer>
-                {/* <Header>
-                    <ArrowBackIosIcon sx={{ cursor: 'pointer' }} />
-                    <h2>{data.name}</h2>
-                    <FavoriteIcon sx={{ cursor: 'pointer' }} />
-
-                </Header> */}
                 <Header title={data.name} back>
                     <FavoriteIcon sx={{ cursor: 'pointer' }} />
                 </Header>
@@ -133,7 +127,8 @@ function PetDetail({ data = {
                     {operation === "delete" ?
                         <Button variants="secondary" style={{ alignSelf: "flex-end", width: "initial" }} onClick={handleDelete}>删除该送养</Button>
                         :
-                        <InfoForm style={{ alignSelf: "flex-end" }} />
+                        // <InfoForm style={{ alignSelf: "flex-end" }} />
+                        <></>
                     }
 
                 </InfoContainer>

@@ -11,15 +11,15 @@ const Container = styled.div`
     font-size: 16px;
 `
 
-function PetInfo({ data = { age: "3周岁", species: "哈士奇", gender: "male" }, ...rest }) {
+function PetInfo({ data = { age: "3周岁", species: "哈士奇", sex: "male" }, ...rest }) {
     // console.log(data)
     return (
         <Container {...rest}>
             {data.age}
             <Divider orientation="vertical" variant="middle" flexItem />
-            {data.species}
-            <Divider orientation="vertical" variant="middle" flexItem />
-            {data.gender === "female" ? <FemaleIcon color="primary" fontSize="small" />
+            {/* {data.species}
+            <Divider orientation="vertical" variant="middle" flexItem /> */}
+            {data.sex === "female" ? <FemaleIcon color="primary" fontSize="small" />
                 :
                 <MaleIcon color="primary" fontSize="small" />
             }
