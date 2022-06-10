@@ -98,18 +98,6 @@ function Adoption() {
         );
       }
     }
-    //  else if (sort === 'Pasc') {
-    //     setFilteredProducts((prev) =>
-    //         [...prev].sort((a, b) => a.price - b.price)
-    //     );
-    //     // console.log([...filteredProducts].sort((a, b) => a.price - b.price));
-    // } 
-    //else if (sort === 'Pdesc') {
-    //     setFilteredProducts((prev) =>
-    //         [...prev].sort((a, b) => b.price - a.price)
-    //     );
-    //     // console.log([...filteredProducts].sort((a, b) => b.price - a.price));
-    // }
   }, [sort])
   return (
     <Container>

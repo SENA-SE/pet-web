@@ -127,6 +127,7 @@ function PetDetail() {
                                 return <Status confirm={pet.status[key] && true} key={index}>{key}</Status>
                             })
                         }</FlexWrapper> */}
+                        {console.log(pet?.status === "0")}
                         <Status confirm={parseInt(pet?.status)}>{pet?.status === "0" ? "未绝育" : "已绝育"}</Status>
                     </FlexWrapper>
                     <FlexWrapper>创建时间： {pet?.createTime}</FlexWrapper>

@@ -159,7 +159,7 @@ const PetForm = ({ setAlert }) => {
 
   const onSubmit = async (e) => {
     let url = `/adopt/add?address=${e.address}&age=${e.age}&categoriesId=${e.categoriesId}&description=${e.description}&name=${e.name}&nickname=${e.nickname}&requirement=${e.requirement}&sex=${e.sex}&size=${e.size}&status=${e.status}&tel=${e.tel}`
-    // url = `/adopt/add?address=1&age=3&description=3&nickname=a&sex=male&size=a&tel=a&categoriesId=12`
+    console.log(url)
     try {
       if (user) {
         const TOKEN = user.token;
@@ -169,7 +169,7 @@ const PetForm = ({ setAlert }) => {
         for (let i = 0; i < files.length; i++) {
           formData.append("files", files[i]);
         }
-        console.log(formData.get("files"))
+        // console.log(formData.get("files"))
         axios({
           url: `http://cyjspace.5gzvip.91tunnel.com:80${url}`,
           method: "post",

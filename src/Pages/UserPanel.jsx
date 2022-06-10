@@ -23,6 +23,7 @@ import axios from 'axios';
 import RequestNotification from '../Components/Common/RequestNotification';
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import ImageUpload from '../Components/Common/ImageUpload';
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -43,101 +44,11 @@ const IconContainer = styled.div`
     height: 180px;
     border-radius: 50%;
     background-color: ${({ theme }) => theme.status.bg2}; 
-    cursor: pointer;
     margin: auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
 `
-
-// const selectData = [
-//     {
-//         name: "type",
-//         label: "类型",
-//         options: [
-//             {
-//                 value: "cat",
-//                 name: "猫"
-//             },
-//             {
-//                 value: "dog",
-//                 name: "狗"
-//             },
-//         ]
-//     },
-//     {
-//         name: "species",
-//         label: "品种",
-//         options: [
-//             {
-//                 value: "cat",
-//                 name: "猫"
-//             },
-//             {
-//                 value: "dog",
-//                 name: "狗"
-//             },
-//         ]
-//     },
-//     {
-//         name: "size",
-//         label: "尺寸",
-//         options: [
-//             {
-//                 value: "small",
-//                 name: "小"
-//             },
-//             {
-//                 value: "big",
-//                 name: "大"
-//             },
-//         ]
-//     },
-
-// ]
-// const inputData = [
-//     {
-//         name: "age",
-//         label: "年龄",
-//         placeholder: "请输入宠物年龄（必填）",
-//     },
-//     {
-//         name: "petName",
-//         label: "宠物昵称",
-//         placeholder: "请输入宠物昵称（必填）",
-//     },
-//     {
-//         name: "location",
-//         label: "联系人地址",
-//         placeholder: "请输入联系人地址（必填）",
-//     },
-//     {
-//         name: "owner",
-//         label: "联系人称呼",
-//         placeholder: "请输入联系人称呼（必填）",
-//     },
-//     {
-//         name: "email",
-//         label: "联系人邮箱",
-//         placeholder: "请输入联系人邮箱（必填）",
-//     },
-//     {
-//         name: "description",
-//         label: "宠物描述",
-//         placeholder: "可填写宠物的性格特征等，200字以内（必填）",
-//         multiline: true,
-//     },
-//     {
-//         name: "condition",
-//         label: "领养要求",
-//         placeholder: "请输入领养要求，200字以内（必填）",
-//         multiline: true,
-//     },
-//     {
-//         name: "gender",
-//         label: "性别",
-//         radioOptions: [{ label: "男", value: "male", name: "gender" },
-//         { label: "女", value: "female", name: "gender" },
-//         { label: "其他", value: "other", name: "gender" },]
-//     }
-// ]
 
 
 export const DataForm = () => {
@@ -149,7 +60,6 @@ export const DataForm = () => {
     });
     const initialData = {
         sex: user.sex,
-        location: user.location,
         introduce: user.introduce,
         email: user.email,
     }
@@ -163,22 +73,31 @@ export const DataForm = () => {
 
     const dispatch = useDispatch();
     const [alert, setAlert] = useState({ on: false })
+    const [icon, setIcon] = useState(null)
     const onSubmit = async (e) => {
         try {
             if (!e.username) {
                 e.username = user.username
             }
 
-            // const updateRequest = userRequest(user.token)
-            // try {
-            //     const res = updateRequest.post(`/update`, e)
-            //     console.log(res)
-            // } catch (err) {
-            //     console.log(err)
-            // }
+            const file = icon;
+            if (icon !== null) {
+                const formData = new FormData();
+                for (let i = 0; i < file.length; i++) {
+                    formData.append("file", file[i]);
+                }
+                const res = await axios({
+                    url: `http://cyjspace.5gzvip.91tunnel.com:80/user/upload`,
+                    method: "post",
+                    data: formData,
+                    headers: {
+                        token: `${TOKEN}`,
+                    },
+                })
+                e.avatar = res.data.data
+            }
             const update = await userRequest.post(`/update`, e);
             const newInfo = await userRequest.post('/information');
-
             dispatch(loginSuccess({ ...newInfo.data.data, token: TOKEN }));
             setAlert({ on: true, content: "修改成功", type: "success" })
             setTimeout(() => setAlert({ on: false }), 3000)
@@ -201,7 +120,9 @@ export const DataForm = () => {
             </>
             {alert.on && <RequestNotification content={alert.content} type={alert.type} />}
             <FormContainer>
-                <IconContainer onClick={() => console.log('uploadImg')} />
+                <IconContainer>
+                    <ImageUpload max={1} setValue={setIcon} />
+                </IconContainer>
                 <Form
                     onSubmit={onSubmit}
                     validate={validate}
@@ -224,7 +145,7 @@ export const DataForm = () => {
                             />
                             <FormRadio label='性别' />
 
-                            <Field
+                            {/* <Field
                                 name={"location"}
                                 required={true}
                                 key={"location"}
@@ -236,7 +157,7 @@ export const DataForm = () => {
                                         {meta.touched && meta.error && <span className="error">{meta.error}</span>}
                                     </FormInput>
                                 )}
-                            />
+                            /> */}
 
                             <Field
                                 name={"email"}

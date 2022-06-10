@@ -27,11 +27,10 @@ const PreviewContainer = styled.div`
         object-fit: cover;
     }
 `
-function ImageUpload({ setValue, ...rest }) {
+function ImageUpload({ setValue, max = 9, ...rest }) {
 
     const [selectedImages, setSelectedImages] = useState([])
     const onDrop = useCallback(acceptedFiles => {
-        // TODO: 储存至全局变量
         if (setValue) {
             setValue(
                 acceptedFiles.map(file => (
@@ -53,7 +52,7 @@ function ImageUpload({ setValue, ...rest }) {
             'image/jpeg': [],
             'image/png': []
         },
-        maxFiles: 9
+        maxFiles: max
     })
     const selected_images = selectedImages?.map(file => (
         <div>
@@ -62,33 +61,18 @@ function ImageUpload({ setValue, ...rest }) {
     ))
 
     return (
-        // <Container className="container">
-        //     <div {...getRootProps({ className: 'dropzone' })}>
-        //         <input {...getInputProps()} />
-        //         <p>点击此处上传图片，至多9张</p>
-        //         <em>(只接受 *.jpeg and *.png 格式图片)</em>
-        //     </div>
-        //     <aside>
-        //         <h4>Accepted files</h4>
-        //         <ul>{acceptedFileItems}</ul>
-        //         <h4>Rejected files</h4>
-        //         <ul>{fileRejectionItems}</ul>
-        //     </aside>
-
-        // </Container>
-
         <Container>
             <div {...getRootProps()}>
                 <input {...getInputProps()} {...rest} />
-                <StyledSpan style={{ cursor: "pointer" }}>点击此处上传图片，至多9张</StyledSpan><br />
+                <StyledSpan style={{ cursor: "pointer" }}>点击此处上传图片{max !== 1 && `，至多${max}张`}</StyledSpan><br />
             </div>
-            <StyledSpan >(只接受 *.jpeg and *.png 格式图片)</StyledSpan>
+            {max !== 1 && <StyledSpan >(只接受 *.jpeg and *.png 格式图片)</StyledSpan>}
 
             <PreviewContainer>
                 {selected_images}
             </PreviewContainer>
-
         </Container>
+
     );
 
 }

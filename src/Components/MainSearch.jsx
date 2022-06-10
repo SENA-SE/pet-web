@@ -47,12 +47,12 @@ function MainSearch() {
   return (
     <Container>
       <Wrapper focus={isFocused}>
-        <IconButton sx={{ p: 0, m: 0.5, height: 35 }} aria-label="menu">
+        <IconButton sx={{ p: 0, m: 0.5, height: 35, cursor: 'initial' }} aria-label="menu">
           <img src={logo1} style={{ height: "100%" }} />
         </IconButton>
         <StyledInputBase
           sx={{ ml: 1, flex: 1 }}
-          placeholder="Find Your Pet"
+          placeholder="开始寻宠之旅"
           inputProps={{ 'aria-label': 'search pet' }}
           onFocus={() => { setIsFocused(true) }}
           onBlur={() => { setIsFocused(false) }}
