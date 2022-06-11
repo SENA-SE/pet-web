@@ -74,11 +74,6 @@ const StyledInput = styled(TextField)`
 
 `
 function FormInput({ label, file, date, setValue, children, ...rest }) {
-    // const [value, setValue] = React.useState("");
-    // const handleNumber = (e) => {
-    //     let numberVal = e.target.value.replace(/[^\d]/, '');
-    //     setValue(numberVal)
-    // }
     return (
         <Container>
             <Wrapper>

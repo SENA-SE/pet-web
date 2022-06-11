@@ -4,8 +4,6 @@ const Container = styled.div`
     // height: 120vh;
     padding: 20px;
     width: 70%;
-    //TODO: 不同breakpoint不同的width百分比，min-width删除
-    // min-width: 1020px;
     border-radius: 5px;
     box-shadow:
         0px 1.1px 4.1px rgba(0, 0, 0, 0.057),

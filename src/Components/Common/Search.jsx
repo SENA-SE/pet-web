@@ -40,6 +40,12 @@ function Search({ setKeyWord, handleSearch, ...rest }) {
         }
         setValue(event.target.value);
     };
+    const handleClear = () => {
+        if (setKeyWord) {
+            setKeyWord("");
+        }
+        setValue("");
+    }
     return (
         <Container {...rest}>
             <Wrapper focus={isFocused}>
@@ -54,7 +60,7 @@ function Search({ setKeyWord, handleSearch, ...rest }) {
                 />
                 {value &&
                     <IconButton sx={{ p: '10px' }} aria-label="delete">
-                        <HighlightOffOutlinedIcon onClick={() => setKeyWord("")} fontSize='small' />
+                        <HighlightOffOutlinedIcon onClick={handleClear} fontSize='small' />
                     </IconButton>}
                 <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
                 <IconButton color="primary" sx={{ p: '10px' }} aria-label="search" onClick={handleSearch}>

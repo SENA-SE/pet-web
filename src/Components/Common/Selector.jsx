@@ -47,7 +47,7 @@ export default function Selector({ data = [
 
     const handleChange = (event) => {
         setSelected(event.target.value);
-        if(setSort) {
+        if (setSort) {
             setSort(event.target.value);
         }
     };

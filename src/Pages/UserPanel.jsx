@@ -1,28 +1,21 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom';
 import styled from 'styled-components'
-
 import Button from '../Components/Common/Button';
 import { Form, Field } from 'react-final-form'
 import FormInput from '../Components/Common/FormInput';
 import FormRadio from '../Components/Common/FormRadio';
-import FormSelect from '../Components/Common/FormSelect';
-
 import Header from '../Components/Common/Header';
 import { Divider } from '@mui/material';
 import PetList from '../Components/PetList';
 import PaginationLink from '../Components/Common/Pagination';
 import { Post } from './Community';
-import TabFilter from '../Components/Common/TabFilter';
 import { KnowledgePost } from './Knowledge';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginStart, loginSuccess, loginFailure } from '../redux/userRedux';
-// import {userRequest} from '../requestMethods';
+import { loginSuccess } from '../redux/userRedux';
 import axios from 'axios';
 import RequestNotification from '../Components/Common/RequestNotification';
 import MuiAlert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 import ImageUpload from '../Components/Common/ImageUpload';
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;

@@ -2,7 +2,7 @@
 // list处获取query（redux），page（用location获取）为依赖进行请求
 // MIXIN: favorite 发送请求，await，变色，返回收藏夹，更新收藏夹（redux），通知收藏成功
 import React, { useEffect, useState } from 'react';
-import { Link, MemoryRouter, Route, Routes, useLocation, useParams, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import PetList from '../Components/PetList'
 import styled from 'styled-components'
 import Sidebar from '../Components/Sidebar'

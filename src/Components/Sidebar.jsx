@@ -46,14 +46,10 @@ const size = [
 function Sidebar({ setValue, handleFilter }) {
     const [selected, setSelected] = useState({});
     const handleSelect = (newObj) => {
-        // console.log(newObj)
-        // debugger
         const updatedObj = { ...selected }
         updatedObj[newObj.queryName] = newObj.value
-        // console.log(updatedObj)
         setSelected({ ...updatedObj })
         handleFilter(updatedObj)
-        // console.log(selected)
 
     }
 
@@ -62,7 +58,7 @@ function Sidebar({ setValue, handleFilter }) {
             <Filter data={gender} handleSet={handleSelect} queryName="sex" label="宠物性别" />
             <Divider variant="middle" />
             <Filter data={size} handleSet={handleSelect} queryName="size" label="宠物尺寸" />
-            <Button style={{ width: '80%', marginTop: '8rem' }} onClick={() => window.location.reload()}>清除所有</Button>
+            {/* <Button style={{ width: '80%', marginTop: '8rem' }} onClick={() => window.location.reload()}>清除所有</Button> */}
         </Container>
     )
 }

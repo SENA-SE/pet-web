@@ -4,10 +4,9 @@ import MainContainer from '../Components/Common/MainContainer'
 
 import Divider from '@mui/material/Divider';
 import { publicRequest } from '../requestMethods';
-import { useDispatch, useSelector } from 'react-redux';
-import RequestNotification from '../Components/Common/RequestNotification';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { Link, MemoryRouter, Route, Routes, useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import Header from '../Components/Common/Header';
 import PostInfo from '../Components/Common/PostInfo';
@@ -53,7 +52,6 @@ function PostDetail() {
         const getPost = async () => {
             const res = await publicRequest.post(`/post/findById?id=${id}`);
             await publicRequest.post(`/post/hit?postId=${id}`);
-            // console.log(res.data.data)
             setPost(res.data.data)
         }
         const getComments = async () => {
@@ -78,10 +76,8 @@ function PostDetail() {
                     headers: { token: `${TOKEN}` }
                 });
                 const res = await userRequest.post(`/post/like?postId=${id}&like=${like}`);
-                // const test = await userRequest.post(`/post/findMyLike?categoriesId=-1&page=1&pageSize=10`)
                 console.log(like)
                 setLike(like === "1" ? "0" : "1")
-                // console.log(res)
             }
         } catch (e) {
             console.log(e)

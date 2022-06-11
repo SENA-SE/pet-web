@@ -79,7 +79,6 @@
 
 // 单选
 import * as React from 'react';
-// import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -101,7 +100,6 @@ const StyledList = styled(List)`
 export default function NestedList({ data, handleSet, queryName, label = "title" }) {
   const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = React.useState("");
-  //handle clear，点击all触发
   const handleClick = () => {
     setOpen(!open);
   };
@@ -110,7 +108,6 @@ export default function NestedList({ data, handleSet, queryName, label = "title"
     if (handleSet) {
       handleSet({ queryName, value: value })
     }
-    // console.log(selected)
   };
   return (
     <StyledList

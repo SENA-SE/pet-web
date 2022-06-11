@@ -57,7 +57,6 @@ const filters = [
     },
 ];
 
-// useEffect path改变时获取数据
 function Notice() {
     const location = useLocation();
     const query = new URLSearchParams(location.search);

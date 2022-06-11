@@ -18,23 +18,23 @@ const Wrapper = styled.div`
     font-size: 14px;
     gap: 3px;
 `
-function ViewInfo({data={read: 100, favorite: 50, comment: 25}, ...rest}) {
-  return (
-    <Container {...rest}>
-        <Wrapper>
-            <VisibilityOutlinedIcon color="secondary" sx={{fontSize: 18}}/>
-            <span>{data.read}</span>
-        </Wrapper>
-        <Wrapper>
-            <FavoriteBorderOutlinedIcon color="secondary" sx={{fontSize: 18}}/>
-            <span>{data.favorite}</span>
-        </Wrapper>
-        <Wrapper>
-            <ChatBubbleOutlineIcon color="secondary" sx={{fontSize: 18}}/>
-            <span>{data.comment}</span>
-        </Wrapper>
-    </Container>
-  )
+function ViewInfo({ data = { read: 100, favorite: 50, comment: 25 }, ...rest }) {
+    return (
+        <Container {...rest}>
+            <Wrapper>
+                <VisibilityOutlinedIcon color="secondary" sx={{ fontSize: 18 }} />
+                <span>{data.read}</span>
+            </Wrapper>
+            <Wrapper>
+                <FavoriteBorderOutlinedIcon color="secondary" sx={{ fontSize: 18 }} />
+                <span>{data.favorite}</span>
+            </Wrapper>
+            <Wrapper>
+                <ChatBubbleOutlineIcon color="secondary" sx={{ fontSize: 18 }} />
+                <span>{data.comment}</span>
+            </Wrapper>
+        </Container>
+    )
 }
 
 export default ViewInfo

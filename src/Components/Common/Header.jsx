@@ -2,8 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
-// import Divider from '@mui/material/Divider';
-
 const Container = styled.div`
     position: relative;
     margin: 0 10px 10px 10px;

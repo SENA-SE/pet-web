@@ -3,9 +3,7 @@ import * as React from 'react';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import { Form, Field } from 'react-final-form';
+import { Field } from 'react-final-form';
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -36,41 +34,42 @@ const Wrapper = styled.div`
 
     }
 `
-function FormRadio({ label="label", radioOptions=[{label: "男", value: "male", name: "sex"}, 
-{label: "女", value: "female", name: "sex"},{label: "其他", value: "other", name: "sex"},], children, ...rest }) {
+function FormRadio({ label = "label", radioOptions = [{ label: "男", value: "male", name: "sex" },
+{ label: "女", value: "female", name: "sex" }, { label: "其他", value: "other", name: "sex" },], children, ...rest }) {
   return (
     <Container>
-    <Wrapper>
+      <Wrapper>
         <label>{label}</label>
-    </Wrapper>
-    <Wrapper>
-    <RadioGroup
-            row>
-            {radioOptions.map((item, index) => (
-              <Field
+      </Wrapper>
+      <Wrapper>
+        <RadioGroup
+          row>
+          {radioOptions.map((item, index) => (
+            <Field
               name={item.name}
               key={index}
-              type="radio"        
+              type="radio"
               value={item.value}
               render={({ input, meta, values }) => (
-                <FormControlLabel 
-                value={item.value} 
-                control={<Radio size="small" />} 
-                label={item.label} 
-                sx={{'& .MuiFormControlLabel-label':{fontSize: '16px'},
-                '& .MuiSvgIcon-root': {
-                  fontSize: 16,
-                },
-              }}
-                {...input}/>
+                <FormControlLabel
+                  value={item.value}
+                  control={<Radio size="small" />}
+                  label={item.label}
+                  sx={{
+                    '& .MuiFormControlLabel-label': { fontSize: '16px' },
+                    '& .MuiSvgIcon-root': {
+                      fontSize: 16,
+                    },
+                  }}
+                  {...input} />
 
               )}
             />
-            ))}
-            </RadioGroup>
-    </Wrapper>
+          ))}
+        </RadioGroup>
+      </Wrapper>
 
-</Container>
+    </Container>
   )
 }
 

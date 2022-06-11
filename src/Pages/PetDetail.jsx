@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { publicRequest } from '../requestMethods';
-import { useDispatch, useSelector } from 'react-redux';
-import RequestNotification from '../Components/Common/RequestNotification';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { Link, MemoryRouter, Route, Routes, useLocation, useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import MainContainer from '../Components/Common/MainContainer'
 import styled from 'styled-components'
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Divider from '@mui/material/Divider';
 import PetInfo from '../Components/Common/PetInfo';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import Carousel from '../Components/Common/Carousel'
-import InfoForm from '../Components/AdoptionRequest'
 import Header from '../Components/Common/Header'
-import Button from '../Components/Common/Button'
 import DeleteDialog from '../Components/Common/DeleteDialog';
 import PhoneIcon from '@mui/icons-material/Phone';
 const Container = styled.div`
@@ -129,7 +125,7 @@ function PetDetail() {
                 <Divider variant="middle" sx={{ marginBottom: "15px" }} />
                 <Carousel images={pet?.images} />
                 <InfoContainer>
-                    <FlexWrapper style={{fontSize: 16}}>创建时间： {pet?.createTime}</FlexWrapper>
+                    <FlexWrapper style={{ fontSize: 16 }}>创建时间： {pet?.createTime}</FlexWrapper>
                     <FlexWrapper style={{ width: "100%", justifyContent: "space-between" }}>
                         <PetInfo data={{ age: pet?.age, gender: pet?.sex }} style={{ fontSize: "20px" }} />
                         {/* <FlexWrapper>                       {

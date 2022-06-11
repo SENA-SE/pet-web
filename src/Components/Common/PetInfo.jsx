@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React, { useState } from 'react'
+import React from 'react'
 import Divider from '@mui/material/Divider';
 import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
@@ -13,7 +13,6 @@ const Container = styled.div`
 `
 
 function PetInfo({ data = { age: "年龄", sex: "male" }, ...rest }) {
-    // console.log(data)
     return (
         <Container {...rest}>
             {data.age}

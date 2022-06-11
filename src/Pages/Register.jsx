@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Form, Field } from 'react-final-form'
 import Button from '../Components/Common/Button'
-import { publicRequest } from '../requestMethods'
 import { login } from '../redux/apiCalls';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../redux/apiCalls';
@@ -85,7 +84,6 @@ export default function Register() {
     const { isFetching, isError, message } = useSelector(state => state.register);
     const onSubmit = async (e) => {
         try {
-            // console.log(e)
             const { tel, password } = e
             register(dispatch, { tel, password })
                 .then(() => login(dispatch, { tel, password }))

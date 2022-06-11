@@ -22,7 +22,7 @@ const Time = styled.span`
     color:${({ theme }) => theme.palette.secondary.main};
 `;
 
-function PostName({data}) {
+function PostName({ data }) {
     return (
         <Container>
             <AccountCircleIcon sx={{ fontSize: 60 }} color='secondary' />

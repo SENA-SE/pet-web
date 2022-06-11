@@ -1,9 +1,4 @@
-// TODO: 获取detail data
-// TODO: 点击提交申请，进行权限验证，否弹通知（请至我的资料处进行实名认证），是弹弹窗，提交表格，发送请求
-// redux管理当前filter tag，获取tag后过滤然后进行遍历渲染
-// 或者直接获取tag后filter网络请求获取
-// 数据： filter，page
-// 提交时需要验证，并通知
+
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import Divider from '@mui/material/Divider';
@@ -149,8 +144,6 @@ export const Comment = ({ header, data, label, postId }) => {
 function Community({ search, sort }) {
     const [posts, setPosts] = useState([]);
     const [pages, setPages] = useState(1);
-    // const [keyword, setKeyWord] = useState("")
-    // console.log(keyword)
     const location = useLocation();
     const query = new URLSearchParams(location.search);
     const page = parseInt(query.get('page') || '1', 10);

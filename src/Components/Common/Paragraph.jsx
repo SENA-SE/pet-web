@@ -22,7 +22,7 @@ const StyledParagraph = styled.span`
 const Bottom = styled.div`
     display: flex;
     align-items: center;
-    justify-content: ${({info}) => info? "space-between" : "flex-end"};
+    justify-content: ${({ info }) => info ? "space-between" : "flex-end"};
     height: 40px;
 `
 const Expand = styled.span`
@@ -43,20 +43,19 @@ function Paragraph({ info, expand, children, ...rest }) {
     const { width } = useWindowSize();
     const containerWidth = width * 0.85;
     const maxWord = containerWidth / 10 * 3;
-    // console.log(maxWord)
     return (
         <Container {...rest}>
             <StyledParagraph as="p" status={status} {...rest}>
                 {children}
             </StyledParagraph>
-            {expand && 
+            {expand &&
                 <Bottom info={info}>
-                {info && <ViewInfo data={info} style={{marginTop: '10px'}}/>}
-                {children.length > maxWord && (status.ellipsis ? <Expand status={status} onClick={handleExpand}>展开</Expand>
-                :
-                <Expand status={status} onClick={handleExpand}>收回</Expand>)
-            }
-            </Bottom>
+                    {info && <ViewInfo data={info} style={{ marginTop: '10px' }} />}
+                    {children.length > maxWord && (status.ellipsis ? <Expand status={status} onClick={handleExpand}>展开</Expand>
+                        :
+                        <Expand status={status} onClick={handleExpand}>收回</Expand>)
+                    }
+                </Bottom>
             }
         </Container>
     );

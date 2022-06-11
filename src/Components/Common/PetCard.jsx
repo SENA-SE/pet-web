@@ -1,9 +1,5 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import FavoriteIcon from '@mui/icons-material/Favorite';
-// import Divider from '@mui/material/Divider';
-// import FemaleIcon from '@mui/icons-material/Female';
-// import MaleIcon from '@mui/icons-material/Male';
 import { Link } from 'react-router-dom';
 import PetInfo from './PetInfo';
 import logo1 from '../../img/logo1.png'

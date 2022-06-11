@@ -12,16 +12,16 @@ const StyledTextArea = styled(TextareaAutosize)`
     transition: .3s;
     padding: 10px;
     &:focus {
-        border: 1px solid ${({theme}) => theme.palette.secondary.main};
+        border: 1px solid ${({ theme }) => theme.palette.secondary.main};
     }
 
 `;
-export default function MinHeightTextarea({setValue}) {
+export default function MinHeightTextarea({ setValue }) {
   const handleChange = (event) => {
     if (setValue) {
       setValue(event.target.value);
     }
-};
+  };
   return (
     <StyledTextArea
       aria-label="minimum height"

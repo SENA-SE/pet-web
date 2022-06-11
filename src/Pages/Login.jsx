@@ -56,25 +56,6 @@ const Label = styled.label`
     user-select: none;
 `;
 
-// const Button = styled.button`
-//     width:70%;
-//     margin-top:30px;
-//     margin-bottom:50px;
-//     border:none;
-//     padding:15px 20px;
-//     background-color:${({ theme }) => theme.palette.primary.main};
-//     color:white;
-//     cursor:pointer;
-//     align-self:center;
-//     border-radius: 5px;
-
-//     &:disabled{
-//         cursor:not-allowed;
-//         color:teal;
-//         background-color:white;
-//         border:1px solid teal;
-//     }
-// `;
 const StyledLink = styled.a`
     margin:10px 0;
     font-size:15px;
@@ -100,7 +81,6 @@ export default function Login() {
     const dispatch = useDispatch();
     const handleLogin = (e) => {
         e.preventDefault();
-        // console.log(tel, password)
         login(dispatch, { tel, password })
     }
     const { isFetching, isError, message } = useSelector(state => state.user);

@@ -53,35 +53,41 @@ export default function SimpleSlider({ images = [""], ...rest }) {
 
 
       {
-        images.length < 2 ?
-          <Slider {...settings}>
-            <ImgContainer>
-              <div className="petImg"></div>
+        images.length === 1 &&
+        <Slider {...settings}>
+          <ImgContainer>
+            <div className="petImg"></div>
+          </ImgContainer>
+          {images.map((item, index) =>
+            <ImgContainer key={index}>
+              <div className="petImg"><img src={item} /></div>
             </ImgContainer>
-            {images.map((item, index) =>
-              <ImgContainer key={index}>
-                <div className="petImg"><img src={item} /></div>
-              </ImgContainer>
-            )}
-            <ImgContainer>
-              <div className="petImg"></div >
+          )}
+          <ImgContainer>
+            <div className="petImg"></div >
+          </ImgContainer>
+        </Slider>
+      }{
+        images.length === 2 &&
+        <Slider {...settings}>
+          {images.map((item, index) =>
+            <ImgContainer key={index}>
+              <div className="petImg"><img src={item} /></div>
             </ImgContainer>
-          </Slider>
-
-          :
-          <Slider {...settings}>
-            {images.map((item, index) =>
-              <ImgContainer key={index}>
-                <div className="petImg"><img src={item} /></div>
-              </ImgContainer>
-            )}
-            <ImgContainer>
-              <div className="petImg"></div>
+          )}
+          <ImgContainer>
+            <div className="petImg"></div>
+          </ImgContainer>
+        </Slider>
+      }{
+        images.length >= 3 &&
+        <Slider {...settings}>
+          {images.map((item, index) =>
+            <ImgContainer key={index}>
+              <div className="petImg"><img src={item} /></div>
             </ImgContainer>
-
-
-          </Slider>
-
+          )}
+        </Slider>
       }
 
 

@@ -1,15 +1,7 @@
 import React from 'react'
 import MainContainer from '../Components/Common/MainContainer'
-import { Link } from 'react-router-dom';
 import styled from 'styled-components'
 import Divider from '@mui/material/Divider';
-import FilterHeader from '../Components/FilterHeader';
-import PostName from '../Components/Common/PostInfo';
-import Paragraph from '../Components/Common/Paragraph';
-import TextArea from '../Components/Common/TextArea';
-import Selector from '../Components/Common/Selector';
-import Button from '../Components/Common/Button';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Header from '../Components/Common/Header';
 import PostInfo from '../Components/Common/PostInfo';
 import ViewInfo from '../Components/Common/ViewInfo';
@@ -54,7 +46,6 @@ const Comment = ({ comment }) => {
 //     justify-content: center;
 // `
 
-//发送请求请求data
 
 function KnowledgePostDetail({ post = {
     user: "用户名",
