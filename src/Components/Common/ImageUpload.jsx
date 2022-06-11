@@ -54,8 +54,8 @@ function ImageUpload({ setValue, max = 9, ...rest }) {
         },
         maxFiles: max
     })
-    const selected_images = selectedImages?.map(file => (
-        <div>
+    const selected_images = selectedImages?.map((file, index) => (
+        <div key={index}>
             <img src={file.preview} />
         </div>
     ))

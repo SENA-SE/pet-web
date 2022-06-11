@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Divider from '@mui/material/Divider';
 import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
+import TransgenderIcon from '@mui/icons-material/Transgender';
 const Container = styled.div`
     display: flex;
     gap: 10px;
@@ -21,7 +22,10 @@ function PetInfo({ data = { age: "年龄", sex: "male" }, ...rest }) {
             <Divider orientation="vertical" variant="middle" flexItem /> */}
             {data.sex === "female" ? <FemaleIcon color="primary" fontSize="small" />
                 :
-                <MaleIcon color="primary" fontSize="small" />
+                data.sex === "other" ?
+                    <TransgenderIcon color="primary" fontSize="small" />
+                    :
+                    <MaleIcon color="primary" fontSize="small" />
             }
         </Container>
     )

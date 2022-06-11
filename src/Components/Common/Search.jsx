@@ -31,11 +31,13 @@ const Wrapper = styled.div`
 const StyledInputBase = styled(InputBase)`
 
 `
-function Search({setKeyWord, ...rest}) {
+function Search({ setKeyWord, handleSearch, ...rest }) {
     const [isFocused, setIsFocused] = useState(false);
     const [value, setValue] = React.useState("");
     const handleChange = (event) => {
-        setKeyWord(event.target.value);
+        if (setKeyWord) {
+            setKeyWord(event.target.value);
+        }
         setValue(event.target.value);
     };
     return (
@@ -43,7 +45,7 @@ function Search({setKeyWord, ...rest}) {
             <Wrapper focus={isFocused}>
                 <StyledInputBase
                     sx={{ ml: 1, flex: 1 }}
-                    placeholder="Search "
+                    placeholder="搜索关键字.. "
                     inputProps={{ 'aria-label': 'search' }}
                     onFocus={() => { setIsFocused(true) }}
                     onBlur={() => { setIsFocused(false) }}
@@ -52,10 +54,10 @@ function Search({setKeyWord, ...rest}) {
                 />
                 {value &&
                     <IconButton sx={{ p: '10px' }} aria-label="delete">
-                        <HighlightOffOutlinedIcon onClick={() => setValue("")} fontSize='small' />
+                        <HighlightOffOutlinedIcon onClick={() => setKeyWord("")} fontSize='small' />
                     </IconButton>}
                 <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-                <IconButton color="primary" sx={{ p: '10px' }} aria-label="search">
+                <IconButton color="primary" sx={{ p: '10px' }} aria-label="search" onClick={handleSearch}>
                     <SearchIcon fontSize='small' />
                 </IconButton>
             </Wrapper>

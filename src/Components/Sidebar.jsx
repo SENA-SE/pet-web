@@ -3,24 +3,30 @@ import styled from 'styled-components'
 import Filter from './Common/Filter'
 import { useState } from 'react'
 import Divider from '@mui/material/Divider';
-
+import Button from '../Components/Common/Button'
 const Container = styled.div`
-width: 25%;
-padding: 10px;
-// background: pink;
+    width: 25%;
+    padding: 10px;
+    height: 90vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
+
 `
 const gender = [
     {
         name: "男",
-        value: "1"
+        value: "male"
     },
     {
         name: "女",
-        value: "2"
+        value: "female"
     },
     {
         name: "其他",
-        value: "3"
+        value: "other"
     },
 ]
 const size = [
@@ -37,24 +43,26 @@ const size = [
         value: "3"
     },
 ]
-function Sidebar({ setValue }) {
-    // const [selected, setSelected] = React.useState(
-    //     {
-    //         species:["all"],
-    //         age:100,
-    //         gender:"all",
-    //         size:"all",
-    //         location:"all",
-    //     }
-    // );
+function Sidebar({ setValue, handleFilter }) {
+    const [selected, setSelected] = useState({});
+    const handleSelect = (newObj) => {
+        // console.log(newObj)
+        // debugger
+        const updatedObj = { ...selected }
+        updatedObj[newObj.queryName] = newObj.value
+        // console.log(updatedObj)
+        setSelected({ ...updatedObj })
+        handleFilter(updatedObj)
+        // console.log(selected)
+
+    }
+
     return (
         <Container>
-            <Filter data={gender} setValue={setValue} label="宠物性别" />
+            <Filter data={gender} handleSet={handleSelect} queryName="sex" label="宠物性别" />
             <Divider variant="middle" />
-            <Filter data={size} setValue={setValue} label="宠物尺寸" />
-
-            {/* //TODO: 清除所有 
-            // 年龄*/}
+            <Filter data={size} handleSet={handleSelect} queryName="size" label="宠物尺寸" />
+            <Button style={{ width: '80%', marginTop: '8rem' }} onClick={() => window.location.reload()}>清除所有</Button>
         </Container>
     )
 }

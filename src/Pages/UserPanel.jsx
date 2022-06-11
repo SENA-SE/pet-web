@@ -319,8 +319,9 @@ export const CommunityPost = ({ data }) => {
                 <Header title={"社区发布"} />
                 <Divider sx={{ marginBottom: '15px' }} />
             </>
-            {/* <Post />
-            <Post /> */}
+            {posts.map((item, index) =>
+                <Post data={item} key={index} />
+            )}
         </Container>
     )
 }
@@ -371,7 +372,7 @@ export const CommunityFavorite = () => {
                         baseURL: 'http://cyjspace.5gzvip.91tunnel.com:80',
                         headers: { token: `${TOKEN}` }
                     });
-                    const res = await userRequest.post(`/post/queryMyLike?categoriesId=-1&page=1&pageSize=1000`)
+                    const res = await userRequest.post(`/post/findMyLike?categoriesId=-1&page=1&pageSize=1000`)
                     setPosts(res.data.data)
                 }
             } catch (e) {
@@ -388,8 +389,8 @@ export const CommunityFavorite = () => {
                 <Header title={"社区"} />
                 <Divider sx={{ marginBottom: '15px' }} />
             </>
-            {posts.map(item =>
-                <Post data={item} />
+            {posts.map((item, index) =>
+                <Post data={item} key={index} />
             )}
             {/* <PaginationLink right sx={{ marginTop: '10px', marginRight: '15px' }} pages={pages} /> */}
         </Container>

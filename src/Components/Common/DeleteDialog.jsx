@@ -8,7 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function FormDialog() {
+export default function DeleteDialog({ handleDelete, ...rest }) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -20,18 +20,19 @@ export default function FormDialog() {
   };
 
   return (
-    <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open form dialog
+    <div {...rest}>
+      <Button variant="outlined" onClick={handleClickOpen} >
+        结束该送养
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Subscribe</DialogTitle>
+        <DialogTitle>
+          结束该送养
+        </DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
+          <DialogContentText style={{ fontSize: 16 }}>
+            结束该送养后，该送养信息将不再公开。您可以在 用户-送养-已结束 中查看已结束的送养。
           </DialogContentText>
-          <TextField
+          {/* <TextField
             autoFocus
             margin="dense"
             id="name"
@@ -39,11 +40,11 @@ export default function FormDialog() {
             type="email"
             fullWidth
             variant="standard"
-          />
+          /> */}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
+          <Button onClick={handleClose}>取消</Button>
+          <Button onClick={handleDelete}>确定</Button>
         </DialogActions>
       </Dialog>
     </div>

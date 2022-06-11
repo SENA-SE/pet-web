@@ -159,7 +159,7 @@ const PetForm = ({ setAlert }) => {
 
   const onSubmit = async (e) => {
     let url = `/adopt/add?address=${e.address}&age=${e.age}&categoriesId=${e.categoriesId}&description=${e.description}&name=${e.name}&nickname=${e.nickname}&requirement=${e.requirement}&sex=${e.sex}&size=${e.size}&status=${e.status}&tel=${e.tel}`
-    console.log(url)
+    const btn = document.getElementById('submitBtn')
     try {
       if (user) {
         const TOKEN = user.token;
@@ -169,6 +169,7 @@ const PetForm = ({ setAlert }) => {
         for (let i = 0; i < files.length; i++) {
           formData.append("files", files[i]);
         }
+        btn.disabled = true
         // console.log(formData.get("files"))
         axios({
           url: `http://cyjspace.5gzvip.91tunnel.com:80${url}`,
@@ -183,6 +184,7 @@ const PetForm = ({ setAlert }) => {
             setAlert({ on: true, content: "发布成功", type: "success" })
             setTimeout(() => setAlert({ on: false }), 3000);
             document.body.scrollTop = document.documentElement.scrollTop = 0;
+            btn.disabled = false;
           })
           .catch(err => {
             console.log(err);
@@ -310,7 +312,7 @@ const PetForm = ({ setAlert }) => {
           />
 
 
-          <Button variants="secondary" type="submit" style={{ width: "60%", marginTop: "30px", marginLeft: "1rem" }}>提交</Button>
+          <Button id="submitBtn" variants="secondary" type="submit" style={{ width: "60%", marginTop: "30px", marginLeft: "1rem" }}>提交</Button>
         </StyledForm>
       )}
     />

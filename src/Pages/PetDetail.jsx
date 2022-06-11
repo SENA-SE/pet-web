@@ -16,6 +16,8 @@ import Carousel from '../Components/Common/Carousel'
 import InfoForm from '../Components/AdoptionRequest'
 import Header from '../Components/Common/Header'
 import Button from '../Components/Common/Button'
+import DeleteDialog from '../Components/Common/DeleteDialog';
+import PhoneIcon from '@mui/icons-material/Phone';
 const Container = styled.div`
     width: 100%;
     padding: 20px;
@@ -62,11 +64,18 @@ function PetDetail() {
             page: 1,
             pagesize: 10
         }
+        const queryDeleted = {
+            deleted: "1",
+            id: id,
+            page: 1,
+            pagesize: 10
+        }
         const getPet = async () => {
             try {
                 const res = await publicRequest.post(`/adopt/findAdopt`, query)
-                // console.log(res.data.data)
-                setPet(res.data.data[0])
+                const deleted = await publicRequest.post(`/adopt/findAdopt`, queryDeleted)
+                console.log(res.data.data)
+                setPet(res.data.data[0] || deleted.data.data[0])
                 if (user.id === res.data.data[0].userId) {
                     setOperation("delete")
                 }
@@ -120,6 +129,7 @@ function PetDetail() {
                 <Divider variant="middle" sx={{ marginBottom: "15px" }} />
                 <Carousel images={pet?.images} />
                 <InfoContainer>
+                    <FlexWrapper style={{fontSize: 16}}>创建时间： {pet?.createTime}</FlexWrapper>
                     <FlexWrapper style={{ width: "100%", justifyContent: "space-between" }}>
                         <PetInfo data={{ age: pet?.age, gender: pet?.sex }} style={{ fontSize: "20px" }} />
                         {/* <FlexWrapper>                       {
@@ -130,14 +140,17 @@ function PetDetail() {
                         {console.log(pet?.status === "0")}
                         <Status confirm={parseInt(pet?.status)}>{pet?.status === "0" ? "未绝育" : "已绝育"}</Status>
                     </FlexWrapper>
-                    <FlexWrapper>创建时间： {pet?.createTime}</FlexWrapper>
                     <FlexWrapper>
-                        <AccountCircleIcon />
+                        <AccountCircleIcon color="secondary" />
                         {pet?.nickname}
                     </FlexWrapper>
                     <FlexWrapper>
-                        <LocationOnOutlinedIcon />
+                        <LocationOnOutlinedIcon color="secondary" />
                         {pet?.address}
+                    </FlexWrapper>
+                    <FlexWrapper>
+                        <PhoneIcon color="secondary" />
+                        {pet?.tel}
                     </FlexWrapper>
                     <FlexWrapper column>
                         <h3>主人描述： </h3>
@@ -148,7 +161,8 @@ function PetDetail() {
                         {pet?.requirement}
                     </FlexWrapper>
                     {operation === "delete" ?
-                        <Button variants="secondary" style={{ alignSelf: "flex-end", width: "initial" }} onClick={handleDelete}>删除该送养</Button>
+                        // <Button variants="secondary" style={{ alignSelf: "flex-end", width: "initial" }} onClick={handleDelete}>删除该送养</Button>
+                        <DeleteDialog style={{ alignSelf: "flex-end", width: "initial" }} handleDelete={handleDelete} />
                         :
                         // <InfoForm style={{ alignSelf: "flex-end" }} />
                         <></>

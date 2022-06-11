@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import MainContainer from '../Components/Common/MainContainer'
 import styled from 'styled-components'
 import Divider from '@mui/material/Divider';
@@ -6,8 +6,8 @@ import FilterHeader from '../Components/FilterHeader';
 import Paragraph from '../Components/Common/Paragraph';
 import PaginationLink from '../Components/Common/Pagination';
 import TabFilter from '../Components/Common/TabFilter';
-import {publicRequest} from '../requestMethods';
-import {useDispatch, useSelector} from 'react-redux';
+import { publicRequest } from '../requestMethods';
+import { useDispatch, useSelector } from 'react-redux';
 import RequestNotification from '../Components/Common/RequestNotification';
 import axios from 'axios';
 import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
@@ -67,24 +67,24 @@ function Notice() {
     const [pages, setPages] = useState(1);
     useEffect(() => {
         const getNotice = async () => {
-        try {
-        const res = await publicRequest.post(`/notice/findNotice?${category===0 ? "" : `categoriesId=${category}&`}page=${page}&pageSize=5`)
-        const getAll = await publicRequest.post(`/notice/findNotice?${category===0 ? "" : `categoriesId=${category}&`}page=1&pageSize=100`)
-        setNotices(res.data.data)
-            setPages(Math.ceil(getAll.data.data.length / 5))
-        } catch (e) {
-            console.log(e)
-        }
-    };
-    getNotice();
-}, [category, page]);
+            try {
+                const res = await publicRequest.post(`/notice/findNotice?${category === 0 ? "" : `categoriesId=${category}&`}page=${page}&pageSize=5`)
+                const getAll = await publicRequest.post(`/notice/findNotice?${category === 0 ? "" : `categoriesId=${category}&`}page=1&pageSize=100`)
+                setNotices(res.data.data)
+                setPages(Math.ceil(getAll.data.data.length / 5))
+            } catch (e) {
+                console.log(e)
+            }
+        };
+        getNotice();
+    }, [category, page]);
     return (
         <Container>
             <MainContainer>
                 <TabFilter filters={filters} />
                 <Divider variant="middle" sx={{ marginY: "15px" }} />
                 <NoticeContainer>
-                    {notices.map(item =>
+                    {notices.map((item, index) =>
                         <>
                             <Link to={`/notice/${item.id}`}>
                                 <NoticeWrapper>
@@ -105,7 +105,7 @@ function Notice() {
                     )}
 
                 </NoticeContainer>
-                <PaginationLink right path={"notice"} pages={pages}/>
+                <PaginationLink right path={"notice"} pages={pages} />
             </MainContainer>
 
         </Container>

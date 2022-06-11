@@ -58,8 +58,8 @@ export default function SimpleSlider({ images = [""], ...rest }) {
             <ImgContainer>
               <div className="petImg"></div>
             </ImgContainer>
-            {images.map(item =>
-              <ImgContainer>
+            {images.map((item, index) =>
+              <ImgContainer key={index}>
                 <div className="petImg"><img src={item} /></div>
               </ImgContainer>
             )}
@@ -70,8 +70,8 @@ export default function SimpleSlider({ images = [""], ...rest }) {
 
           :
           <Slider {...settings}>
-            {images.map(item =>
-              <ImgContainer>
+            {images.map((item, index) =>
+              <ImgContainer key={index}>
                 <div className="petImg"><img src={item} /></div>
               </ImgContainer>
             )}

@@ -2,7 +2,7 @@
 // list处获取query（redux），page（用location获取）为依赖进行请求
 // MIXIN: favorite 发送请求，await，变色，返回收藏夹，更新收藏夹（redux），通知收藏成功
 import React, { useEffect, useState } from 'react';
-import { Link, MemoryRouter, Route, Routes, useLocation, useParams } from 'react-router-dom';
+import { Link, MemoryRouter, Route, Routes, useLocation, useParams, useNavigate } from 'react-router-dom';
 import PetList from '../Components/PetList'
 import styled from 'styled-components'
 import Sidebar from '../Components/Sidebar'
@@ -24,10 +24,14 @@ const ListContainer = styled.div`
 `
 function Adoption() {
   const [pets, setPets] = useState([]);
-  const [pages, setPages] = useState([]);
+  const [pages, setPages] = useState(1);
   const [sort, setSort] = useState('Tasc');
   const [defaultArr, setDefaultArr] = useState([])
-  const [filters, setFilters] = useState({})
+  const [keyword, setKeyword] = useState("");
+  const navigate = useNavigate();
+  const handleSearch = () => {
+    navigate(`/adoption?search=${keyword}&category=10`)
+  }
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const page = parseInt(query.get('page') || '1', 10);
@@ -39,22 +43,25 @@ function Adoption() {
       deleted: "0",
       categoriesId: category,
       keyword: search || "",
-      page: 1,
-      pagesize: 10
+      page: page,
+      pagesize: 12
     }
     const all = {
       deleted: "0",
+      categoriesId: category,
+      keyword: search || "",
       page: 1,
       pagesize: 1000
     }
     const getPets = async () => {
       try {
         const res = await publicRequest.post(`/adopt/findAdopt`, query)
-        const getAll = await publicRequest.post(`/adopt/findAdopt`, query)
+        const getAll = await publicRequest.post(`/adopt/findAdopt`, all)
         console.log(res.data.data)
         setPets(res.data.data)
         setDefaultArr(res.data.data)
-        setPages(Math.ceil(getAll.data.data.length / 10))
+        setPages(Math.ceil(getAll.data.data.length / 12))
+        console.log(getAll.data.data)
       } catch (e) {
         console.log(e)
       }
@@ -63,7 +70,6 @@ function Adoption() {
   }, [category, page, search]);
 
   useEffect(() => {
-    console.log(sort)
     if (pets) {
       if (sort === 'Sasc') {
         setPets((prev) => {
@@ -99,11 +105,45 @@ function Adoption() {
       }
     }
   }, [sort])
+
+  const handleFilter = async (filterObj) => {
+    const query = {
+      deleted: "0",
+      categoriesId: category,
+      keyword: search || "",
+      page: page,
+      pagesize: 12,
+      ...filterObj
+    }
+    console.log(query)
+    const all = {
+      deleted: "0",
+      categoriesId: category,
+      keyword: search || "",
+      page: 1,
+      pagesize: 1000,
+      ...filterObj
+    }
+    const getPets = async () => {
+      try {
+        const res = await publicRequest.post(`/adopt/findAdopt`, query)
+        const getAll = await publicRequest.post(`/adopt/findAdopt`, all)
+        console.log(res.data.data)
+        setPets(res.data.data)
+        setDefaultArr(res.data.data)
+        setPages(Math.ceil(getAll.data.data.length / 3))
+        console.log(getAll.data.data)
+      } catch (e) {
+        console.log(e)
+      }
+    };
+    getPets();
+  }
   return (
     <Container>
-      <Sidebar setValue={setFilters} />
+      <Sidebar handleFilter={handleFilter} />
       <ListContainer>
-        <PetsHeader setSort={setSort} filter />
+        <PetsHeader setSort={setSort} filter setKeyWord={setKeyword} handleSearch={handleSearch} />
         <PetList data={pets} />
         <PaginationLink right sx={{ marginTop: '10px', marginRight: '15px' }} pages={pages} />
       </ListContainer>

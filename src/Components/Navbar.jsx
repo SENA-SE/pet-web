@@ -55,13 +55,17 @@ export default function NavTabs() {
     const location = useLocation();
     const tabKey = location.pathname.split('/')[1];
     const idxArr = ["home", "adoption", "send", "community", "notice"]
-    const index = idxArr.indexOf(tabKey)
+    let index = idxArr.indexOf(tabKey)
     const [value, setValue] = useState(index === -1 ? 0 : index);
     useEffect(() => {
+        index = idxArr.indexOf(tabKey)
+        // console.log(index)
         if (index === -1) {
             setValue(0);
+        } else {
+            setValue(index)
         }
-    }, [index]);
+    }, [location]);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };

@@ -19,7 +19,7 @@ import { publicRequest } from '../requestMethods';
 import { useSelector } from 'react-redux';
 import RequestNotification from '../Components/Common/RequestNotification';
 import axios from 'axios';
-import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { Link, MemoryRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 const Container = styled.div`
     width: 100%;
     padding: 20px;
@@ -174,8 +174,8 @@ function Community({ search, sort }) {
                 <FilterHeader filter={false} tabData={tags} />
                 <Divider variant="middle" sx={{ marginY: "15px" }} />
                 <PostsContainer>
-                    {posts.map(item =>
-                        <Post data={item} />
+                    {posts.map((item, index) =>
+                        <Post data={item} key={index} />
                     )}
                     <PaginationLink right path={"community"} pages={pages} />
                 </PostsContainer>
